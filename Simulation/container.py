@@ -12,7 +12,7 @@ class container():
         self.size = size
         self.sensors = sensors
 
-    #Size and sensor mutators
+    #--Size and sensor mutators
     def set_size(self, new_size):
         self.size = new_size
     
@@ -25,3 +25,25 @@ class container():
     
     def get_sensors(self):
         return self.sensors
+    
+class sensor():
+    
+    #Constructor initializes the limit associated with the sensor
+    def __init__(self, limit):
+        self.active = False
+        self.value = 0
+        self.limit = limit
+    
+    #Check limit function checks to see if the current value matches the limit, if it does switch sensor on
+    def check_limit(self):
+        if self.limit == self.value:
+            self.active = True
+        else:
+            self.active = False
+    
+    #--Value mutators
+    def set_value(self, new_value):
+        self.value = new_value
+    
+    def get_value(self):
+        return self.value
