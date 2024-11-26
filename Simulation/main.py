@@ -9,6 +9,8 @@
 import logging
 
 from pyModbusTCP.client import ModbusClient
+
+from components import container, motor, sensor
 #-----------------------------
 #Initialize modbus client and logging
 #-----------------------------
@@ -28,3 +30,46 @@ client = ModbusClient(host = "localhost", port = 502, auto_open= True, auto_clos
 #-----------------------------
 
 #TO DO: Add relevant motors and containers for each section of the model; resource handling, production, shipping handling
+
+#-----------------------------
+# RESOURCE HANDLING
+#-----------------------------
+
+#Container and LI definitions
+#LI: Level Indicator
+
+siloSize = 100
+
+#Flour Silo
+flourSiloLIs = {
+    sensor(100),
+    sensor(75),
+    sensor(50)
+}
+
+flourSilo = container(100, flourSiloLIs)
+
+#Sugar Silo
+
+sugarSiloLIs = {
+    sensor(100),
+    sensor(75),
+    sensor(50)
+}
+
+sugarSilo = container(100, sugarSiloLIs)
+
+hopper = container(20, {sensor(20)})
+
+#Motor and RV definitions
+#RV: Rotary Valve
+
+flourRV = motor()
+sugarRV = motor()
+hopperRV = motor()
+
+diverterValve = motor()
+topValve = motor()
+
+vacuum = motor()
+mixer = motor()

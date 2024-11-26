@@ -47,3 +47,18 @@ class sensor():
     
     def get_value(self):
         return self.value
+    
+#Class description: Class file for the motor class, currently just has speed as a parameter for simplicity sake
+
+class motor:
+
+    #Constructor initializes motor velocity at 0, implementation for further parameters will go here
+    def __init__(self):
+        self.velocity = 0
+
+    #Velocity mutators:
+    def set_velocity(self, new_velocity):
+        self.velocity = new_velocity
+
+    def get_velocity(self):
+        return self.velocity
