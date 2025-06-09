@@ -185,11 +185,6 @@ def runnable():
     # Hopper load cell
     lch_weight = hopper.get_weight()/1.0
     client.write_float(signals['lch'].get_address(), lch_weight)
-
-    #Sugar and flour weight
-    client.write_float(signals['flour_weight'].get_address(), flourSilo.get_weight())
-    print(sugarSilo.get_weight())
-    client.write_float(signals['sugar_weight'].get_address(), sugarSilo.get_weight())
     
     # Vacuum RPM
     rpm = RPM(signals['vacuum_freq'].get_value())
