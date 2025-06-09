@@ -1,0 +1,16 @@
+10
+QW,98,99,true,0,HoldingRegisterFloat,98
+QW,116,117,true,0,HoldingRegisterFloat,116
+QX,700,701,false,0,Coil,700
+QX,701,702,false,0,Coil,701
+QX,702,703,false,0,Coil,702
+QX,703,704,false,0,Coil,703
+QX,704,705,false,0,Coil,704
+QW,1001,1001,false,0,HoldingRegisterUInt16,1001
+QW,1000,1000,false,0,HoldingRegisterUInt16,1000
+QX,706,706,false,0,Coil,706
+QX,707,707,false,0,Coil,707
+QX,708,708,false,0,Coil,708
+QX,709,709,false,0,Coil,709
+QX,710,710,false,0,Coil,710
+QW,218,219,true,0,HoldingRegisterFloat,218
