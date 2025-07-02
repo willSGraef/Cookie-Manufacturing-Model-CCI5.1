@@ -1,0 +1,8 @@
+{
+  "valueSource": "opc",
+  "opcItemPath": "ns\u003d1;s\u003d[OpenPLC Modbus]QW94",
+  "dataType": "Float4",
+  "name": "trough_weight",
+  "tagType": "AtomicTag",
+  "opcServer": "Ignition OPC UA Server"
+}
