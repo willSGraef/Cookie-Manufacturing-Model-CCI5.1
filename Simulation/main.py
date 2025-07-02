@@ -43,8 +43,8 @@ class FloatModbusClient(ModbusClient):
         return self.write_multiple_registers(address, b16_l)
 
 #Set debug level for pyModbusTCP client to see frame changes, basically shows us all connection logs
-logging.basicConfig()
-logging.getLogger('pyModbusTCP.client').setLevel(logging.DEBUG)
+#logging.basicConfig()
+#logging.getLogger('pyModbusTCP.client').setLevel(logging.DEBUG)
 
 #Init client using IP for the PLC acting as the 'hostname' and the port being 502 (Basic modbus communication port)
 #Enable auto open and auto close for our port so that it opens and closes for each invidiual request
