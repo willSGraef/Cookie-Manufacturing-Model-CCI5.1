@@ -1,8 +1,262 @@
 {
-  "valueSource": "opc",
-  "opcItemPath": "ns\u003d1;s\u003d[OpenPLC Modbus]QW94",
-  "dataType": "Float4",
-  "name": "trough_weight",
-  "tagType": "AtomicTag",
-  "opcServer": "Ignition OPC UA Server"
+  "tags": [
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX716",
+      "dataType": "Boolean",
+      "name": "conveyor",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QW120",
+      "dataType": "Float4",
+      "name": "conveyor_fpm",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX703",
+      "dataType": "Boolean",
+      "name": "dv",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX722",
+      "dataType": "Boolean",
+      "name": "exhaust_fan",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX719",
+      "dataType": "Boolean",
+      "name": "fan_1",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX720",
+      "dataType": "Boolean",
+      "name": "fan_2",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX721",
+      "dataType": "Boolean",
+      "name": "fan_3",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX706",
+      "dataType": "Boolean",
+      "name": "flour_alarm",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QW116",
+      "dataType": "Float4",
+      "name": "flour_weight",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX718",
+      "dataType": "Boolean",
+      "name": "gv_1",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX708",
+      "dataType": "Boolean",
+      "name": "hopper_alarm",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QW98",
+      "dataType": "Float4",
+      "name": "hopper_weight",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX705",
+      "dataType": "Boolean",
+      "name": "mixer",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QW1003",
+      "name": "mixer_rpm",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QW96",
+      "dataType": "Float4",
+      "name": "mixer_weight",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QW300",
+      "dataType": "Float4",
+      "name": "nitrogen_volume",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX717",
+      "dataType": "Boolean",
+      "name": "paper_cutter",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QW1009",
+      "dataType": "Int4",
+      "name": "papercut_cpm",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX700",
+      "dataType": "Boolean",
+      "name": "rv_1",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX701",
+      "dataType": "Boolean",
+      "name": "rv_2",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX702",
+      "dataType": "Boolean",
+      "name": "rv_3",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX707",
+      "dataType": "Boolean",
+      "name": "sugar_alarm",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QW218",
+      "dataType": "Float4",
+      "name": "sugar_weight",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX713",
+      "dataType": "Boolean",
+      "name": "trough_transfer",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QW94",
+      "dataType": "Float4",
+      "name": "trough_weight",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QW302",
+      "dataType": "Float4",
+      "name": "tunnel_temp",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX704",
+      "dataType": "Boolean",
+      "name": "vacuum",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX709",
+      "dataType": "Boolean",
+      "name": "vacuum_alarm",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX710",
+      "dataType": "Boolean",
+      "name": "vacuum_manual",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "scaleMode": "Off",
+      "expression": "abs({[default]vacuum_rpm})",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QW1001",
+      "dataType": "Int4",
+      "name": "vacuum_rpm",
+      "executionMode": "TagGroupRate",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QW1006",
+      "dataType": "Int4",
+      "name": "wirecut_cpm",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX711",
+      "dataType": "Boolean",
+      "name": "wirecutter",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
+    }
+  ]
 }
