@@ -8,6 +8,8 @@
 #Import dependencies
 import logging
 import struct
+import threading
+import time
 import random
 from pyModbusTCP.client import ModbusClient
 from pyModbusTCP.utils import (decode_ieee, word_list_to_long)
@@ -38,7 +40,6 @@ class FloatModbusClient(ModbusClient):
         b16_l = []
         for f in floats_list:
             b16_l.extend(encode_ieee(f))
-            print(encode_ieee(f))
         # Write the registers to the specified address
         return self.write_multiple_registers(address, b16_l)
 
@@ -166,9 +167,6 @@ def runnable():
             if result is not None:
                 Signal.set_value(result[0])
     #Check to see if vacuum is on, if it is start pulling
-    print(SIGNALS['vacuum'].get_value())
-    print(SIGNALS['rv_1'].get_value())
-    print(SIGNALS['dv'].get_value())
     #Pull vacuum RPM and mixer RPM from the PLC
     vacuum_rpm = SIGNALS['vacuum_rpm'].get_value()
     wirecut_cpm = SIGNALS['wirecut_cpm'].get_value()
@@ -177,7 +175,6 @@ def runnable():
         vacuum_CFM = CFM(vacuum_rpm)
         rate = (vacuum_CFM * MATERIAL_AIR_RATIO * AIR_DENSITY)/SECONDS_PER_MIN
         if SIGNALS['rv_1'].get_value() and SIGNALS['dv'].get_value() and flourSilo.get_weight() > 0:
-            print("Siphoning flour")
             if flourSilo.get_weight() < rate:
                 hopper.set_weight(hopper.get_weight() + flourSilo.get_weight())
                 flourSilo.set_weight(0)
@@ -188,11 +185,9 @@ def runnable():
                 remainder = hopper.get_weight() - HOPPER_CAPACITY
                 hopper.set_weight(hopper.get_weight() - remainder)
                 flourSilo.set_weight(flourSilo.get_weight() + remainder)
-                print("Hopper at max capacity")
             if flourSilo.get_weight() < 0:
                 flourSilo.set_weight(0)
         elif SIGNALS['rv_2'].get_value() and not SIGNALS['dv'].get_value() and sugarSilo.get_weight() > 0:
-            print("Siphoning sugar")
             if sugarSilo.get_weight() < rate:
                 hopper.set_weight(hopper.get_weight() + sugarSilo.get_weight())
                 sugarSilo.set_weight(0)
@@ -203,7 +198,6 @@ def runnable():
                 remainder = hopper.get_weight() - HOPPER_CAPACITY
                 hopper.set_weight(hopper.get_weight() - remainder)
                 sugarSilo.set_weight(sugarSilo.get_weight() + remainder)
-                print("Hopper at max capacity")
             if sugarSilo.get_weight() < 0:
                 sugarSilo.set_weight(0)
     if SIGNALS['rv_3'].get_value() and hopper.get_weight() > 0:
@@ -218,7 +212,6 @@ def runnable():
                 remainder = mixer.get_weight() - MIXER_CAPACITY
                 mixer.set_weight(mixer.get_weight() - remainder)
                 hopper.set_weight(hopper.get_weight() + remainder)
-                print("Mixer at max capacity")
         if hopper.get_weight() < 0:
             hopper.set_weight(0)
 
@@ -289,6 +282,36 @@ def runnable():
     client.close()
 
 #BEGIN SIMULATION
-running = True
-while(running):
-    runnable()
+# Control flags
+stop_event = threading.Event()
+restart_event = threading.Event()
+
+def runner_thread():
+    print("Beginning simulation...")
+    print("You can now stop/reset the simulation.")
+    while not stop_event.is_set():
+        if restart_event.is_set():
+            print("Restarting simulation...")
+            restart_event.clear()
+        runnable()
+        time.sleep(1)
+
+def control_thread():
+    while not stop_event.is_set():
+        command = input("Enter command [reset, quit]: ").strip().lower()
+        if command == "reset":
+            restart_event.set()
+        elif command == "quit":
+            print("Stopping simulation...")
+            stop_event.set()
+        else:
+            print("Unknown command. Use 'reset' or 'quit'.")
+
+runner = threading.Thread(target=runner_thread)
+controller = threading.Thread(target=control_thread)
+
+runner.start()
+controller.start()
+
+runner.join()
+controller.join()
