@@ -6,9 +6,8 @@
 #The main class also binds together each sensor object to match the visualized model, as well as the virtualized Containers
 
 #Import dependencies
-import logging
+import signal
 import struct
-import threading
 import time
 import random
 from pyModbusTCP.client import ModbusClient
@@ -16,7 +15,21 @@ from pyModbusTCP.utils import (decode_ieee, word_list_to_long)
 from components import Container, Signal
 
 #-----------------------------
-#Initialize modbus client and logging
+#Handle service termination
+#-----------------------------
+
+running = True
+
+def handle_sigterm(signum, frame):
+    global running
+    print("SIGTERM received, stopping simulation...")
+    running = False
+
+signal.signal(signal.SIGTERM, handle_sigterm)
+
+
+#-----------------------------
+#Initialize modbus client
 #-----------------------------
 
 def encode_ieee(value):
@@ -42,10 +55,6 @@ class FloatModbusClient(ModbusClient):
             b16_l.extend(encode_ieee(f))
         # Write the registers to the specified address
         return self.write_multiple_registers(address, b16_l)
-
-#Set debug level for pyModbusTCP client to see frame changes, basically shows us all connection logs
-#logging.basicConfig()
-#logging.getLogger('pyModbusTCP.client').setLevel(logging.DEBUG)
 
 #Init client using IP for the PLC acting as the 'hostname' and the port being 502 (Basic modbus communication port)
 #Enable auto open and auto close for our port so that it opens and closes for each invidiual request
@@ -93,6 +102,7 @@ SIGNALS = {
     "exhaust_fan" : Signal(False, 722),
     "conveyor" : Signal(False, 716),
     "paper_cutter" : Signal(False, 717),
+    "reset" : Signal(False, 1000),
 
     #Initialize all analog signals to their default values
     "vacuum_rpm" : Signal(0, 1001),
@@ -148,6 +158,23 @@ trough = Container(0)
 nitrogen_tank = Container(TANK_CAPACITY)
 temperature = Container(AMBIENT_TUNNEL_TEMP)
 
+#Reset system function
+
+def reset_system():
+    # Reset container weights to their initial values
+    flourSilo.set_weight(SILO_CAPACITY)
+    sugarSilo.set_weight(SILO_CAPACITY)
+    hopper.set_weight(0)
+    mixer.set_weight(0)
+    trough.set_weight(0)
+    nitrogen_tank.set_weight(TANK_CAPACITY)
+    temperature.set_weight(AMBIENT_TUNNEL_TEMP)
+
+    # Reset boolean signals
+    for signal in SIGNALS.values():
+        if isinstance(signal.get_value(), bool):
+            signal.set_value(False)
+
 def runnable():
     #Read all signals from PLC into the signals global dictionary
     for Signal in SIGNALS.values():
@@ -166,6 +193,10 @@ def runnable():
             result = client.read_float(Signal.get_address())
             if result is not None:
                 Signal.set_value(result[0])
+    #Check to see if simulation needs to be reset
+    if SIGNALS['reset'].get_value():
+        reset_system()
+        client.write_single_coil(SIGNALS["reset"].get_address(), False)
     #Check to see if vacuum is on, if it is start pulling
     #Pull vacuum RPM and mixer RPM from the PLC
     vacuum_rpm = SIGNALS['vacuum_rpm'].get_value()
@@ -280,53 +311,15 @@ def runnable():
     temp = temperature.get_weight()/1.0
     client.write_float(SIGNALS['tunnel_temp'].get_address(), temp)
     client.close()
+    time.sleep(1)
 
 #BEGIN SIMULATION
-def reset_system():
-    # Reset container weights to their initial values
-    flourSilo.set_weight(SILO_CAPACITY)
-    sugarSilo.set_weight(SILO_CAPACITY)
-    hopper.set_weight(0)
-    mixer.set_weight(0)
-    trough.set_weight(0)
-    nitrogen_tank.set_weight(TANK_CAPACITY)
-    temperature.set_weight(AMBIENT_TUNNEL_TEMP)
-
-    # Reset boolean signals
-    for signal in SIGNALS.values():
-        if isinstance(signal.get_value(), bool):
-            signal.set_value(False)
-# Control flags
-stop_event = threading.Event()
-restart_event = threading.Event()
-print_lock = threading.Lock()
-
-def runner_thread():
-    print("Beginning simulation...")
-    print("You can now stop/reset the simulation.")
-    while not stop_event.is_set():
-        if restart_event.is_set():
-            reset_system()
-            restart_event.clear()
-        runnable()
-        time.sleep(1)
-
-def control_thread():
-    while not stop_event.is_set():
-        command = input("Enter command [reset, quit]: ").strip().lower()
-        if command == "reset":
-            restart_event.set()
-        elif command == "quit":
-            print("Stopping simulation...")
-            stop_event.set()
-        else:
-            print("Unknown command. Use 'reset' or 'quit'.")
-
-runner = threading.Thread(target=runner_thread)
-controller = threading.Thread(target=control_thread)
-
-runner.start()
-controller.start()
-
-runner.join()
-controller.join()
+if __name__ == "__main__":
+    print("Simulation started.")
+    try:
+        while running:
+            runnable()
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        print("Simulation stopped.")
