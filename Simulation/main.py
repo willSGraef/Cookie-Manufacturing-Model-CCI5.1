@@ -282,16 +282,31 @@ def runnable():
     client.close()
 
 #BEGIN SIMULATION
+def reset_system():
+    # Reset container weights to their initial values
+    flourSilo.set_weight(SILO_CAPACITY)
+    sugarSilo.set_weight(SILO_CAPACITY)
+    hopper.set_weight(0)
+    mixer.set_weight(0)
+    trough.set_weight(0)
+    nitrogen_tank.set_weight(TANK_CAPACITY)
+    temperature.set_weight(AMBIENT_TUNNEL_TEMP)
+
+    # Reset boolean signals
+    for signal in SIGNALS.values():
+        if isinstance(signal.get_value(), bool):
+            signal.set_value(False)
 # Control flags
 stop_event = threading.Event()
 restart_event = threading.Event()
+print_lock = threading.Lock()
 
 def runner_thread():
     print("Beginning simulation...")
     print("You can now stop/reset the simulation.")
     while not stop_event.is_set():
         if restart_event.is_set():
-            print("Restarting simulation...")
+            reset_system()
             restart_event.clear()
         runnable()
         time.sleep(1)
