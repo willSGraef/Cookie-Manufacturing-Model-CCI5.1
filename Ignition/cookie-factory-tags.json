@@ -257,6 +257,14 @@
       "name": "wirecutter",
       "tagType": "AtomicTag",
       "opcServer": "Ignition OPC UA Server"
+    },
+    {
+      "valueSource": "opc",
+      "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX1000",
+      "dataType": "Boolean",
+      "name": "reset",
+      "tagType": "AtomicTag",
+      "opcServer": "Ignition OPC UA Server"
     }
   ]
 }
