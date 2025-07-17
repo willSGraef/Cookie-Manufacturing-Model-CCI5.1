@@ -1,4 +1,4 @@
-#Date: 5/30/2025
+#Date: 7/11/2025
 #Author: William Graef, wgraef@uark.edu
 #RIOT LAB, UNIVERSITY OF ARKANSAS
 
@@ -12,7 +12,7 @@ import time
 import random
 from pyModbusTCP.client import ModbusClient
 from pyModbusTCP.utils import (decode_ieee, word_list_to_long)
-from components import Container, Signal
+from components import Signal
 
 #-----------------------------
 #Handle service termination
@@ -26,7 +26,6 @@ def handle_sigterm(signum, frame):
     running = False
 
 signal.signal(signal.SIGTERM, handle_sigterm)
-
 
 #-----------------------------
 #Initialize modbus client
@@ -99,9 +98,31 @@ SIGNALS = {
     "wirecutter" : Signal(False, 711),
     "trough_transfer" : Signal(False, 713),
     "gv_1" : Signal(False, 718),
+    "fan_1" : Signal(False, 719),
+    "fan_2" : Signal(False, 720),
+    "fan_3" : Signal(False, 721),
     "exhaust_fan" : Signal(False, 722),
     "conveyor" : Signal(False, 716),
     "paper_cutter" : Signal(False, 717),
+    "box_maker" : Signal(False, 723),
+    "taper" : Signal(False, 724),
+    "palletizer" : Signal(False, 726),
+    "palletizer_grabbing" : Signal(False, 727),
+    "wrapper_conveyor" : Signal(False, 729),
+    "conveyor_1" : Signal(False, 730),
+    "conveyor_2" : Signal(False, 731),
+    "conveyor_3" : Signal(False, 732),
+    "conveyor_4" : Signal(False, 733),
+    "conveyor_5" : Signal(False, 734),
+    "ps_1" : Signal(False, 735),
+    "ps_2" : Signal(False, 736),
+    "ps_3" : Signal(False, 737),
+    "ps_4" : Signal(False, 738),
+    "ps_5" : Signal(False, 739),
+    "ps_6" : Signal(False, 740),
+    "bagger" : Signal(False, 741),
+    "wrapper_wrapping" : Signal(False, 742),
+    "boxing" : Signal(False, 743),
     "reset" : Signal(False, 1000),
 
     #Initialize all analog signals to their default values
@@ -109,6 +130,7 @@ SIGNALS = {
     "mixer_rpm" : Signal(0, 1003), 
     "wirecut_cpm" : Signal(0, 1006),
     "conveyor_fpm" : Signal(0, 1007),
+    "palletizer_position" : Signal(0, 1012),
 
     #Load cells for sugar, for REAL values make sure there
     #is enough room for both 16 bit addresses
@@ -147,35 +169,67 @@ SIGNALS = {
 # RESOURCE HANDLING
 #-----------------------------
 
-#Container and LI definitions, all Container weights are in pounds
-#LC - Load Cell
+flourSilo = SILO_CAPACITY
+sugarSilo = SILO_CAPACITY
+hopper = 0
+mixer = 0
+trough = 0
+nitrogen_tank = TANK_CAPACITY
+temperature = AMBIENT_TUNNEL_TEMP
 
-flourSilo = Container(SILO_CAPACITY)
-sugarSilo = Container(SILO_CAPACITY)
-hopper = Container(0)
-mixer = Container(0)
-trough = Container(0)
-nitrogen_tank = Container(TANK_CAPACITY)
-temperature = Container(AMBIENT_TUNNEL_TEMP)
+#Counters
+box_counter = 0
+c1_counter = 0
+c2_counter = 0
+c3_counter = 0
+c4_counter = 0
+ps1_counter = 0
+ps2_counter = 0
+ps3_coutner = 0
+
+palletizer_counter = 0
+wrapper_counter = 0
+
+#State variable
+current_state = 0
 
 #Reset system function
 
 def reset_system():
+    global flourSilo, sugarSilo, hopper, mixer, trough, nitrogen_tank, temperature
     # Reset container weights to their initial values
-    flourSilo.set_weight(SILO_CAPACITY)
-    sugarSilo.set_weight(SILO_CAPACITY)
-    hopper.set_weight(0)
-    mixer.set_weight(0)
-    trough.set_weight(0)
-    nitrogen_tank.set_weight(TANK_CAPACITY)
-    temperature.set_weight(AMBIENT_TUNNEL_TEMP)
+    flourSilo = SILO_CAPACITY
+    sugarSilo = SILO_CAPACITY
+    hopper = 0
+    mixer = 0
+    trough = 0
+    nitrogen_tank = TANK_CAPACITY
+    # Reset temperature to ambient temp
+    temperature = AMBIENT_TUNNEL_TEMP
 
     # Reset boolean signals
     for signal in SIGNALS.values():
         if isinstance(signal.get_value(), bool):
-            signal.set_value(False)
+            client.write_single_coil(signal.get_address(), False)
+
+def transfer_material(source, dest, rate, capacity):
+    if source < rate:
+        dest += source
+        source = 0
+    else:
+        source -= rate
+        dest += rate
+    if (dest >= capacity):
+        remainder = dest - capacity
+        dest -= remainder
+        source += remainder
+    if source < 0:
+        source = 0
+    
+    return source, dest
 
 def runnable():
+    global flourSilo, sugarSilo, hopper, mixer, trough, nitrogen_tank, temperature, box_counter, c1_counter, c2_counter, c3_counter, c4_counter, ps1_counter, ps2_counter, ps3_coutner, ps4_counter, palletizer_counter, wrapper_counter
     #Read all signals from PLC into the signals global dictionary
     for Signal in SIGNALS.values():
         # Set booleans
@@ -205,51 +259,18 @@ def runnable():
         #Solve for vacuum CFM using best fit curve function
         vacuum_CFM = CFM(vacuum_rpm)
         rate = (vacuum_CFM * MATERIAL_AIR_RATIO * AIR_DENSITY)/SECONDS_PER_MIN
-        if SIGNALS['rv_1'].get_value() and SIGNALS['dv'].get_value() and flourSilo.get_weight() > 0:
-            if flourSilo.get_weight() < rate:
-                hopper.set_weight(hopper.get_weight() + flourSilo.get_weight())
-                flourSilo.set_weight(0)
-            else:
-                flourSilo.set_weight(flourSilo.get_weight()-rate)
-                hopper.set_weight(hopper.get_weight() + rate)
-            if (hopper.get_weight() >= HOPPER_CAPACITY):
-                remainder = hopper.get_weight() - HOPPER_CAPACITY
-                hopper.set_weight(hopper.get_weight() - remainder)
-                flourSilo.set_weight(flourSilo.get_weight() + remainder)
-            if flourSilo.get_weight() < 0:
-                flourSilo.set_weight(0)
-        elif SIGNALS['rv_2'].get_value() and not SIGNALS['dv'].get_value() and sugarSilo.get_weight() > 0:
-            if sugarSilo.get_weight() < rate:
-                hopper.set_weight(hopper.get_weight() + sugarSilo.get_weight())
-                sugarSilo.set_weight(0)
-            else:
-                sugarSilo.set_weight(sugarSilo.get_weight()-rate)
-                hopper.set_weight(hopper.get_weight() + rate)
-            if (hopper.get_weight() >= HOPPER_CAPACITY):
-                remainder = hopper.get_weight() - HOPPER_CAPACITY
-                hopper.set_weight(hopper.get_weight() - remainder)
-                sugarSilo.set_weight(sugarSilo.get_weight() + remainder)
-            if sugarSilo.get_weight() < 0:
-                sugarSilo.set_weight(0)
-    if SIGNALS['rv_3'].get_value() and hopper.get_weight() > 0:
+        if SIGNALS['rv_1'].get_value() and SIGNALS['dv'].get_value() and flourSilo > 0:
+            flourSilo, hopper = transfer_material(flourSilo, hopper, rate, HOPPER_CAPACITY)
+        elif SIGNALS['rv_2'].get_value() and not SIGNALS['dv'].get_value() and sugarSilo > 0:
+            sugarSilo, hopper = transfer_material(sugarSilo, hopper, rate, HOPPER_CAPACITY)
+    if SIGNALS['rv_3'].get_value() and hopper > 0:
         rate = (GRAVITY_CFM_ESTIMATE * MATERIAL_AIR_RATIO * AIR_DENSITY)/SECONDS_PER_MIN 
-        if hopper.get_weight() < rate:
-            mixer.set_weight(mixer.get_weight() + hopper.get_weight())
-            hopper.set_weight(0)
-        else:
-            hopper.set_weight(hopper.get_weight()-rate)
-            mixer.set_weight(mixer.get_weight()+rate)
-        if (mixer.get_weight() >= MIXER_CAPACITY):
-                remainder = mixer.get_weight() - MIXER_CAPACITY
-                mixer.set_weight(mixer.get_weight() - remainder)
-                hopper.set_weight(hopper.get_weight() + remainder)
-        if hopper.get_weight() < 0:
-            hopper.set_weight(0)
+        hopper, mixer = transfer_material(hopper, mixer, rate, MIXER_CAPACITY)
 
     if SIGNALS['trough_transfer'].get_value():
         #Transfer dough from mixer to "trough"
-        trough.set_weight(mixer.get_weight())
-        mixer.set_weight(0)
+        trough = mixer
+        mixer = 0
         client.write_single_coil(SIGNALS['trough_transfer'].get_address(), False)
 
     if SIGNALS['trough_weight'].get_value() > 0 and SIGNALS['wirecutter'].get_value():
@@ -257,58 +278,179 @@ def runnable():
         cookie_count = 8.0
         cookie_weight = 0.3
         rate = ((wirecut_cpm * cookie_count * cookie_weight)/16.0)/SECONDS_PER_MIN
-        trough.set_weight(trough.get_weight() - rate)
+        trough -= rate
 
     if SIGNALS['gv_1'].get_value():
         temp_noise = random.uniform(0.0, 1.0)
         if SIGNALS['exhaust_fan'].get_value():
-            if temperature.get_weight() > -10.0:
-                temperature.set_weight(temperature.get_weight() - (FREEZING_RATE + temp_noise )) 
+            if temperature > -10.0:
+                temperature -= FREEZING_RATE + temp_noise
             else:
-                temperature.set_weight(-10.0 - temp_noise)
+                temperature = (-10.0 - temp_noise)
         elif not SIGNALS['exhaust_fan'].get_value():
-            if temperature.get_weight() > -15.0:
-                temperature.set_weight(temperature.get_weight() - (FREEZING_RATE + temp_noise )) 
+            if temperature > -140.0:
+                temperature -= FREEZING_RATE + temp_noise
             else:
-                temperature.set_weight(-15.0 - temp_noise)
+                temperature = (-140.0 - temp_noise)
         rate = 1365.0/3600.0
-        if nitrogen_tank.get_weight() < rate or nitrogen_tank.get_weight() < 0:
-            nitrogen_tank.set_weight(0)
+        if nitrogen_tank < rate or nitrogen_tank < 0:
+            nitrogen_tank = 0
         else:
-            nitrogen_tank.set_weight(nitrogen_tank.get_weight()-rate)
+            nitrogen_tank -= rate
     elif not SIGNALS['gv_1'].get_value():
         temp_noise = random.uniform(0.0, 0.1)
-        if temperature.get_weight() < 20.0:
-            temperature.set_weight(temperature.get_weight() + (WARMING_RATE + temp_noise )) 
+        if temperature < 20.0:
+            rate = WARMING_RATE
+            #Increase the warming rate based on how many circulating fans are on
+            for i in range(1, 4):
+                if SIGNALS[f'fan_{i}'].get_value():
+                    rate += WARMING_RATE
+            temperature += (rate + temp_noise)
         else:
-            temperature.set_weight(20.0 + temp_noise)
-            
+            temperature = (20.0 + temp_noise)
+    
+    #Move to openPLC
+    if SIGNALS['boxing'].get_value() and SIGNALS['box_maker'].get_value():
+        if box_counter >= 2:
+            box_counter = 0
+            client.write_single_coil(SIGNALS['boxing'].get_address(), False)
+        box_counter += 1
+
+    if SIGNALS['conveyor_1'].get_value():
+        if c1_counter >= 3:
+            c1_counter = 0
+            client.write_single_coil(SIGNALS['conveyor_1'].get_address(), False)
+            client.write_single_coil(SIGNALS['ps_1'].get_address(), True)
+        c1_counter += 1
+    
+    #Move to openPLC
+    if SIGNALS['ps_1'].get_value() and SIGNALS['bagger'].get_value():
+        if ps1_counter >= 1:
+            ps1_counter = 0
+            client.write_single_coil(SIGNALS['ps_1'].get_address(), False)
+        ps1_counter += 1
+    
+    if SIGNALS['conveyor_2'].get_value():
+        if c2_counter >= 3:
+            c1_counter = 0
+            client.write_single_coil(SIGNALS['conveyor_2'].get_address(), False)
+            client.write_single_coil(SIGNALS['ps_2'].get_address(), True)
+        c2_counter += 1
+
+    if SIGNALS['ps_2'].get_value():
+        if ps2_counter >= 4:
+            ps2_counter = 0
+            client.write_single_coil(SIGNALS['ps_2'].get_address(), False)
+            client.write_single_coil(SIGNALS['ps_3'].get_address(), True)
+        ps2_counter += 1
+    
+    if SIGNALS['conveyor_3'].get_value():
+        if c3_counter >= 3:
+            c3_counter = 0
+            client.write_single_coil(SIGNALS['conveyor_3'].get_address(), False)
+            client.write_single_coil(SIGNALS['ps_4'].get_address(), True)
+        c3_counter += 1
+    
+    if SIGNALS['ps_4'].get_value() and SIGNALS['taper'].get_value():
+        if ps4_counter >= 2:
+            ps4_counter = 0
+            client.write_single_coil(SIGNALS['ps_4'].get_address(), False)
+        ps4_counter += 1
+
+    if SIGNALS['conveyor_4'].get_value():
+        if c4_counter >= 3:
+            c4_counter = 0
+            client.write_single_coil(SIGNALS['conveyor_4'].get_address(), False)
+            client.write_single_coil(SIGNALS['ps_5'].get_address(), True)
+        c4_counter += 1
+    
+    #Move to openPLC
+    if SIGNALS['palletizer'].get_value():
+        if SIGNALS['ps_5'].get_value():
+            if SIGNALS['palletizer_position'].get_value() == 0:
+                if palletizer_counter >= 1:
+                    palletizer_counter = 0
+                    client.write_single_coil(SIGNALS['palletizer_position'].get_address(), 1)
+                    client.write_single_coil(SIGNALS['palletizer_grabbing'].get_address(), True)
+                    client.write_single_coil(SIGNALS['ps_5'].get_address(), False)
+                palletizer_counter += 1
+            if SIGNALS['palletizer_position'].get_value() == 2:
+                if palletizer_counter >= 2:
+                    palletizer_counter = 0
+                    client.write_single_coil(SIGNALS['palletizer_position'].get_address(), 1)
+                    client.write_single_coil(SIGNALS['palletizer_grabbing'].get_address(), True)
+                    client.write_single_coil(SIGNALS['ps_5'].get_address(), False)
+                palletizer_counter += 1
+        else:
+            if SIGNALS['palletizer_grabbing'].get_value():
+                if SIGNALS['palletizer_position'].get_value() == 2:
+                    if palletizer_counter >= 1:
+                        palletizer_counter = 0
+                        client.write_single_coil(SIGNALS['palletizer_grabbing'].get_address(), False)
+                        stack_counter += 1
+                    palletizer_counter += 1
+                if SIGNALS['palletizer_position'].get_value() == 1:
+                    if palletizer_counter >= 1:
+                        palletizer_counter = 0
+                        client.write_single_coil(SIGNALS['palletizer_position'].get_address(), 0)
+                    palletizer_counter += 1
+                if SIGNALS['palletizer_position'].get_value() == 0 and SIGNALS['wrapper_wrapping'].get_value() == False and SIGNALS['wrapper_conveyor'].get_value() == False:
+                    if palletizer_counter >= 1:
+                        palletizer_counter = 0
+                        client.write_single_coil(SIGNALS['palletizer_position'].get_address(), 2)
+                    palletizer_counter += 1
+            else:
+                if SIGNALS['palletizer_position'].get_value() == 1:
+                    if palletizer_counter >= 1:
+                        palletizer_counter = 0
+                        client.write_single_coil(SIGNALS['palletizer_position'].get_address(), 0)
+                    palletizer_counter += 1
+                if SIGNALS['palletizer_position'].get_value() == 2:
+                    if palletizer_counter >= 1:
+                        palletizer_counter = 0
+                        client.write_single_coil(SIGNALS['palletizer_position'].get_address(), 0)
+                    palletizer_counter += 1
+    
+    #Move to openPLC
+    if SIGNALS['wrapper_wrapping'].get_value():
+        if wrapper_counter >= 3:
+            wrapper_counter = 0
+            client.write_single_coil(SIGNALS['wrapper_wrapping'].get_address(), False)
+            client.write_single_coil(SIGNALS['wrapper_conveyor'].get_address(), True)
+        wrapper_counter += 1
+    
+    if SIGNALS['wrapper_conveyor'].get_value():
+        if wrapper_counter >= 1:
+            wrapper_counter = 0
+            client.write_single_coil(SIGNALS['wrapper_conveyor'].get_address(), False)
+            client.write_single_coil(SIGNALS['ps_6'].get_address(), True)
+        wrapper_counter += 1
 
     # Write all relevant signals to master device
     # Flour/Sugar load cells
-    lcf_weight = flourSilo.get_weight()/4.0
-    lcs_weight = sugarSilo.get_weight()/4.0
+    lcf_weight = flourSilo/4.0
+    lcs_weight = sugarSilo/4.0
     for i in range(1, 5):
         client.write_float(SIGNALS[f'lcf_{i}'].get_address(), lcf_weight)
         client.write_float(SIGNALS[f'lcs_{i}'].get_address(), lcs_weight)
     # Hopper load cell
-    lch_weight = hopper.get_weight()/1.0
+    lch_weight = hopper/1.0
     client.write_float(SIGNALS['lch'].get_address(), lch_weight)
 
     # Mixer load cell
-    lcm_weight = mixer.get_weight()/1.0
+    lcm_weight = mixer/1.0
     client.write_float(SIGNALS['lcm'].get_address(), lcm_weight)
 
     # Trough weight
-    trough_weight = trough.get_weight()/1.0
+    trough_weight = trough/1.0
     client.write_float(SIGNALS['trough_weight'].get_address(), trough_weight)
 
     # Nitrogen volume
-    nitrogen = nitrogen_tank.get_weight()/1.0
+    nitrogen = nitrogen_tank/1.0
     client.write_float(SIGNALS['nitrogen_volume'].get_address(), nitrogen)
     
     # Temperature
-    temp = temperature.get_weight()/1.0
+    temp = temperature/1.0
     client.write_float(SIGNALS['tunnel_temp'].get_address(), temp)
     client.close()
     time.sleep(1)

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2025-02-05T12:34:47"/>
-  <contentHeader name="CookiePLC" modificationDateTime="2025-06-02T14:36:27">
+  <contentHeader name="CookiePLC" modificationDateTime="2025-07-17T12:14:54">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -17,6 +17,149 @@
   <types>
     <dataTypes/>
     <pous>
+      <pou name="mixer_rpm_function" pouType="functionBlock">
+        <interface>
+          <outputVars>
+            <variable name="output_rpm">
+              <type>
+                <WORD/>
+              </type>
+            </variable>
+          </outputVars>
+          <inputVars>
+            <variable name="valve_status">
+              <type>
+                <BOOL/>
+              </type>
+            </variable>
+            <variable name="hopper_weight">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
+            <variable name="mixer_status">
+              <type>
+                <BOOL/>
+              </type>
+            </variable>
+          </inputVars>
+          <localVars>
+            <variable name="noise">
+              <type>
+                <INT/>
+              </type>
+            </variable>
+          </localVars>
+          <inOutVars>
+            <variable name="counter">
+              <type>
+                <INT/>
+              </type>
+            </variable>
+          </inOutVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml:p><![CDATA[counter := counter + 1;
+IF counter > 10000 THEN
+  counter := 0;
+END_IF;
+
+noise := counter MOD 2;
+
+IF hopper_weight = 0.0 AND mixer_status = 1 THEN
+  output_rpm := INT_TO_WORD(70 + noise);
+ELSIF hopper_weight > 0.0 AND mixer_status = 1 AND valve_status = 1 THEN
+  output_rpm := INT_TO_WORD(35 + noise);
+ELSE
+  output_rpm := INT_TO_WORD(0);
+END_IF;]]></xhtml:p>
+          </ST>
+        </body>
+      </pou>
+      <pou name="vacuum_rpm_function" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="input_rpm">
+              <type>
+                <WORD/>
+              </type>
+            </variable>
+            <variable name="vacuum_status">
+              <type>
+                <BOOL/>
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="output_rpm">
+              <type>
+                <WORD/>
+              </type>
+            </variable>
+          </outputVars>
+          <inputVars>
+            <variable name="max_rpm">
+              <type>
+                <WORD/>
+              </type>
+            </variable>
+            <variable name="manual">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="0"/>
+              </initialValue>
+            </variable>
+            <variable name="dv">
+              <type>
+                <BOOL/>
+              </type>
+            </variable>
+          </inputVars>
+          <localVars>
+            <variable name="noise">
+              <type>
+                <INT/>
+              </type>
+            </variable>
+          </localVars>
+          <inOutVars>
+            <variable name="counter">
+              <type>
+                <INT/>
+              </type>
+            </variable>
+          </inOutVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml:p><![CDATA[counter := counter + 1;
+IF counter > 10000 THEN
+  counter := 0;
+END_IF;
+
+noise := counter MOD 5;
+
+IF NOT vacuum_status THEN
+  output_rpm := 0;
+ELSIF input_rpm > max_rpm THEN
+  output_rpm := INT_TO_WORD(WORD_TO_INT(max_rpm) + noise);
+ELSIF dv = 1 AND manual = 0 THEN
+  output_rpm := INT_TO_WORD(1380 + noise);
+ELSIF dv = 0 AND manual = 0 THEN
+  output_rpm := INT_TO_WORD(1980 + noise);
+ELSE
+  IF (counter MOD 2) = 1 THEN
+    output_rpm := INT_TO_WORD(WORD_TO_INT(input_rpm) + noise);
+  ELSE
+    output_rpm := INT_TO_WORD(WORD_TO_INT(input_rpm) - noise);
+    END_IF;
+END_IF;]]></xhtml:p>
+          </ST>
+        </body>
+      </pou>
       <pou name="real_to_words" pouType="functionBlock">
         <interface>
           <inputVars>
@@ -80,7 +223,6 @@
         <body>
           <ST>
             <xhtml:p><![CDATA[{
-
     IEC_WORD var_in[2];
 
     IEC_REAL var_out;
@@ -92,9 +234,6 @@
     memcpy(&var_out, var_in, sizeof(var_out));
 
     SetFbVar(RESULT, var_out);
-
-
-
 }]]></xhtml:p>
           </ST>
         </body>
@@ -235,7 +374,7 @@
                 <WORD/>
               </type>
               <documentation>
-                <xhtml:p><![CDATA[Load cell for hopper (lower integer)]]></xhtml:p>
+                <xhtml:p><![CDATA[Load cell for hopper (higher integer)]]></xhtml:p>
               </documentation>
             </variable>
             <variable name="lch_low" address="%QW98">
@@ -243,18 +382,39 @@
                 <WORD/>
               </type>
               <documentation>
-                <xhtml:p><![CDATA[Load cell for hopper (higher integer)]]></xhtml:p>
+                <xhtml:p><![CDATA[Load cell for hopper (lower integer)]]></xhtml:p>
               </documentation>
             </variable>
-            <variable name="vacuum_freq" address="%QW1000">
+            <variable name="lcm_high" address="%QW97">
               <type>
                 <WORD/>
               </type>
-              <initialValue>
-                <simpleValue value="0"/>
-              </initialValue>
               <documentation>
-                <xhtml:p><![CDATA[Vacuum frequency]]></xhtml:p>
+                <xhtml:p><![CDATA[Load cell for mixer (higher integer)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="lcm_low" address="%QW96">
+              <type>
+                <WORD/>
+              </type>
+              <documentation>
+                <xhtml:p><![CDATA[Load cell for mixer (lower integer)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="trough_weight_high" address="%QW95">
+              <type>
+                <WORD/>
+              </type>
+              <documentation>
+                <xhtml:p><![CDATA[Weight for trough (higher integer)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="trough_weight_low" address="%QW94">
+              <type>
+                <WORD/>
+              </type>
+              <documentation>
+                <xhtml:p><![CDATA[Weight for trough (lower integer)]]></xhtml:p>
               </documentation>
             </variable>
             <variable name="vacuum_rpm" address="%QW1001">
@@ -265,7 +425,15 @@
                 <xhtml:p><![CDATA[Vacuum RPM]]></xhtml:p>
               </documentation>
             </variable>
-            <variable name="mixer_freq" address="%QW1002">
+            <variable name="mixer_rpm" address="%QW1003">
+              <type>
+                <WORD/>
+              </type>
+              <documentation>
+                <xhtml:p><![CDATA[Mixer RPM]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="wirecut_cpm" address="%QW1006">
               <type>
                 <WORD/>
               </type>
@@ -273,15 +441,45 @@
                 <simpleValue value="0"/>
               </initialValue>
               <documentation>
-                <xhtml:p><![CDATA[Mixer frequency (Not implemented)]]></xhtml:p>
+                <xhtml:p><![CDATA[Wirecut cuts per minute]]></xhtml:p>
               </documentation>
             </variable>
-            <variable name="mixer_rpm" address="%QW1003">
+            <variable name="papercut_cpm" address="%QW1009">
               <type>
                 <WORD/>
               </type>
               <documentation>
-                <xhtml:p><![CDATA[Mixer RPM (Not implemented)]]></xhtml:p>
+                <xhtml:p><![CDATA[Papercutter cuts per minute]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="conveyor_fpm" address="%MD13">
+              <type>
+                <REAL/>
+              </type>
+              <documentation>
+                <xhtml:p><![CDATA[Conveyor feet per minute]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="conveyor_fpm_high" address="%QW121">
+              <type>
+                <WORD/>
+              </type>
+              <initialValue>
+                <simpleValue value="0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Conveyor feet per minute (high integer)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="conveyor_fpm_low" address="%QW120">
+              <type>
+                <WORD/>
+              </type>
+              <initialValue>
+                <simpleValue value="0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Conveyor feet per minute (low integer)]]></xhtml:p>
               </documentation>
             </variable>
             <variable name="lcs_1" address="%MD0">
@@ -359,6 +557,28 @@
                 <xhtml:p><![CDATA[Load cell for hopper (combined float)]]></xhtml:p>
               </documentation>
             </variable>
+            <variable name="lcm" address="%MD11">
+              <type>
+                <REAL/>
+              </type>
+              <initialValue>
+                <simpleValue value="0.0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Load cell for mixer (combined float)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="trough_weight" address="%MD12">
+              <type>
+                <REAL/>
+              </type>
+              <initialValue>
+                <simpleValue value="0.0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Trough weight (combined float)]]></xhtml:p>
+              </documentation>
+            </variable>
             <variable name="flour_weight" address="%MD9">
               <type>
                 <REAL/>
@@ -413,6 +633,66 @@
                 <xhtml:p><![CDATA[Sugar weight (lower integer)]]></xhtml:p>
               </documentation>
             </variable>
+            <variable name="tunnel_temp" address="%MD15">
+              <type>
+                <REAL/>
+              </type>
+              <documentation>
+                <xhtml:p><![CDATA[Tunnel temperature]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="tunnel_temp_high" address="%QW303">
+              <type>
+                <WORD/>
+              </type>
+              <initialValue>
+                <simpleValue value="0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Tunnel temperature (higher integer)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="tunnel_temp_low" address="%QW302">
+              <type>
+                <WORD/>
+              </type>
+              <initialValue>
+                <simpleValue value="0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Tunnel temperature (lower integer)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="nitrogen_volume" address="%MD14">
+              <type>
+                <REAL/>
+              </type>
+              <documentation>
+                <xhtml:p><![CDATA[Volume of nitrogen]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="nitrogen_volume_high" address="%QW301">
+              <type>
+                <WORD/>
+              </type>
+              <initialValue>
+                <simpleValue value="0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Volume of nitrogen (higher integer)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="nitrogen_volume_low" address="%QW300">
+              <type>
+                <WORD/>
+              </type>
+              <initialValue>
+                <simpleValue value="0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Volume of nitrogen (lower integer)]]></xhtml:p>
+              </documentation>
+            </variable>
             <variable name="rv_1" address="%QX87.4">
               <type>
                 <BOOL/>
@@ -458,7 +738,7 @@
                 <BOOL/>
               </type>
               <documentation>
-                <xhtml:p><![CDATA[Mixer on state (Not implemented)]]></xhtml:p>
+                <xhtml:p><![CDATA[Mixer on state]]></xhtml:p>
               </documentation>
             </variable>
             <variable name="flour_alarm" address="%QX88.2">
@@ -516,12 +796,122 @@
                 <xhtml:p><![CDATA[Vacuum manual control state]]></xhtml:p>
               </documentation>
             </variable>
-            <variable name="CFM" address="%MD11">
+            <variable name="wirecutter" address="%QX88.7">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Wirecutter on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="trough_transfer" address="%QX89.1">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Trough transfer state ]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="conveyor" address="%QX89.4">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Conveyor on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="paper_cutter" address="%QX89.5">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Papercutter on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="gv_1" address="%QX89.6">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Gate valve 1 (nitrogen)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="fan_1" address="%QX89.7">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Fan 1 (nitrogen tunnel)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="fan_2" address="%QX90.0">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Fan 2 (nitrogen tunnel)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="fan_3" address="%QX90.1">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Fan 3 (nitrogen tunnel)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="exhaust_fan" address="%QX90.2">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Exhaust fan (nitrogen tunnel)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="CFM" address="%MD20">
               <type>
                 <REAL/>
               </type>
               <documentation>
                 <xhtml:p><![CDATA[Calculated cubic feet per minute of material]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="reset" address="%QX125.0">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Restart option for simulation]]></xhtml:p>
               </documentation>
             </variable>
           </localVars>
@@ -591,11 +981,6 @@
                 <derived name="vacuum_alarm_rpm"/>
               </type>
             </variable>
-            <variable name="freq_function0">
-              <type>
-                <derived name="freq_function"/>
-              </type>
-            </variable>
             <variable name="real_to_words0">
               <type>
                 <derived name="real_to_words"/>
@@ -606,19 +991,368 @@
                 <derived name="real_to_words"/>
               </type>
             </variable>
+            <variable name="vacuum_max_rpm">
+              <type>
+                <WORD/>
+              </type>
+              <initialValue>
+                <simpleValue value="3600"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Max rpm of vacuum]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="mixer_max_rpm">
+              <type>
+                <WORD/>
+              </type>
+              <initialValue>
+                <simpleValue value="80"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Max rpm of mixer]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="mixer_rpm_function0">
+              <type>
+                <derived name="mixer_rpm_function"/>
+              </type>
+            </variable>
+            <variable name="vacuum_rpm_function0">
+              <type>
+                <derived name="vacuum_rpm_function"/>
+              </type>
+            </variable>
+            <variable name="cookie_diameter">
+              <type>
+                <REAL/>
+              </type>
+              <initialValue>
+                <simpleValue value="1.5"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Diameter of individual cookies (in)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="cookie_margin">
+              <type>
+                <REAL/>
+              </type>
+              <initialValue>
+                <simpleValue value="0.5"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Margin between cookies on paper (in)]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="papercutter_cpm_function0">
+              <type>
+                <derived name="papercutter_cpm_function"/>
+              </type>
+            </variable>
+            <variable name="conveyor_fpm_function0">
+              <type>
+                <derived name="conveyor_fpm_function"/>
+              </type>
+            </variable>
+            <variable name="words_to_real9">
+              <type>
+                <derived name="words_to_real"/>
+              </type>
+            </variable>
+            <variable name="words_to_real10">
+              <type>
+                <derived name="words_to_real"/>
+              </type>
+            </variable>
+            <variable name="real_to_words2">
+              <type>
+                <derived name="real_to_words"/>
+              </type>
+            </variable>
+            <variable name="wirecut_cpm_function0">
+              <type>
+                <derived name="wirecut_cpm_function"/>
+              </type>
+            </variable>
+            <variable name="words_to_real11">
+              <type>
+                <derived name="words_to_real"/>
+              </type>
+            </variable>
+            <variable name="words_to_real12">
+              <type>
+                <derived name="words_to_real"/>
+              </type>
+            </variable>
+          </localVars>
+          <localVars>
+            <variable name="box_maker" address="%QX90.3">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Box maker on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="taper" address="%QX90.4">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Taper on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="labeler" address="%QX90.5">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Labeler on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="palletizer" address="%QX90.6">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Palletizer on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="palletizer_grabbing" address="%QX90.7">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Palletizer grabbing state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="wrapper" address="%QX91.0">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Wrapper on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="wrapper_conveyor" address="%QX91.1">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Wrapper conveyor on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="conveyor_1" address="%QX91.2">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Conveyor 1 on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="conveyor_2" address="%QX91.3">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Conveyor 2 on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="conveyor_3" address="%QX91.4">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Conveyor 3 on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="conveyor_4" address="%QX91.5">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Conveyor 4 on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="conveyor_5" address="%QX91.6">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Conveyor 5 on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="ps_1" address="%QX91.7">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Photoelectric sensor 1]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="ps_2" address="%QX92.0">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Photoelectric sensor 2]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="ps_3" address="%QX92.1">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Photoelectric sensor 3]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="ps_4" address="%QX92.2">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Photoelectric sensor 4]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="ps_5" address="%QX92.3">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Photoelectric sensor 5]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="ps_6" address="%QX92.4">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Photoelectric sensor 6]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="bagger" address="%QX92.5">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Bagger on state]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="palletizer_position" address="%QW1012">
+              <type>
+                <WORD/>
+              </type>
+              <initialValue>
+                <simpleValue value="0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Palletizer arm position 0, 1, or 2]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="box_count" address="%QW1013">
+              <type>
+                <WORD/>
+              </type>
+              <initialValue>
+                <simpleValue value="0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Number of boxes on the wrapper]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="wrapper_wrapping" address="%QX92.6">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[True if the wrapper is currently wrapping]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="box_maker_boxing" address="%QX92.7">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[True if the boxer is currently boxing]]></xhtml:p>
+              </documentation>
+            </variable>
           </localVars>
         </interface>
         <body>
           <LD>
             <inVariable localId="2" width="90" height="30" negated="false">
-              <position x="20" y="50"/>
+              <position x="20" y="40"/>
               <connectionPointOut>
                 <relPosition x="90" y="10"/>
               </connectionPointOut>
               <expression>lcf_1_high</expression>
             </inVariable>
             <inVariable localId="3" width="90" height="30" negated="false" executionOrderId="0">
-              <position x="20" y="80"/>
+              <position x="20" y="90"/>
               <connectionPointOut>
                 <relPosition x="90" y="20"/>
               </connectionPointOut>
@@ -633,8 +1367,8 @@
                     <connection refLocalId="2">
                       <position x="150" y="70"/>
                       <position x="130" y="70"/>
-                      <position x="130" y="60"/>
-                      <position x="110" y="60"/>
+                      <position x="130" y="50"/>
+                      <position x="110" y="50"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -644,8 +1378,8 @@
                     <connection refLocalId="3">
                       <position x="150" y="90"/>
                       <position x="130" y="90"/>
-                      <position x="130" y="100"/>
-                      <position x="110" y="100"/>
+                      <position x="130" y="110"/>
+                      <position x="110" y="110"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1425,13 +2159,13 @@
               <expression>flour_alarm</expression>
             </outVariable>
             <block localId="47" typeName="sugar_alarm_check" instanceName="sugar_alarm_check0" width="160" height="40">
-              <position x="810" y="490"/>
+              <position x="800" y="490"/>
               <inputVariables>
                 <variable formalParameter="Sugar_weight">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="44">
-                      <position x="810" y="520"/>
+                      <position x="800" y="520"/>
                       <position x="770" y="520"/>
                     </connection>
                   </connectionPointIn>
@@ -1460,17 +2194,6 @@
               </connectionPointOut>
               <expression>sugar_weight</expression>
             </inOutVariable>
-            <outVariable localId="48" width="100" height="30" negated="false">
-              <position x="1000" y="500"/>
-              <connectionPointIn>
-                <relPosition x="0" y="20"/>
-                <connection refLocalId="47" formalParameter="Alarm">
-                  <position x="1000" y="520"/>
-                  <position x="970" y="520"/>
-                </connection>
-              </connectionPointIn>
-              <expression>sugar_alarm</expression>
-            </outVariable>
             <block localId="49" typeName="hopper_alarm_check" instanceName="hopper_alarm_check0" width="160" height="40">
               <position x="1140" y="30"/>
               <inputVariables>
@@ -1479,9 +2202,7 @@
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="34">
                       <position x="1140" y="60"/>
-                      <position x="1130" y="60"/>
-                      <position x="1130" y="60"/>
-                      <position x="1120" y="60"/>
+                      <position x="1110" y="60"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1496,11 +2217,11 @@
               </outputVariables>
             </block>
             <inOutVariable localId="34" width="50" height="30" negatedOut="false" negatedIn="false">
-              <position x="1070" y="50"/>
+              <position x="1060" y="50"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="36" formalParameter="Result">
-                  <position x="1070" y="60"/>
+                  <position x="1060" y="60"/>
                   <position x="1020" y="60"/>
                 </connection>
               </connectionPointIn>
@@ -1603,84 +2324,6 @@
                 </connection>
               </connectionPointIn>
               <expression>CFM</expression>
-            </outVariable>
-            <block localId="56" typeName="freq_function" instanceName="freq_function0" width="190" height="80">
-              <position x="770" y="580"/>
-              <inputVariables>
-                <variable formalParameter="input_freq">
-                  <connectionPointIn>
-                    <relPosition x="0" y="30"/>
-                    <connection refLocalId="60">
-                      <position x="770" y="610"/>
-                      <position x="750" y="610"/>
-                      <position x="750" y="600"/>
-                      <position x="720" y="600"/>
-                    </connection>
-                  </connectionPointIn>
-                </variable>
-                <variable formalParameter="manual">
-                  <connectionPointIn>
-                    <relPosition x="0" y="50"/>
-                    <connection refLocalId="57">
-                      <position x="770" y="630"/>
-                      <position x="690" y="630"/>
-                    </connection>
-                  </connectionPointIn>
-                </variable>
-                <variable formalParameter="dv">
-                  <connectionPointIn>
-                    <relPosition x="0" y="70"/>
-                    <connection refLocalId="58">
-                      <position x="770" y="650"/>
-                      <position x="740" y="650"/>
-                      <position x="740" y="670"/>
-                      <position x="660" y="670"/>
-                    </connection>
-                  </connectionPointIn>
-                </variable>
-              </inputVariables>
-              <inOutVariables/>
-              <outputVariables>
-                <variable formalParameter="output_freq">
-                  <connectionPointOut>
-                    <relPosition x="190" y="30"/>
-                  </connectionPointOut>
-                </variable>
-              </outputVariables>
-            </block>
-            <inVariable localId="57" width="120" height="30" negated="false">
-              <position x="570" y="610"/>
-              <connectionPointOut>
-                <relPosition x="120" y="20"/>
-              </connectionPointOut>
-              <expression>vacuum_manual</expression>
-            </inVariable>
-            <inVariable localId="58" width="30" height="30" negated="false">
-              <position x="630" y="650"/>
-              <connectionPointOut>
-                <relPosition x="30" y="20"/>
-              </connectionPointOut>
-              <expression>dv</expression>
-            </inVariable>
-            <inVariable localId="60" width="100" height="30" negated="false">
-              <position x="620" y="580"/>
-              <connectionPointOut>
-                <relPosition x="100" y="20"/>
-              </connectionPointOut>
-              <expression>vacuum_freq</expression>
-            </inVariable>
-            <outVariable localId="61" width="100" height="30" negated="false">
-              <position x="990" y="590"/>
-              <connectionPointIn>
-                <relPosition x="0" y="10"/>
-                <connection refLocalId="56" formalParameter="output_freq">
-                  <position x="990" y="600"/>
-                  <position x="975" y="600"/>
-                  <position x="975" y="610"/>
-                  <position x="960" y="610"/>
-                </connection>
-              </connectionPointIn>
-              <expression>vacuum_freq</expression>
             </outVariable>
             <inVariable localId="62" width="110" height="30" negated="false">
               <position x="980" y="230"/>
@@ -1806,6 +2449,1507 @@
               </connectionPointIn>
               <expression>sugar_weight_low</expression>
             </outVariable>
+            <outVariable localId="70" width="100" height="30" negated="false">
+              <position x="990" y="500"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="47" formalParameter="Alarm">
+                  <position x="990" y="520"/>
+                  <position x="960" y="520"/>
+                </connection>
+              </connectionPointIn>
+              <expression>sugar_alarm</expression>
+            </outVariable>
+            <block localId="48" typeName="mixer_rpm_function" instanceName="mixer_rpm_function0" width="200" height="100" executionOrderId="0">
+              <position x="1270" y="470"/>
+              <inputVariables>
+                <variable formalParameter="valve_status">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="64">
+                      <position x="1270" y="500"/>
+                      <position x="1250" y="500"/>
+                      <position x="1250" y="480"/>
+                      <position x="1230" y="480"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="hopper_weight">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="56">
+                      <position x="1270" y="520"/>
+                      <position x="1230" y="520"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="mixer_status">
+                  <connectionPointIn>
+                    <relPosition x="0" y="70"/>
+                    <connection refLocalId="71">
+                      <position x="1270" y="540"/>
+                      <position x="1250" y="540"/>
+                      <position x="1250" y="560"/>
+                      <position x="1230" y="560"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="counter">
+                  <connectionPointIn>
+                    <relPosition x="0" y="90"/>
+                    <connection refLocalId="48" formalParameter="counter">
+                      <position x="1270" y="560"/>
+                      <position x="1260" y="560"/>
+                      <position x="1260" y="600"/>
+                      <position x="1480" y="600"/>
+                      <position x="1480" y="520"/>
+                      <position x="1470" y="520"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="output_rpm">
+                  <connectionPointOut>
+                    <relPosition x="200" y="30"/>
+                  </connectionPointOut>
+                </variable>
+                <variable formalParameter="counter">
+                  <connectionPointOut>
+                    <relPosition x="200" y="50"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <inVariable localId="64" width="50" height="30" negated="false" executionOrderId="0">
+              <position x="1180" y="460"/>
+              <connectionPointOut>
+                <relPosition x="50" y="20"/>
+              </connectionPointOut>
+              <expression>rv_3</expression>
+            </inVariable>
+            <inVariable localId="56" width="40" height="30" negated="false" executionOrderId="0">
+              <position x="1190" y="500"/>
+              <connectionPointOut>
+                <relPosition x="40" y="20"/>
+              </connectionPointOut>
+              <expression>lch</expression>
+            </inVariable>
+            <inVariable localId="71" width="50" height="30" negated="false" executionOrderId="0">
+              <position x="1180" y="540"/>
+              <connectionPointOut>
+                <relPosition x="50" y="20"/>
+              </connectionPointOut>
+              <expression>mixer</expression>
+            </inVariable>
+            <outVariable localId="72" width="90" height="30" negated="false" executionOrderId="0">
+              <position x="1500" y="490"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="48" formalParameter="output_rpm">
+                  <position x="1500" y="500"/>
+                  <position x="1470" y="500"/>
+                </connection>
+              </connectionPointIn>
+              <expression>mixer_rpm</expression>
+            </outVariable>
+            <inVariable localId="73" width="90" height="30" negated="false" executionOrderId="0">
+              <position x="590" y="580"/>
+              <connectionPointOut>
+                <relPosition x="90" y="10"/>
+              </connectionPointOut>
+              <expression>vacuum_rpm</expression>
+            </inVariable>
+            <inVariable localId="60" width="130" height="30" negated="false" executionOrderId="0">
+              <position x="580" y="660"/>
+              <connectionPointOut>
+                <relPosition x="130" y="20"/>
+              </connectionPointOut>
+              <expression>vacuum_max_rpm</expression>
+            </inVariable>
+            <block localId="74" typeName="vacuum_rpm_function" instanceName="vacuum_rpm_function0" width="199" height="140" executionOrderId="0">
+              <position x="870" y="590"/>
+              <inputVariables>
+                <variable formalParameter="input_rpm">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="73">
+                      <position x="870" y="620"/>
+                      <position x="840" y="620"/>
+                      <position x="840" y="600"/>
+                      <position x="680" y="600"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="vacuum_status">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="75">
+                      <position x="870" y="640"/>
+                      <position x="670" y="640"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="max_rpm">
+                  <connectionPointIn>
+                    <relPosition x="0" y="70"/>
+                    <connection refLocalId="60">
+                      <position x="870" y="660"/>
+                      <position x="780" y="660"/>
+                      <position x="780" y="680"/>
+                      <position x="710" y="680"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="manual">
+                  <connectionPointIn>
+                    <relPosition x="0" y="90"/>
+                    <connection refLocalId="57">
+                      <position x="870" y="680"/>
+                      <position x="800" y="680"/>
+                      <position x="800" y="720"/>
+                      <position x="700" y="720"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="dv">
+                  <connectionPointIn>
+                    <relPosition x="0" y="110"/>
+                    <connection refLocalId="58">
+                      <position x="870" y="700"/>
+                      <position x="835" y="700"/>
+                      <position x="835" y="760"/>
+                      <position x="670" y="760"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="counter">
+                  <connectionPointIn>
+                    <relPosition x="0" y="130"/>
+                    <connection refLocalId="74" formalParameter="counter">
+                      <position x="870" y="720"/>
+                      <position x="860" y="720"/>
+                      <position x="860" y="760"/>
+                      <position x="1079" y="760"/>
+                      <position x="1079" y="640"/>
+                      <position x="1069" y="640"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="output_rpm">
+                  <connectionPointOut>
+                    <relPosition x="199" y="30"/>
+                  </connectionPointOut>
+                </variable>
+                <variable formalParameter="counter">
+                  <connectionPointOut>
+                    <relPosition x="199" y="50"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <outVariable localId="61" width="90" height="30" negated="false" executionOrderId="0">
+              <position x="1100" y="600"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="74" formalParameter="output_rpm">
+                  <position x="1100" y="620"/>
+                  <position x="1040" y="620"/>
+                </connection>
+              </connectionPointIn>
+              <expression>vacuum_rpm</expression>
+            </outVariable>
+            <inVariable localId="57" width="120" height="30" negated="false" executionOrderId="0">
+              <position x="580" y="700"/>
+              <connectionPointOut>
+                <relPosition x="120" y="10"/>
+              </connectionPointOut>
+              <expression>vacuum_manual</expression>
+            </inVariable>
+            <inVariable localId="58" width="30" height="30" negated="false" executionOrderId="0">
+              <position x="640" y="740"/>
+              <connectionPointOut>
+                <relPosition x="30" y="20"/>
+              </connectionPointOut>
+              <expression>dv</expression>
+            </inVariable>
+            <inVariable localId="75" width="60" height="30" negated="false">
+              <position x="610" y="620"/>
+              <connectionPointOut>
+                <relPosition x="60" y="20"/>
+              </connectionPointOut>
+              <expression>vacuum</expression>
+            </inVariable>
+            <block localId="79" typeName="papercutter_cpm_function" instanceName="papercutter_cpm_function0" width="240" height="100">
+              <position x="1450" y="750"/>
+              <inputVariables>
+                <variable formalParameter="paper_cutter">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="104">
+                      <position x="1450" y="780"/>
+                      <position x="1410" y="780"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="cookie_diameter">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="82">
+                      <position x="1450" y="800"/>
+                      <position x="1240" y="800"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="cookie_margin">
+                  <connectionPointIn>
+                    <relPosition x="0" y="70"/>
+                    <connection refLocalId="85">
+                      <position x="1450" y="820"/>
+                      <position x="1365" y="820"/>
+                      <position x="1365" y="840"/>
+                      <position x="1250" y="840"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="conveyor_fpm">
+                  <connectionPointIn>
+                    <relPosition x="0" y="90"/>
+                    <connection refLocalId="95">
+                      <position x="1450" y="840"/>
+                      <position x="1440" y="840"/>
+                      <position x="1440" y="870"/>
+                      <position x="1520" y="870"/>
+                      <position x="1520" y="900"/>
+                      <position x="1500" y="900"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="papercut_cpm">
+                  <connectionPointOut>
+                    <relPosition x="240" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <block localId="80" typeName="conveyor_fpm_function" instanceName="conveyor_fpm_function0" width="240" height="100">
+              <position x="1120" y="870"/>
+              <inputVariables>
+                <variable formalParameter="wirecut_cpm">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="81">
+                      <position x="1120" y="900"/>
+                      <position x="1090" y="900"/>
+                      <position x="1090" y="880"/>
+                      <position x="1060" y="880"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="cookie_margin">
+                  <connectionPointIn>
+                    <relPosition x="0" y="60"/>
+                    <connection refLocalId="84">
+                      <position x="1120" y="930"/>
+                      <position x="1030" y="930"/>
+                      <position x="1030" y="920"/>
+                      <position x="940" y="920"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="cookie_diameter">
+                  <connectionPointIn>
+                    <relPosition x="0" y="90"/>
+                    <connection refLocalId="83">
+                      <position x="1120" y="960"/>
+                      <position x="1000" y="960"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="conveyor_fpm">
+                  <connectionPointOut>
+                    <relPosition x="240" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <inVariable localId="81" width="100" height="30" negated="false" executionOrderId="0">
+              <position x="960" y="870"/>
+              <connectionPointOut>
+                <relPosition x="100" y="10"/>
+              </connectionPointOut>
+              <expression>wirecut_cpm</expression>
+            </inVariable>
+            <inVariable localId="82" width="130" height="30" negated="false">
+              <position x="1110" y="780"/>
+              <connectionPointOut>
+                <relPosition x="130" y="20"/>
+              </connectionPointOut>
+              <expression>cookie_diameter</expression>
+            </inVariable>
+            <inVariable localId="83" width="130" height="30" negated="false" executionOrderId="0">
+              <position x="870" y="950"/>
+              <connectionPointOut>
+                <relPosition x="130" y="10"/>
+              </connectionPointOut>
+              <expression>cookie_diameter</expression>
+            </inVariable>
+            <inVariable localId="84" width="120" height="30" negated="false">
+              <position x="820" y="910"/>
+              <connectionPointOut>
+                <relPosition x="120" y="20"/>
+              </connectionPointOut>
+              <expression>cookie_margin</expression>
+            </inVariable>
+            <inVariable localId="85" width="120" height="30" negated="false" executionOrderId="0">
+              <position x="1130" y="820"/>
+              <connectionPointOut>
+                <relPosition x="120" y="10"/>
+              </connectionPointOut>
+              <expression>cookie_margin</expression>
+            </inVariable>
+            <inVariable localId="88" width="160" height="30" negated="false">
+              <position x="20" y="730"/>
+              <connectionPointOut>
+                <relPosition x="160" y="10"/>
+              </connectionPointOut>
+              <expression>trough_weight_high</expression>
+            </inVariable>
+            <inVariable localId="89" width="150" height="30" negated="false">
+              <position x="20" y="770"/>
+              <connectionPointOut>
+                <relPosition x="150" y="10"/>
+              </connectionPointOut>
+              <expression>trough_weight_low</expression>
+            </inVariable>
+            <inVariable localId="90" width="70" height="30" negated="false">
+              <position x="20" y="870"/>
+              <connectionPointOut>
+                <relPosition x="70" y="10"/>
+              </connectionPointOut>
+              <expression>lcm_low</expression>
+            </inVariable>
+            <inVariable localId="91" width="80" height="30" negated="false">
+              <position x="20" y="830"/>
+              <connectionPointOut>
+                <relPosition x="80" y="10"/>
+              </connectionPointOut>
+              <expression>lcm_high</expression>
+            </inVariable>
+            <block localId="92" typeName="words_to_real" instanceName="words_to_real9" width="120" height="60">
+              <position x="220" y="730"/>
+              <inputVariables>
+                <variable formalParameter="High">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="88">
+                      <position x="220" y="760"/>
+                      <position x="200" y="760"/>
+                      <position x="200" y="740"/>
+                      <position x="180" y="740"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="Low">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="89">
+                      <position x="220" y="780"/>
+                      <position x="170" y="780"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="Result">
+                  <connectionPointOut>
+                    <relPosition x="120" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <block localId="87" typeName="words_to_real" instanceName="words_to_real10" width="120" height="60" executionOrderId="0">
+              <position x="150" y="820"/>
+              <inputVariables>
+                <variable formalParameter="High">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="91">
+                      <position x="150" y="850"/>
+                      <position x="125" y="850"/>
+                      <position x="125" y="840"/>
+                      <position x="100" y="840"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="Low">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="90">
+                      <position x="150" y="870"/>
+                      <position x="120" y="870"/>
+                      <position x="120" y="880"/>
+                      <position x="90" y="880"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="Result">
+                  <connectionPointOut>
+                    <relPosition x="120" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <outVariable localId="93" width="120" height="30" negated="false">
+              <position x="370" y="750"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="92" formalParameter="Result">
+                  <position x="370" y="760"/>
+                  <position x="340" y="760"/>
+                </connection>
+              </connectionPointIn>
+              <expression>trough_weight</expression>
+            </outVariable>
+            <outVariable localId="94" width="40" height="30" negated="false">
+              <position x="320" y="830"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="87" formalParameter="Result">
+                  <position x="320" y="850"/>
+                  <position x="270" y="850"/>
+                </connection>
+              </connectionPointIn>
+              <expression>lcm</expression>
+            </outVariable>
+            <outVariable localId="86" width="140" height="30" negated="false">
+              <position x="1740" y="760"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="79" formalParameter="papercut_cpm">
+                  <position x="1740" y="780"/>
+                  <position x="1690" y="780"/>
+                </connection>
+              </connectionPointIn>
+              <expression>papercut_cpm</expression>
+            </outVariable>
+            <inOutVariable localId="95" width="110" height="30" negatedOut="false" negatedIn="false">
+              <position x="1390" y="880"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="80" formalParameter="conveyor_fpm">
+                  <position x="1390" y="900"/>
+                  <position x="1360" y="900"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="110" y="20"/>
+              </connectionPointOut>
+              <expression>conveyor_fpm</expression>
+            </inOutVariable>
+            <inVariable localId="76" width="110" height="30" negated="false">
+              <position x="1550" y="940"/>
+              <connectionPointOut>
+                <relPosition x="110" y="20"/>
+              </connectionPointOut>
+              <expression>conveyor_fpm</expression>
+            </inVariable>
+            <block localId="96" typeName="real_to_words" instanceName="real_to_words2" width="120" height="60">
+              <position x="1690" y="930"/>
+              <inputVariables>
+                <variable formalParameter="Input">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="76">
+                      <position x="1690" y="960"/>
+                      <position x="1660" y="960"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="High">
+                  <connectionPointOut>
+                    <relPosition x="120" y="30"/>
+                  </connectionPointOut>
+                </variable>
+                <variable formalParameter="Low">
+                  <connectionPointOut>
+                    <relPosition x="120" y="50"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <outVariable localId="97" width="150" height="30" negated="false">
+              <position x="1860" y="920"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="96" formalParameter="High">
+                  <position x="1860" y="940"/>
+                  <position x="1835" y="940"/>
+                  <position x="1835" y="960"/>
+                  <position x="1810" y="960"/>
+                </connection>
+              </connectionPointIn>
+              <expression>conveyor_fpm_high</expression>
+            </outVariable>
+            <outVariable localId="98" width="140" height="30" negated="false">
+              <position x="1860" y="980"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="96" formalParameter="Low">
+                  <position x="1860" y="1000"/>
+                  <position x="1839" y="1000"/>
+                  <position x="1839" y="980"/>
+                  <position x="1810" y="980"/>
+                </connection>
+              </connectionPointIn>
+              <expression>conveyor_fpm_low</expression>
+            </outVariable>
+            <block localId="99" typeName="wirecut_cpm_function" instanceName="wirecut_cpm_function0" width="200" height="60">
+              <position x="1640" y="370"/>
+              <inputVariables>
+                <variable formalParameter="wirecut_cpm">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="100">
+                      <position x="1640" y="400"/>
+                      <position x="1610" y="400"/>
+                      <position x="1610" y="380"/>
+                      <position x="1580" y="380"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="wirecutter">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="101">
+                      <position x="1640" y="420"/>
+                      <position x="1570" y="420"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="wirecut_cpm">
+                  <connectionPointOut>
+                    <relPosition x="200" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <inVariable localId="100" width="100" height="30" negated="false">
+              <position x="1480" y="360"/>
+              <connectionPointOut>
+                <relPosition x="100" y="20"/>
+              </connectionPointOut>
+              <expression>wirecut_cpm</expression>
+            </inVariable>
+            <inVariable localId="101" width="90" height="30" negated="false">
+              <position x="1480" y="400"/>
+              <connectionPointOut>
+                <relPosition x="90" y="20"/>
+              </connectionPointOut>
+              <expression>wirecutter</expression>
+            </inVariable>
+            <outVariable localId="102" width="100" height="30" negated="false">
+              <position x="1890" y="380"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="99" formalParameter="wirecut_cpm">
+                  <position x="1890" y="400"/>
+                  <position x="1840" y="400"/>
+                </connection>
+              </connectionPointIn>
+              <expression>wirecut_cpm</expression>
+            </outVariable>
+            <inVariable localId="104" width="110" height="30" negated="false">
+              <position x="1300" y="760"/>
+              <connectionPointOut>
+                <relPosition x="110" y="20"/>
+              </connectionPointOut>
+              <expression>paper_cutter</expression>
+            </inVariable>
+            <inVariable localId="105" width="170" height="30" negated="false">
+              <position x="20" y="920"/>
+              <connectionPointOut>
+                <relPosition x="170" y="20"/>
+              </connectionPointOut>
+              <expression>nitrogen_volume_high</expression>
+            </inVariable>
+            <inVariable localId="106" width="170" height="30" negated="false">
+              <position x="20" y="960"/>
+              <connectionPointOut>
+                <relPosition x="170" y="20"/>
+              </connectionPointOut>
+              <expression>nitrogen_volume_low</expression>
+            </inVariable>
+            <block localId="77" typeName="words_to_real" instanceName="words_to_real11" width="120" height="60" executionOrderId="0">
+              <position x="240" y="920"/>
+              <inputVariables>
+                <variable formalParameter="High">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="105">
+                      <position x="240" y="950"/>
+                      <position x="215" y="950"/>
+                      <position x="215" y="940"/>
+                      <position x="190" y="940"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="Low">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="106">
+                      <position x="240" y="970"/>
+                      <position x="215" y="970"/>
+                      <position x="215" y="980"/>
+                      <position x="190" y="980"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="Result">
+                  <connectionPointOut>
+                    <relPosition x="120" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <outVariable localId="107" width="130" height="30" negated="false">
+              <position x="400" y="940"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="77" formalParameter="Result">
+                  <position x="400" y="950"/>
+                  <position x="360" y="950"/>
+                </connection>
+              </connectionPointIn>
+              <expression>nitrogen_volume</expression>
+            </outVariable>
+            <inVariable localId="108" width="140" height="30" negated="false">
+              <position x="20" y="1010"/>
+              <connectionPointOut>
+                <relPosition x="140" y="20"/>
+              </connectionPointOut>
+              <expression>tunnel_temp_high</expression>
+            </inVariable>
+            <inVariable localId="109" width="130" height="30" negated="false">
+              <position x="20" y="1060"/>
+              <connectionPointOut>
+                <relPosition x="130" y="20"/>
+              </connectionPointOut>
+              <expression>tunnel_temp_low</expression>
+            </inVariable>
+            <block localId="110" typeName="words_to_real" instanceName="words_to_real12" width="120" height="60">
+              <position x="200" y="1010"/>
+              <inputVariables>
+                <variable formalParameter="High">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="108">
+                      <position x="200" y="1040"/>
+                      <position x="180" y="1040"/>
+                      <position x="180" y="1030"/>
+                      <position x="160" y="1030"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="Low">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="109">
+                      <position x="200" y="1060"/>
+                      <position x="175" y="1060"/>
+                      <position x="175" y="1080"/>
+                      <position x="150" y="1080"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="Result">
+                  <connectionPointOut>
+                    <relPosition x="120" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <outVariable localId="111" width="100" height="30" negated="false">
+              <position x="340" y="1020"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="110" formalParameter="Result">
+                  <position x="340" y="1040"/>
+                  <position x="320" y="1040"/>
+                </connection>
+              </connectionPointIn>
+              <expression>tunnel_temp</expression>
+            </outVariable>
+            <leftPowerRail localId="113" width="10" height="40">
+              <position x="0" y="1130"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="115" negated="true" width="21" height="20">
+              <position x="230" y="1140"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="138">
+                  <position x="230" y="1150"/>
+                  <position x="91" y="1150"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>ps_1</variable>
+            </contact>
+            <coil localId="116" negated="false" width="21" height="20">
+              <position x="630" y="1140"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="117">
+                  <position x="630" y="1150"/>
+                  <position x="391" y="1150"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>box_maker_boxing</variable>
+            </coil>
+            <contact localId="117" negated="false" width="21" height="20">
+              <position x="370" y="1140"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="115">
+                  <position x="370" y="1150"/>
+                  <position x="251" y="1150"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>box_maker</variable>
+            </contact>
+            <rightPowerRail localId="118" width="10" height="40">
+              <position x="740" y="1130"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="116">
+                  <position x="740" y="1150"/>
+                  <position x="651" y="1150"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <leftPowerRail localId="119" width="10" height="40">
+              <position x="0" y="1170"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="120" negated="true" width="21" height="20">
+              <position x="228" y="1180"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="139">
+                  <position x="228" y="1190"/>
+                  <position x="121" y="1190"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>box_maker_boxing</variable>
+            </contact>
+            <contact localId="122" negated="true" width="21" height="20">
+              <position x="330" y="1180"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="120">
+                  <position x="330" y="1190"/>
+                  <position x="249" y="1190"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>ps_1</variable>
+            </contact>
+            <coil localId="123" negated="false" width="21" height="20">
+              <position x="630" y="1180"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="122">
+                  <position x="630" y="1190"/>
+                  <position x="351" y="1190"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveyor_1</variable>
+            </coil>
+            <rightPowerRail localId="124" width="10" height="40">
+              <position x="740" y="1170"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="123">
+                  <position x="740" y="1190"/>
+                  <position x="651" y="1190"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <leftPowerRail localId="125" width="10" height="40">
+              <position x="0" y="1210"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="126" negated="true" width="21" height="20">
+              <position x="210" y="1220"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="145">
+                  <position x="210" y="1230"/>
+                  <position x="121" y="1230"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>ps_1</variable>
+            </contact>
+            <contact localId="78" negated="true" width="21" height="20" executionOrderId="0">
+              <position x="260" y="1220"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="126">
+                  <position x="260" y="1230"/>
+                  <position x="231" y="1230"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>ps_2</variable>
+            </contact>
+            <coil localId="127" negated="false" width="21" height="20">
+              <position x="630" y="1220"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="112">
+                  <position x="630" y="1230"/>
+                  <position x="431" y="1230"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveyor_2</variable>
+            </coil>
+            <rightPowerRail localId="128" width="10" height="40">
+              <position x="740" y="1210"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="127">
+                  <position x="740" y="1230"/>
+                  <position x="651" y="1230"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <leftPowerRail localId="129" width="10" height="40">
+              <position x="0" y="1250"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="130" negated="false" width="21" height="20">
+              <position x="40" y="1260"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="129">
+                  <position x="40" y="1270"/>
+                  <position x="10" y="1270"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>ps_3</variable>
+            </contact>
+            <contact localId="131" negated="true" width="21" height="20">
+              <position x="118" y="1260"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="130">
+                  <position x="118" y="1270"/>
+                  <position x="61" y="1270"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>ps_5</variable>
+            </contact>
+            <contact localId="132" negated="false" width="21" height="20">
+              <position x="188" y="1260"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="131">
+                  <position x="188" y="1270"/>
+                  <position x="139" y="1270"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>ps_4</variable>
+            </contact>
+            <coil localId="133" negated="false" width="21" height="20">
+              <position x="258" y="1260"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="132">
+                  <position x="258" y="1270"/>
+                  <position x="209" y="1270"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveyor_3</variable>
+            </coil>
+            <coil localId="134" negated="true" width="21" height="20">
+              <position x="630" y="1260"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="133">
+                  <position x="630" y="1270"/>
+                  <position x="279" y="1270"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>ps_3</variable>
+            </coil>
+            <rightPowerRail localId="135" width="10" height="40">
+              <position x="740" y="1250"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="134">
+                  <position x="740" y="1270"/>
+                  <position x="651" y="1270"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <leftPowerRail localId="136" width="10" height="40">
+              <position x="0" y="1310"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="137" negated="false" width="21" height="20">
+              <position x="80" y="1320"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="136">
+                  <position x="80" y="1330"/>
+                  <position x="10" y="1330"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>palletizer_grabbing</variable>
+            </contact>
+            <block localId="140" typeName="EQ" width="70" height="60">
+              <position x="220" y="1340"/>
+              <inputVariables>
+                <variable formalParameter="IN1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="141">
+                      <position x="220" y="1370"/>
+                      <position x="200" y="1370"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="IN2">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="142">
+                      <position x="220" y="1390"/>
+                      <position x="210" y="1390"/>
+                      <position x="210" y="1400"/>
+                      <position x="200" y="1400"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="70" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <inVariable localId="141" width="170" height="30" negated="false">
+              <position x="30" y="1350"/>
+              <connectionPointOut>
+                <relPosition x="170" y="20"/>
+              </connectionPointOut>
+              <expression>palletizer_position</expression>
+            </inVariable>
+            <inVariable localId="142" width="20" height="30" negated="false">
+              <position x="180" y="1390"/>
+              <connectionPointOut>
+                <relPosition x="20" y="10"/>
+              </connectionPointOut>
+              <expression>2</expression>
+            </inVariable>
+            <block localId="143" typeName="AND" width="70" height="60">
+              <position x="310" y="1300"/>
+              <inputVariables>
+                <variable formalParameter="IN1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="137">
+                      <position x="310" y="1330"/>
+                      <position x="101" y="1330"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="IN2">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="140" formalParameter="OUT">
+                      <position x="310" y="1350"/>
+                      <position x="300" y="1350"/>
+                      <position x="300" y="1370"/>
+                      <position x="290" y="1370"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="70" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <coil localId="144" negated="true" width="21" height="20">
+              <position x="458" y="1320"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="143" formalParameter="OUT">
+                  <position x="458" y="1330"/>
+                  <position x="380" y="1330"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>palletizer_grabbing</variable>
+            </coil>
+            <rightPowerRail localId="146" width="10" height="40">
+              <position x="740" y="1310"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="161" formalParameter="ENO">
+                  <position x="740" y="1330"/>
+                  <position x="630" y="1330"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <inVariable localId="147" width="20" height="30" negated="false">
+              <position x="490" y="1340"/>
+              <connectionPointOut>
+                <relPosition x="20" y="20"/>
+              </connectionPointOut>
+              <expression>1</expression>
+            </inVariable>
+            <inVariable localId="148" width="90" height="30" negated="false">
+              <position x="330" y="1370"/>
+              <connectionPointOut>
+                <relPosition x="90" y="10"/>
+              </connectionPointOut>
+              <expression>box_count</expression>
+            </inVariable>
+            <outVariable localId="149" width="90" height="30" negated="false">
+              <position x="810" y="1370"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="163" formalParameter="OUT">
+                  <position x="810" y="1390"/>
+                  <position x="770" y="1390"/>
+                </connection>
+              </connectionPointIn>
+              <expression>box_count</expression>
+            </outVariable>
+            <leftPowerRail localId="150" width="10" height="40">
+              <position x="0" y="1420"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="151" negated="false" width="21" height="20">
+              <position x="78" y="1430"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="150">
+                  <position x="78" y="1440"/>
+                  <position x="10" y="1440"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>wrapper</variable>
+            </contact>
+            <block localId="152" typeName="AND" width="70" height="60">
+              <position x="350" y="1410"/>
+              <inputVariables>
+                <variable formalParameter="IN1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="151">
+                      <position x="350" y="1440"/>
+                      <position x="99" y="1440"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="IN2">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="103" formalParameter="OUT">
+                      <position x="350" y="1460"/>
+                      <position x="340" y="1460"/>
+                      <position x="340" y="1480"/>
+                      <position x="330" y="1480"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="70" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <block localId="103" typeName="EQ" width="70" height="60" executionOrderId="0">
+              <position x="260" y="1450"/>
+              <inputVariables>
+                <variable formalParameter="IN1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="154">
+                      <position x="260" y="1480"/>
+                      <position x="245" y="1480"/>
+                      <position x="245" y="1460"/>
+                      <position x="230" y="1460"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="IN2">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="153">
+                      <position x="260" y="1500"/>
+                      <position x="250" y="1500"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="70" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <inVariable localId="153" width="30" height="30" negated="false">
+              <position x="220" y="1490"/>
+              <connectionPointOut>
+                <relPosition x="30" y="10"/>
+              </connectionPointOut>
+              <expression>40</expression>
+            </inVariable>
+            <inVariable localId="154" width="90" height="30" negated="false">
+              <position x="140" y="1450"/>
+              <connectionPointOut>
+                <relPosition x="90" y="10"/>
+              </connectionPointOut>
+              <expression>box_count</expression>
+            </inVariable>
+            <coil localId="155" negated="false" width="21" height="20">
+              <position x="650" y="1430"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="152" formalParameter="OUT">
+                  <position x="650" y="1440"/>
+                  <position x="420" y="1440"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>wrapper_wrapping</variable>
+            </coil>
+            <rightPowerRail localId="156" width="10" height="40">
+              <position x="740" y="1420"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="155">
+                  <position x="740" y="1440"/>
+                  <position x="670" y="1440"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <leftPowerRail localId="157" width="10" height="40">
+              <position x="0" y="1510"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="158" negated="false" width="21" height="20">
+              <position x="68" y="1520"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="157">
+                  <position x="68" y="1530"/>
+                  <position x="10" y="1530"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>ps_6</variable>
+            </contact>
+            <coil localId="159" negated="false" width="21" height="20">
+              <position x="680" y="1520"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="158">
+                  <position x="680" y="1530"/>
+                  <position x="89" y="1530"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveyor_5</variable>
+            </coil>
+            <rightPowerRail localId="160" width="10" height="40">
+              <position x="740" y="1510"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="159">
+                  <position x="740" y="1530"/>
+                  <position x="700" y="1530"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <block localId="161" typeName="ADD" width="70" height="80">
+              <position x="560" y="1300"/>
+              <inputVariables>
+                <variable formalParameter="EN">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="144">
+                      <position x="560" y="1330"/>
+                      <position x="479" y="1330"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="IN1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="147">
+                      <position x="560" y="1350"/>
+                      <position x="540" y="1350"/>
+                      <position x="540" y="1360"/>
+                      <position x="510" y="1360"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="IN2">
+                  <connectionPointIn>
+                    <relPosition x="0" y="70"/>
+                    <connection refLocalId="162" formalParameter="OUT">
+                      <position x="560" y="1370"/>
+                      <position x="550" y="1370"/>
+                      <position x="550" y="1400"/>
+                      <position x="540" y="1400"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="ENO">
+                  <connectionPointOut>
+                    <relPosition x="70" y="30"/>
+                  </connectionPointOut>
+                </variable>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="70" y="50"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <block localId="162" typeName="WORD_TO_INT" width="100" height="40">
+              <position x="440" y="1370"/>
+              <inputVariables>
+                <variable formalParameter="IN">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="148">
+                      <position x="440" y="1400"/>
+                      <position x="430" y="1400"/>
+                      <position x="430" y="1380"/>
+                      <position x="420" y="1380"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="100" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <block localId="163" typeName="INT_TO_WORD" width="100" height="40">
+              <position x="670" y="1360"/>
+              <inputVariables>
+                <variable formalParameter="IN">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="161" formalParameter="OUT">
+                      <position x="670" y="1390"/>
+                      <position x="649" y="1390"/>
+                      <position x="649" y="1350"/>
+                      <position x="630" y="1350"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="100" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <contact localId="164" negated="false" width="21" height="20">
+              <position x="310" y="1220"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="78">
+                  <position x="310" y="1230"/>
+                  <position x="281" y="1230"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>bagger</variable>
+            </contact>
+            <contact localId="112" negated="false" width="21" height="20" executionOrderId="0">
+              <position x="410" y="1220"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="164">
+                  <position x="410" y="1230"/>
+                  <position x="331" y="1230"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>box_maker_boxing</variable>
+            </contact>
+            <contact localId="138" negated="true" width="21" height="20" executionOrderId="0">
+              <position x="70" y="1140"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="113">
+                  <position x="70" y="1150"/>
+                  <position x="10" y="1150"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>box_maker_boxing</variable>
+            </contact>
+            <contact localId="139" negated="true" width="21" height="20" executionOrderId="0">
+              <position x="100" y="1180"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="119">
+                  <position x="100" y="1190"/>
+                  <position x="10" y="1190"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveyor_2</variable>
+            </contact>
+            <contact localId="145" negated="true" width="21" height="20" executionOrderId="0">
+              <position x="100" y="1220"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="125">
+                  <position x="100" y="1230"/>
+                  <position x="10" y="1230"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveyor_1</variable>
+            </contact>
           </LD>
         </body>
       </pou>
@@ -1831,7 +3975,7 @@
         </interface>
         <body>
           <ST>
-            <xhtml:p><![CDATA[IF Flour_weight <= 1000.0 THEN
+            <xhtml:p><![CDATA[IF Flour_weight <= 100.0 THEN
   Alarm := TRUE;
 ELSE
   Alarm := FALSE;
@@ -1862,7 +4006,7 @@ END_IF;
         </interface>
         <body>
           <ST>
-            <xhtml:p><![CDATA[IF Sugar_weight <= 1000.0 THEN
+            <xhtml:p><![CDATA[IF Sugar_weight <= 100.0 THEN
   Alarm := TRUE;
 ELSE
   Alarm := FALSE;
@@ -1893,7 +4037,7 @@ END_IF;
         </interface>
         <body>
           <ST>
-            <xhtml:p><![CDATA[IF Hopper_weight <= 100.0 THEN
+            <xhtml:p><![CDATA[IF Hopper_weight <= 10.0 THEN
   Alarm := TRUE;
 ELSE
   Alarm := FALSE;
@@ -1942,7 +4086,7 @@ END_IF;
 
 Cfm := ((-1.275 * 0.0000001) * (WORD_TO_REAL(Vacuum_rpm) * WORD_TO_REAL(Vacuum_rpm)) + (0.7896 * WORD_TO_REAL(Vacuum_rpm)) - 365.43);
 
-IF Dv = 1 AND Cfm < 687.0 THEN
+IF Dv = 1 AND Cfm < 687.0 THEN 
   Alarm := TRUE;
 ELSIF Dv = 0 AND Cfm < 1178.0 THEN
   Alarm := TRUE;
@@ -1953,29 +4097,146 @@ END_IF;
           </ST>
         </body>
       </pou>
-      <pou name="freq_function" pouType="functionBlock">
+      <pou name="wirecut_ppm_function" pouType="functionBlock">
         <interface>
           <inputVars>
-            <variable name="input_freq">
+            <variable name="wirecut_cpm">
               <type>
                 <WORD/>
               </type>
             </variable>
           </inputVars>
+          <localVars>
+            <variable name="cookie_weight">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
+            <variable name="cookie_count">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
+          </localVars>
           <outputVars>
-            <variable name="output_freq">
+            <variable name="wirecut_ppm">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
+          </outputVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml:p><![CDATA[cookie_count := 8.0;
+cookie_weight := 0.3;
+wirecut_ppm := (WORD_TO_REAL(wirecut_cpm) * cookie_count * cookie_weight)/16.0;]]></xhtml:p>
+          </ST>
+        </body>
+      </pou>
+      <pou name="papercutter_cpm_function" pouType="functionBlock">
+        <interface>
+          <localVars>
+            <variable name="rows">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
+          </localVars>
+          <inputVars>
+            <variable name="paper_cutter">
+              <type>
+                <BOOL/>
+              </type>
+            </variable>
+            <variable name="cookie_diameter">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
+            <variable name="cookie_margin">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
+            <variable name="conveyor_fpm">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
+          </inputVars>
+          <localVars>
+            <variable name="float_cpm">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
+          </localVars>
+          <outputVars>
+            <variable name="papercut_cpm">
               <type>
                 <WORD/>
               </type>
             </variable>
           </outputVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml:p><![CDATA[
+IF paper_cutter THEN
+  rows := 5.0;
+  float_cpm := (conveyor_fpm * 12.0) / (rows * (cookie_diameter+cookie_margin));
+  papercut_cpm := REAL_TO_WORD(float_cpm);
+ELSE
+  papercut_cpm := 0;
+END_IF;]]></xhtml:p>
+          </ST>
+        </body>
+      </pou>
+      <pou name="conveyor_fpm_function" pouType="functionBlock">
+        <interface>
           <inputVars>
-            <variable name="manual">
+            <variable name="wirecut_cpm">
               <type>
-                <BOOL/>
+                <WORD/>
               </type>
             </variable>
-            <variable name="dv">
+            <variable name="cookie_margin">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
+            <variable name="cookie_diameter">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="conveyor_fpm">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
+          </outputVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml:p><![CDATA[conveyor_fpm := (WORD_TO_REAL(wirecut_cpm) * (cookie_margin+cookie_diameter)) / 12.0;]]></xhtml:p>
+          </ST>
+        </body>
+      </pou>
+      <pou name="wirecut_cpm_function" pouType="functionBlock">
+        <interface>
+          <inOutVars>
+            <variable name="wirecut_cpm">
+              <type>
+                <WORD/>
+              </type>
+            </variable>
+          </inOutVars>
+          <inputVars>
+            <variable name="wirecutter">
               <type>
                 <BOOL/>
               </type>
@@ -1984,12 +4245,10 @@ END_IF;
         </interface>
         <body>
           <ST>
-            <xhtml:p><![CDATA[IF dv = 1 AND manual = 0 THEN
-  output_freq := 23;
-ELSIF dv = 0 AND manual = 0 THEN
-  output_freq := 33;
+            <xhtml:p><![CDATA[IF wirecutter THEN
+  wirecut_cpm := 200;
 ELSE
-  output_freq := input_freq;
+  wirecut_cpm := 0;
 END_IF;]]></xhtml:p>
           </ST>
         </body>
