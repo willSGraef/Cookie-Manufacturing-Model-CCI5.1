@@ -108,7 +108,7 @@ SIGNALS = {
     "taper" : Signal(False, 724),
     "palletizer" : Signal(False, 726),
     "palletizer_grabbing" : Signal(False, 727),
-    "wrapper_conveyor" : Signal(False, 729),
+    "wrapper_conveying" : Signal(False, 729),
     "conveyor_1" : Signal(False, 730),
     "conveyor_2" : Signal(False, 731),
     "conveyor_3" : Signal(False, 732),
@@ -123,45 +123,36 @@ SIGNALS = {
     "bagger" : Signal(False, 741),
     "wrapper_wrapping" : Signal(False, 742),
     "boxing" : Signal(False, 743),
+    "taping" : Signal(False, 744),
+    "conveying_1" : Signal(False, 745),
+    "conveying_2" : Signal(False, 746),
+    "conveying_3" : Signal(False, 747),
+    "conveying_4" : Signal(False, 748),
+    "conveying_5" : Signal(False, 749),
+    "palletizer_moving" : Signal(False, 750),
     "reset" : Signal(False, 1000),
-
     #Initialize all analog signals to their default values
     "vacuum_rpm" : Signal(0, 1001),
     "mixer_rpm" : Signal(0, 1003), 
     "wirecut_cpm" : Signal(0, 1006),
     "conveyor_fpm" : Signal(0, 1007),
     "palletizer_position" : Signal(0, 1012),
-
     #Load cells for sugar, for REAL values make sure there
     #is enough room for both 16 bit addresses
     "lcs_1" : Signal(0.000, 100), #REAL ...
     "lcs_2" : Signal(0.000, 102),
     "lcs_3" : Signal(0.000, 104),
     "lcs_4" : Signal(0.000, 106),
-
-    #Load cells for flour
     "lcf_1" : Signal(0.000, 108),
     "lcf_2" : Signal(0.000, 110),
     "lcf_3" : Signal(0.000, 112),
     "lcf_4" : Signal(0.000, 114),
-
-    #Load cell for hopper
     "lch" : Signal(0.000, 98),
-
-    #Load cell for mixer
     "lcm" : Signal(0.000, 96),
-
-    #Load cell for wirecutter trough (This is a physical trough, something that an operator would physically put dough in and then transfer to the wirecutter)
     "trough_weight" : Signal(0.000, 94),
-
     "flour_weight" : Signal(0.000, 116),
     "sugar_weight" : Signal(0.000, 218),
-
-    #Nitrogen tunnel temperature
     "tunnel_temp" : Signal(0.000, 302),
-
-    #Nitrogen volume
-
     "nitrogen_volume" : Signal(0.000, 300)
 }
 
@@ -178,17 +169,7 @@ nitrogen_tank = TANK_CAPACITY
 temperature = AMBIENT_TUNNEL_TEMP
 
 #Counters
-box_counter = 0
-c1_counter = 0
-c2_counter = 0
-c3_counter = 0
-c4_counter = 0
-ps1_counter = 0
-ps2_counter = 0
-ps3_coutner = 0
 
-palletizer_counter = 0
-wrapper_counter = 0
 
 #State variable
 current_state = 0
@@ -229,7 +210,7 @@ def transfer_material(source, dest, rate, capacity):
     return source, dest
 
 def runnable():
-    global flourSilo, sugarSilo, hopper, mixer, trough, nitrogen_tank, temperature, box_counter, c1_counter, c2_counter, c3_counter, c4_counter, ps1_counter, ps2_counter, ps3_coutner, ps4_counter, palletizer_counter, wrapper_counter
+    global flourSilo, sugarSilo, hopper, mixer, trough, nitrogen_tank, temperature, box_counter
     #Read all signals from PLC into the signals global dictionary
     for Signal in SIGNALS.values():
         # Set booleans
@@ -309,122 +290,7 @@ def runnable():
         else:
             temperature = (20.0 + temp_noise)
     
-    #Move to openPLC
-    if SIGNALS['boxing'].get_value() and SIGNALS['box_maker'].get_value():
-        if box_counter >= 2:
-            box_counter = 0
-            client.write_single_coil(SIGNALS['boxing'].get_address(), False)
-        box_counter += 1
-
-    if SIGNALS['conveyor_1'].get_value():
-        if c1_counter >= 3:
-            c1_counter = 0
-            client.write_single_coil(SIGNALS['conveyor_1'].get_address(), False)
-            client.write_single_coil(SIGNALS['ps_1'].get_address(), True)
-        c1_counter += 1
     
-    #Move to openPLC
-    if SIGNALS['ps_1'].get_value() and SIGNALS['bagger'].get_value():
-        if ps1_counter >= 1:
-            ps1_counter = 0
-            client.write_single_coil(SIGNALS['ps_1'].get_address(), False)
-        ps1_counter += 1
-    
-    if SIGNALS['conveyor_2'].get_value():
-        if c2_counter >= 3:
-            c1_counter = 0
-            client.write_single_coil(SIGNALS['conveyor_2'].get_address(), False)
-            client.write_single_coil(SIGNALS['ps_2'].get_address(), True)
-        c2_counter += 1
-
-    if SIGNALS['ps_2'].get_value():
-        if ps2_counter >= 4:
-            ps2_counter = 0
-            client.write_single_coil(SIGNALS['ps_2'].get_address(), False)
-            client.write_single_coil(SIGNALS['ps_3'].get_address(), True)
-        ps2_counter += 1
-    
-    if SIGNALS['conveyor_3'].get_value():
-        if c3_counter >= 3:
-            c3_counter = 0
-            client.write_single_coil(SIGNALS['conveyor_3'].get_address(), False)
-            client.write_single_coil(SIGNALS['ps_4'].get_address(), True)
-        c3_counter += 1
-    
-    if SIGNALS['ps_4'].get_value() and SIGNALS['taper'].get_value():
-        if ps4_counter >= 2:
-            ps4_counter = 0
-            client.write_single_coil(SIGNALS['ps_4'].get_address(), False)
-        ps4_counter += 1
-
-    if SIGNALS['conveyor_4'].get_value():
-        if c4_counter >= 3:
-            c4_counter = 0
-            client.write_single_coil(SIGNALS['conveyor_4'].get_address(), False)
-            client.write_single_coil(SIGNALS['ps_5'].get_address(), True)
-        c4_counter += 1
-    
-    #Move to openPLC
-    if SIGNALS['palletizer'].get_value():
-        if SIGNALS['ps_5'].get_value():
-            if SIGNALS['palletizer_position'].get_value() == 0:
-                if palletizer_counter >= 1:
-                    palletizer_counter = 0
-                    client.write_single_coil(SIGNALS['palletizer_position'].get_address(), 1)
-                    client.write_single_coil(SIGNALS['palletizer_grabbing'].get_address(), True)
-                    client.write_single_coil(SIGNALS['ps_5'].get_address(), False)
-                palletizer_counter += 1
-            if SIGNALS['palletizer_position'].get_value() == 2:
-                if palletizer_counter >= 2:
-                    palletizer_counter = 0
-                    client.write_single_coil(SIGNALS['palletizer_position'].get_address(), 1)
-                    client.write_single_coil(SIGNALS['palletizer_grabbing'].get_address(), True)
-                    client.write_single_coil(SIGNALS['ps_5'].get_address(), False)
-                palletizer_counter += 1
-        else:
-            if SIGNALS['palletizer_grabbing'].get_value():
-                if SIGNALS['palletizer_position'].get_value() == 2:
-                    if palletizer_counter >= 1:
-                        palletizer_counter = 0
-                        client.write_single_coil(SIGNALS['palletizer_grabbing'].get_address(), False)
-                        stack_counter += 1
-                    palletizer_counter += 1
-                if SIGNALS['palletizer_position'].get_value() == 1:
-                    if palletizer_counter >= 1:
-                        palletizer_counter = 0
-                        client.write_single_coil(SIGNALS['palletizer_position'].get_address(), 0)
-                    palletizer_counter += 1
-                if SIGNALS['palletizer_position'].get_value() == 0 and SIGNALS['wrapper_wrapping'].get_value() == False and SIGNALS['wrapper_conveyor'].get_value() == False:
-                    if palletizer_counter >= 1:
-                        palletizer_counter = 0
-                        client.write_single_coil(SIGNALS['palletizer_position'].get_address(), 2)
-                    palletizer_counter += 1
-            else:
-                if SIGNALS['palletizer_position'].get_value() == 1:
-                    if palletizer_counter >= 1:
-                        palletizer_counter = 0
-                        client.write_single_coil(SIGNALS['palletizer_position'].get_address(), 0)
-                    palletizer_counter += 1
-                if SIGNALS['palletizer_position'].get_value() == 2:
-                    if palletizer_counter >= 1:
-                        palletizer_counter = 0
-                        client.write_single_coil(SIGNALS['palletizer_position'].get_address(), 0)
-                    palletizer_counter += 1
-    
-    #Move to openPLC
-    if SIGNALS['wrapper_wrapping'].get_value():
-        if wrapper_counter >= 3:
-            wrapper_counter = 0
-            client.write_single_coil(SIGNALS['wrapper_wrapping'].get_address(), False)
-            client.write_single_coil(SIGNALS['wrapper_conveyor'].get_address(), True)
-        wrapper_counter += 1
-    
-    if SIGNALS['wrapper_conveyor'].get_value():
-        if wrapper_counter >= 1:
-            wrapper_counter = 0
-            client.write_single_coil(SIGNALS['wrapper_conveyor'].get_address(), False)
-            client.write_single_coil(SIGNALS['ps_6'].get_address(), True)
-        wrapper_counter += 1
 
     # Write all relevant signals to master device
     # Flour/Sugar load cells
