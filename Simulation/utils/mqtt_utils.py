@@ -2,14 +2,15 @@ import json
 import time
 import threading
 import socket
+import os
 import paho.mqtt.client as mqtt
 from paho import mqtt as mqtt_consts
 
 BROKER = "ualr-core-f8adc79d.a02.usw2.aws.hivemq.cloud"
 PORT = 8883
-TOPIC_PREFIX = "BUILD_ID"
+TOPIC_PREFIX = os.environ.get('BUILD_ID', 'DEFAULT_TOPIC')
 USERNAME = "cyberarena"
-PASSWORD = "eyJhbGciOiJSUzI1NiIsImtpZCI6InhKRGZ5d0NJNEFuZVBpMzExMWh1dndVSTVFWHc0c09vbVZZbVlCUDItZVEiLCJ0eXAiOiJKV1QifQ.eyJleHAiOjE3NTUxODM2MzYsImlhdCI6MTc1Mzk3NDAzNiwic3ViIjoiaGZ5aWZkYmNuciJ9.YSQGM1tXRVqI4CPGyKlvytlvXRDyMXRnYt9_eaAWta4k2OLd5sHChsYOJ9dpUpVE8LXscyq0KKjtlz1o9_0EXMEV7P8A4alZcoJDzwS2wnz00DkNjWlO2zFBpyCJrrg4GvAwJtEfKVCfgl7sMPDUoPBxi6gAgRJmrvdIA2ajeRNZ35smp-4yDAl-ZxsewWvGGhydcBbJ-9vgGrBJHCfhgY3hmSsm4TYF3k6wllecmDefGV4UCHOAVEtTufsbH9zSIg_hWYyKTO2q0NCjH-0Agb8XsSx27ZgD2oOl4rDoUUbFGzwv6PSZpTfg6_Qj0pzNUBCPtWUTARwoOxiZXBO8Hw"
+PASSWORD = os.environ.get('JWT_TOKEN', 'TOKEN_NOT_SET')
 
 class MqttClient:
     def __init__(self, signals, modbus_client):
@@ -23,6 +24,10 @@ class MqttClient:
         self.hostname = socket.gethostname()
 
     def connect(self):
+        if PASSWORD == 'TOKEN_NOT_SET':
+            print("ERROR: JWT_TOKEN environment variable not set. Exiting.")
+            import sys
+            sys.exit(1)
         self.client.connect(BROKER, PORT, keepalive=60)
         thread = threading.Thread(target=self.client.loop_forever)
         thread.daemon = True
