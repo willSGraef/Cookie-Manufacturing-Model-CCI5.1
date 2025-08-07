@@ -273,80 +273,80 @@ END_FUNCTION_BLOCK
 
 PROGRAM tag_display
   VAR
-    lcs_1_low AT %QW100 : WORD;
-    lcs_1_high AT %QW101 : WORD;
-    lcs_2_low AT %QW102 : WORD;
-    lcs_2_high AT %QW103 : WORD;
-    lcs_3_low AT %QW104 : WORD;
-    lcs_3_high AT %QW105 : WORD;
-    lcs_4_low AT %QW106 : WORD;
-    lcs_4_high AT %QW107 : WORD;
-    lcf_1_low AT %QW108 : WORD;
-    lcf_1_high AT %QW109 : WORD;
-    lcf_2_low AT %QW110 : WORD;
-    lcf_2_high AT %QW111 : WORD;
-    lcf_3_low AT %QW112 : WORD;
-    lcf_3_high AT %QW113 : WORD;
-    lcf_4_low AT %QW114 : WORD;
-    lcf_4_high AT %QW115 : WORD;
-    lch_high AT %QW99 : WORD;
-    lch_low AT %QW98 : WORD;
-    lcm_high AT %QW97 : WORD;
-    lcm_low AT %QW96 : WORD;
-    trough_weight_high AT %QW95 : WORD;
-    trough_weight_low AT %QW94 : WORD;
-    vacuum_rpm AT %QW1001 : WORD;
-    mixer_rpm AT %QW1003 : WORD;
-    wirecut_cpm AT %QW1006 : WORD := 0;
-    papercut_cpm AT %QW1009 : WORD;
-    conveyor_fpm AT %MD13 : REAL;
-    conveyor_fpm_high AT %QW121 : WORD := 0;
-    conveyor_fpm_low AT %QW120 : WORD := 0;
-    lcs_1 AT %MD0 : REAL;
-    lcs_2 AT %MD1 : REAL;
-    lcs_3 AT %MD2 : REAL;
-    lcs_4 AT %MD3 : REAL;
-    lcf_1 AT %MD4 : REAL;
-    lcf_2 AT %MD5 : REAL;
-    lcf_3 AT %MD6 : REAL;
-    lcf_4 AT %MD7 : REAL;
-    lch AT %MD8 : REAL := 0.0;
-    lcm AT %MD11 : REAL := 0.0;
-    trough_weight AT %MD12 : REAL := 0.0;
-    flour_weight AT %MD9 : REAL := 0.0;
-    flour_weight_high AT %QW117 : WORD;
-    flour_weight_low AT %QW116 : WORD;
-    sugar_weight AT %MD10 : REAL := 0.0;
-    sugar_weight_high AT %QW219 : WORD;
-    sugar_weight_low AT %QW218 : WORD;
-    tunnel_temp AT %MD15 : REAL;
-    tunnel_temp_high AT %QW303 : WORD := 0;
-    tunnel_temp_low AT %QW302 : WORD := 0;
-    nitrogen_volume AT %MD14 : REAL;
-    nitrogen_volume_high AT %QW301 : WORD := 0;
-    nitrogen_volume_low AT %QW300 : WORD := 0;
-    rv_1 AT %QX87.4 : BOOL;
-    rv_2 AT %QX87.5 : BOOL;
-    rv_3 AT %QX87.6 : BOOL;
-    dv AT %QX87.7 : BOOL;
-    vacuum AT %QX88.0 : BOOL;
-    mixer AT %QX88.1 : BOOL;
-    flour_alarm AT %QX88.2 : BOOL := false;
-    sugar_alarm AT %QX88.3 : BOOL := false;
-    hopper_alarm AT %QX88.4 : BOOL := false;
-    vacuum_alarm AT %QX88.5 : BOOL := false;
-    vacuum_manual AT %QX88.6 : BOOL := false;
-    wirecutter AT %QX88.7 : BOOL := false;
-    trough_transfer AT %QX89.1 : BOOL := false;
-    conveyor AT %QX89.4 : BOOL := false;
-    paper_cutter AT %QX89.5 : BOOL := false;
-    gv_1 AT %QX89.6 : BOOL := false;
-    fan_1 AT %QX89.7 : BOOL := false;
-    fan_2 AT %QX90.0 : BOOL := false;
-    fan_3 AT %QX90.1 : BOOL := false;
-    exhaust_fan AT %QX90.2 : BOOL := false;
-    CFM AT %MD20 : REAL;
-    reset AT %QX125.0 : BOOL := false;
+    lcs_1_low : WORD;
+    lcs_1_high : WORD;
+    lcs_2_low : WORD;
+    lcs_2_high : WORD;
+    lcs_3_low : WORD;
+    lcs_3_high : WORD;
+    lcs_4_low : WORD;
+    lcs_4_high : WORD;
+    lcf_1_low : WORD;
+    lcf_1_high : WORD;
+    lcf_2_low : WORD;
+    lcf_2_high : WORD;
+    lcf_3_low : WORD;
+    lcf_3_high : WORD;
+    lcf_4_low : WORD;
+    lcf_4_high : WORD;
+    lch_high : WORD;
+    lch_low : WORD;
+    lcm_high : WORD;
+    lcm_low : WORD;
+    trough_weight_high : WORD;
+    trough_weight_low : WORD;
+    vacuum_rpm : WORD;
+    mixer_rpm : WORD;
+    wirecut_cpm : WORD := 0;
+    papercut_cpm : WORD;
+    conveyor_fpm : REAL;
+    conveyor_fpm_high : WORD := 0;
+    conveyor_fpm_low : WORD := 0;
+    lcs_1 : REAL;
+    lcs_2 : REAL;
+    lcs_3 : REAL;
+    lcs_4 : REAL;
+    lcf_1 : REAL;
+    lcf_2 : REAL;
+    lcf_3 : REAL;
+    lcf_4 : REAL;
+    lch : REAL := 0.0;
+    lcm : REAL := 0.0;
+    trough_weight : REAL := 0.0;
+    flour_weight : REAL := 0.0;
+    flour_weight_high : WORD;
+    flour_weight_low : WORD;
+    sugar_weight : REAL := 0.0;
+    sugar_weight_high : WORD;
+    sugar_weight_low : WORD;
+    tunnel_temp : REAL;
+    tunnel_temp_high : WORD := 0;
+    tunnel_temp_low : WORD := 0;
+    nitrogen_volume : REAL;
+    nitrogen_volume_high : WORD := 0;
+    nitrogen_volume_low : WORD := 0;
+    rv_1 : BOOL;
+    rv_2 : BOOL;
+    rv_3 : BOOL;
+    dv : BOOL;
+    vacuum : BOOL;
+    mixer : BOOL;
+    flour_alarm : BOOL := false;
+    sugar_alarm : BOOL := false;
+    hopper_alarm : BOOL := false;
+    vacuum_alarm : BOOL := false;
+    vacuum_manual : BOOL := false;
+    wirecutter : BOOL := false;
+    trough_transfer : BOOL := false;
+    conveyor : BOOL := true;
+    paper_cutter : BOOL := false;
+    gv_1 : BOOL := false;
+    fan_1 : BOOL := false;
+    fan_2 : BOOL := false;
+    fan_3 : BOOL := false;
+    exhaust_fan : BOOL := false;
+    CFM : REAL;
+    reset : BOOL := false;
   END_VAR
   VAR
     words_to_real0 : words_to_real;
@@ -380,29 +380,58 @@ PROGRAM tag_display
     words_to_real12 : words_to_real;
   END_VAR
   VAR
-    box_maker AT %QX90.3 : BOOL := false;
-    taper AT %QX90.4 : BOOL := false;
-    labeler AT %QX90.5 : BOOL := false;
-    palletizer AT %QX90.6 : BOOL := false;
-    palletizer_grabbing AT %QX90.7 : BOOL := false;
-    wrapper AT %QX91.0 : BOOL := false;
-    wrapper_conveyor AT %QX91.1 : BOOL := false;
-    conveyor_1 AT %QX91.2 : BOOL := false;
-    conveyor_2 AT %QX91.3 : BOOL := false;
-    conveyor_3 AT %QX91.4 : BOOL := false;
-    conveyor_4 AT %QX91.5 : BOOL := false;
-    conveyor_5 AT %QX91.6 : BOOL := false;
-    ps_1 AT %QX91.7 : BOOL := false;
-    ps_2 AT %QX92.0 : BOOL := false;
-    ps_3 AT %QX92.1 : BOOL := false;
-    ps_4 AT %QX92.2 : BOOL := false;
-    ps_5 AT %QX92.3 : BOOL := false;
-    ps_6 AT %QX92.4 : BOOL := false;
-    bagger AT %QX92.5 : BOOL := false;
-    palletizer_position AT %QW1012 : WORD := 0;
-    box_count AT %QW1013 : WORD := 0;
-    wrapper_wrapping AT %QX92.6 : BOOL := false;
-    box_maker_boxing AT %QX92.7 : BOOL := false;
+    box_maker : BOOL := false;
+    taper : BOOL := false;
+    labeler : BOOL := false;
+    palletizer : BOOL := false;
+    palletizer_grabbing : BOOL := false;
+    wrapper : BOOL := false;
+    wrapper_conveying : BOOL := false;
+    conveyor_1 : BOOL := true;
+    conveyor_2 : BOOL := true;
+    conveyor_3 : BOOL := true;
+    conveyor_4 : BOOL := true;
+    conveyor_5 : BOOL := true;
+    ps_1 : BOOL := false;
+    ps_2 : BOOL := false;
+    ps_3 : BOOL := false;
+    ps_4 : BOOL := false;
+    ps_5 : BOOL := false;
+    ps_6 : BOOL := false;
+    bagger : BOOL := false;
+    palletizer_rotation : INT := 180;
+    box_count : INT := 0;
+    wrapper_wrapping : BOOL := false;
+    boxing : BOOL := false;
+    taping : BOOL := false;
+    conveying_1 : BOOL := false;
+    conveying_2 : BOOL := false;
+    conveying_3 : BOOL := false;
+    conveying_4 : BOOL := false;
+    conveying_5 : BOOL := false;
+    palletizer_moving : BOOL := false;
+    bagging : BOOL := false;
+    machine_1 : INT := 0;
+    machine_2 : INT := 0;
+    machine_3 : INT := 0;
+    machine_4 : INT := 0;
+  END_VAR
+  VAR
+    state_0 : INT := 0;
+    state_1 : INT := 1;
+    state_2 : INT := 2;
+    state_3 : INT := 3;
+    state_4 : INT := 4;
+    state_5 : INT := 5;
+    state_6 : INT := 6;
+    pos_1 : INT := 225;
+    pos_2 : INT := 180;
+    pos_3 : INT := 130;
+  END_VAR
+  VAR
+    roe_1 : BOOL := false;
+    roe_2 : BOOL := false;
+    roe_3 : BOOL := false;
   END_VAR
   VAR
     _TMP_ADD37_OUT : REAL;
@@ -413,14 +442,82 @@ PROGRAM tag_display
     _TMP_ADD43_OUT : REAL;
     mixer_rpm_function0_counter : INT;
     vacuum_rpm_function0_counter : INT;
-    _TMP_EQ140_OUT : BOOL;
-    _TMP_AND143_OUT : BOOL;
-    _TMP_WORD_TO_INT162_OUT : INT;
-    _TMP_ADD161_ENO : BOOL;
-    _TMP_ADD161_OUT : INT;
-    _TMP_INT_TO_WORD163_OUT : WORD;
-    _TMP_EQ103_OUT : BOOL;
-    _TMP_AND152_OUT : BOOL;
+    _TMP_EQ167_OUT : BOOL;
+    _TMP_MOVE174_ENO : BOOL;
+    _TMP_MOVE174_OUT : INT;
+    _TMP_EQ113_OUT : BOOL;
+    _TMP_MOVE120_ENO : BOOL;
+    _TMP_MOVE120_OUT : INT;
+    _TMP_EQ125_OUT : BOOL;
+    _TMP_MOVE133_ENO : BOOL;
+    _TMP_MOVE133_OUT : INT;
+    _TMP_EQ130_OUT : BOOL;
+    _TMP_MOVE144_ENO : BOOL;
+    _TMP_MOVE144_OUT : INT;
+    _TMP_EQ141_OUT : BOOL;
+    _TMP_MOVE156_ENO : BOOL;
+    _TMP_MOVE156_OUT : INT;
+    _TMP_EQ154_OUT : BOOL;
+    _TMP_MOVE163_ENO : BOOL;
+    _TMP_MOVE163_OUT : INT;
+    _TMP_EQ171_OUT : BOOL;
+    _TMP_MOVE188_ENO : BOOL;
+    _TMP_MOVE188_OUT : INT;
+    _TMP_EQ197_OUT : BOOL;
+    _TMP_MOVE205_ENO : BOOL;
+    _TMP_MOVE205_OUT : INT;
+    _TMP_EQ219_OUT : BOOL;
+    _TMP_MOVE231_ENO : BOOL;
+    _TMP_MOVE231_OUT : INT;
+    _TMP_EQ243_OUT : BOOL;
+    _TMP_MOVE281_ENO : BOOL;
+    _TMP_MOVE281_OUT : INT;
+    _TMP_MOVE228_ENO : BOOL;
+    _TMP_MOVE228_OUT : INT;
+    _TMP_EQ264_OUT : BOOL;
+    _TMP_MOVE241_ENO : BOOL;
+    _TMP_MOVE241_OUT : INT;
+    _TMP_ADD248_ENO : BOOL;
+    _TMP_ADD248_OUT : INT;
+    _TMP_MOVE252_ENO : BOOL;
+    _TMP_MOVE252_OUT : INT;
+    _TMP_EQ256_OUT : BOOL;
+    _TMP_GE263_OUT : BOOL;
+    _TMP_AND353_OUT : BOOL;
+    _TMP_EQ210_OUT : BOOL;
+    _TMP_MOVE224_ENO : BOOL;
+    _TMP_MOVE224_OUT : INT;
+    _TMP_EQ270_OUT : BOOL;
+    _TMP_MOVE290_ENO : BOOL;
+    _TMP_MOVE290_OUT : INT;
+    _TMP_MOVE310_ENO : BOOL;
+    _TMP_MOVE310_OUT : INT;
+    _TMP_EQ314_OUT : BOOL;
+    _TMP_MOVE321_ENO : BOOL;
+    _TMP_MOVE321_OUT : INT;
+    _TMP_EQ145_OUT : BOOL;
+    _TMP_MOVE336_ENO : BOOL;
+    _TMP_MOVE336_OUT : INT;
+    _TMP_EQ347_OUT : BOOL;
+    _TMP_MOVE345_ENO : BOOL;
+    _TMP_MOVE345_OUT : INT;
+    _TMP_MOVE238_ENO : BOOL;
+    _TMP_MOVE238_OUT : INT;
+    _TMP_EQ204_OUT : BOOL;
+    _TMP_EQ232_OUT : BOOL;
+    _TMP_MOVE229_ENO : BOOL;
+    _TMP_MOVE229_OUT : INT;
+    _TMP_MOVE262_ENO : BOOL;
+    _TMP_MOVE262_OUT : INT;
+    _TMP_EQ341_OUT : BOOL;
+    _TMP_MOVE303_ENO : BOOL;
+    _TMP_MOVE303_OUT : INT;
+    _TMP_MOVE362_ENO : BOOL;
+    _TMP_MOVE362_OUT : INT;
+    _TMP_MOVE186_ENO : BOOL;
+    _TMP_MOVE186_OUT : INT;
+    _TMP_MOVE273_ENO : BOOL;
+    _TMP_MOVE273_OUT : INT;
   END_VAR
 
   words_to_real0(High := lcf_1_high, Low := lcf_1_low);
@@ -487,22 +584,208 @@ PROGRAM tag_display
   nitrogen_volume := words_to_real11.Result;
   words_to_real12(High := tunnel_temp_high, Low := tunnel_temp_low);
   tunnel_temp := words_to_real12.Result;
-  box_maker_boxing := box_maker AND NOT(ps_1) AND NOT(box_maker_boxing);
-  conveyor_1 := NOT(ps_1) AND NOT(box_maker_boxing) AND NOT(conveyor_2);
-  conveyor_2 := box_maker_boxing AND bagger AND NOT(ps_2) AND NOT(ps_1) AND NOT(conveyor_1);
-  conveyor_3 := ps_4 AND NOT(ps_5) AND ps_3;
-  ps_3 := NOT(ps_4 AND NOT(ps_5) AND ps_3);
-  _TMP_EQ140_OUT := EQ(palletizer_position, 2);
-  _TMP_AND143_OUT := AND(palletizer_grabbing, _TMP_EQ140_OUT);
-  palletizer_grabbing := NOT(_TMP_AND143_OUT);
-  _TMP_WORD_TO_INT162_OUT := WORD_TO_INT(box_count);
-  _TMP_ADD161_OUT := ADD(EN := _TMP_AND143_OUT, IN1 := 1, IN2 := _TMP_WORD_TO_INT162_OUT, ENO => _TMP_ADD161_ENO);
-  _TMP_INT_TO_WORD163_OUT := INT_TO_WORD(_TMP_ADD161_OUT);
-  box_count := _TMP_INT_TO_WORD163_OUT;
-  _TMP_EQ103_OUT := EQ(box_count, 40);
-  _TMP_AND152_OUT := AND(wrapper, _TMP_EQ103_OUT);
-  wrapper_wrapping := _TMP_AND152_OUT;
-  conveyor_5 := ps_6;
+  _TMP_EQ167_OUT := EQ(machine_1, state_0);
+  IF box_maker AND _TMP_EQ167_OUT THEN
+    boxing := TRUE; (*set*)
+  END_IF;
+  _TMP_MOVE174_OUT := MOVE(EN := box_maker AND _TMP_EQ167_OUT, IN := state_1, ENO => _TMP_MOVE174_ENO);
+  IF _TMP_MOVE174_ENO THEN
+      machine_1 := _TMP_MOVE174_OUT;
+  END_IF;
+  _TMP_EQ113_OUT := EQ(machine_1, state_1);
+  IF conveyor_1 AND NOT(boxing) AND _TMP_EQ113_OUT THEN
+    conveying_1 := TRUE; (*set*)
+  END_IF;
+  _TMP_MOVE120_OUT := MOVE(EN := conveyor_1 AND NOT(boxing) AND _TMP_EQ113_OUT, IN := state_2, ENO => _TMP_MOVE120_ENO);
+  IF _TMP_MOVE120_ENO THEN
+      machine_1 := _TMP_MOVE120_OUT;
+  END_IF;
+  _TMP_EQ125_OUT := EQ(machine_1, state_2);
+  IF bagger AND ps_1 AND _TMP_EQ125_OUT THEN
+    bagging := TRUE; (*set*)
+  END_IF;
+  _TMP_MOVE133_OUT := MOVE(EN := bagger AND ps_1 AND _TMP_EQ125_OUT, IN := state_3, ENO => _TMP_MOVE133_ENO);
+  IF _TMP_MOVE133_ENO THEN
+      machine_1 := _TMP_MOVE133_OUT;
+  END_IF;
+  _TMP_EQ130_OUT := EQ(machine_1, state_3);
+  _TMP_MOVE144_OUT := MOVE(EN := NOT(bagging) AND conveyor_2 AND _TMP_EQ130_OUT, IN := state_4, ENO => _TMP_MOVE144_ENO);
+  IF _TMP_MOVE144_ENO THEN
+      machine_1 := _TMP_MOVE144_OUT;
+  END_IF;
+  IF NOT(bagging) AND conveyor_2 AND _TMP_EQ130_OUT THEN
+    conveying_2 := TRUE; (*set*)
+  END_IF;
+  _TMP_EQ141_OUT := EQ(machine_1, state_5);
+  _TMP_MOVE156_OUT := MOVE(EN := NOT(ps_2) AND _TMP_EQ141_OUT, IN := state_0, ENO => _TMP_MOVE156_ENO);
+  IF _TMP_MOVE156_ENO THEN
+      machine_1 := _TMP_MOVE156_OUT;
+  END_IF;
+  _TMP_EQ154_OUT := EQ(machine_2, state_0);
+  IF ps_3 AND conveyor_3 AND _TMP_EQ154_OUT THEN
+    conveying_3 := TRUE; (*set*)
+  END_IF;
+  _TMP_MOVE163_OUT := MOVE(EN := ps_3 AND conveyor_3 AND _TMP_EQ154_OUT, IN := state_1, ENO => _TMP_MOVE163_ENO);
+  IF _TMP_MOVE163_ENO THEN
+      machine_2 := _TMP_MOVE163_OUT;
+  END_IF;
+  _TMP_EQ171_OUT := EQ(machine_2, state_1);
+  IF taper AND ps_4 AND _TMP_EQ171_OUT THEN
+    taping := TRUE; (*set*)
+  END_IF;
+  _TMP_MOVE188_OUT := MOVE(EN := taper AND ps_4 AND _TMP_EQ171_OUT, IN := state_2, ENO => _TMP_MOVE188_ENO);
+  IF _TMP_MOVE188_ENO THEN
+      machine_2 := _TMP_MOVE188_OUT;
+  END_IF;
+  _TMP_EQ197_OUT := EQ(machine_2, state_2);
+  IF conveyor_4 AND NOT(taping) AND NOT(ps_5) AND _TMP_EQ197_OUT THEN
+    conveying_4 := TRUE; (*set*)
+  END_IF;
+  _TMP_MOVE205_OUT := MOVE(EN := conveyor_4 AND NOT(taping) AND NOT(ps_5) AND _TMP_EQ197_OUT, IN := state_0, ENO => _TMP_MOVE205_ENO);
+  IF _TMP_MOVE205_ENO THEN
+      machine_2 := _TMP_MOVE205_OUT;
+  END_IF;
+  _TMP_EQ219_OUT := EQ(machine_3, state_2);
+  _TMP_MOVE231_OUT := MOVE(EN := palletizer AND _TMP_EQ219_OUT, IN := state_3, ENO => _TMP_MOVE231_ENO);
+  IF _TMP_MOVE231_ENO THEN
+      machine_3 := _TMP_MOVE231_OUT;
+  END_IF;
+  IF palletizer AND _TMP_EQ219_OUT THEN
+    palletizer_moving := TRUE; (*set*)
+  END_IF;
+  _TMP_EQ243_OUT := EQ(machine_3, state_4);
+  IF NOT(wrapper_wrapping) AND NOT(wrapper_conveying) AND palletizer AND _TMP_EQ243_OUT THEN
+    palletizer_moving := TRUE; (*set*)
+  END_IF;
+  _TMP_MOVE281_OUT := MOVE(EN := NOT(wrapper_wrapping) AND NOT(wrapper_conveying) AND palletizer AND _TMP_EQ243_OUT, IN := state_5, ENO => _TMP_MOVE281_ENO);
+  IF _TMP_MOVE281_ENO THEN
+      machine_3 := _TMP_MOVE281_OUT;
+  END_IF;
+  _TMP_MOVE228_OUT := MOVE(EN := palletizer AND _TMP_EQ219_OUT, IN := pos_2, ENO => _TMP_MOVE228_ENO);
+  IF _TMP_MOVE228_ENO THEN
+      palletizer_rotation := _TMP_MOVE228_OUT;
+  END_IF;
+  _TMP_EQ264_OUT := EQ(machine_3, state_6);
+  _TMP_MOVE241_OUT := MOVE(EN := _TMP_EQ264_OUT, IN := pos_2, ENO => _TMP_MOVE241_ENO);
+  IF _TMP_MOVE241_ENO THEN
+      palletizer_rotation := _TMP_MOVE241_OUT;
+  END_IF;
+  _TMP_ADD248_OUT := ADD(EN := palletizer AND _TMP_EQ264_OUT, IN1 := box_count, IN2 := 1, ENO => _TMP_ADD248_ENO);
+  IF _TMP_ADD248_ENO THEN
+      box_count := _TMP_ADD248_OUT;
+  END_IF;
+  _TMP_MOVE252_OUT := MOVE(EN := palletizer AND _TMP_EQ264_OUT, IN := state_3, ENO => _TMP_MOVE252_ENO);
+  IF _TMP_MOVE252_ENO THEN
+      machine_3 := _TMP_MOVE252_OUT;
+  END_IF;
+  _TMP_EQ256_OUT := EQ(machine_4, state_0);
+  _TMP_GE263_OUT := GE(box_count, 40);
+  _TMP_AND353_OUT := AND(_TMP_EQ256_OUT, _TMP_GE263_OUT);
+  IF NOT(ps_6) AND wrapper AND _TMP_AND353_OUT THEN
+    wrapper_wrapping := TRUE; (*set*)
+  END_IF;
+  _TMP_EQ210_OUT := EQ(machine_3, state_0);
+  _TMP_MOVE224_OUT := MOVE(EN := palletizer AND NOT(palletizer_grabbing) AND ps_5 AND _TMP_EQ210_OUT, IN := state_1, ENO => _TMP_MOVE224_ENO);
+  IF _TMP_MOVE224_ENO THEN
+      machine_3 := _TMP_MOVE224_OUT;
+  END_IF;
+  _TMP_EQ270_OUT := EQ(machine_4, state_1);
+  IF NOT(wrapper_wrapping) AND wrapper AND _TMP_EQ270_OUT THEN
+    wrapper_conveying := TRUE; (*set*)
+  END_IF;
+  _TMP_MOVE290_OUT := MOVE(EN := NOT(ps_6) AND wrapper AND _TMP_AND353_OUT, IN := state_1, ENO => _TMP_MOVE290_ENO);
+  IF _TMP_MOVE290_ENO THEN
+      machine_4 := _TMP_MOVE290_OUT;
+  END_IF;
+  _TMP_MOVE310_OUT := MOVE(EN := NOT(wrapper_wrapping) AND wrapper AND _TMP_EQ270_OUT, IN := state_2, ENO => _TMP_MOVE310_ENO);
+  IF _TMP_MOVE310_ENO THEN
+      machine_4 := _TMP_MOVE310_OUT;
+  END_IF;
+  _TMP_EQ314_OUT := EQ(machine_4, state_2);
+  IF NOT(wrapper_conveying) AND conveyor_5 AND _TMP_EQ314_OUT THEN
+    conveying_5 := TRUE; (*set*)
+  END_IF;
+  _TMP_MOVE321_OUT := MOVE(EN := NOT(wrapper_conveying) AND conveyor_5 AND _TMP_EQ314_OUT, IN := state_3, ENO => _TMP_MOVE321_ENO);
+  IF _TMP_MOVE321_ENO THEN
+      machine_4 := _TMP_MOVE321_OUT;
+  END_IF;
+  IF palletizer AND _TMP_EQ264_OUT THEN
+    palletizer_grabbing := FALSE; (*reset*)
+  END_IF;
+  IF palletizer AND _TMP_EQ264_OUT THEN
+    palletizer_moving := TRUE; (*set*)
+  END_IF;
+  IF ps_1 AND _TMP_EQ125_OUT THEN
+    conveying_1 := FALSE; (*reset*)
+  END_IF;
+  _TMP_EQ145_OUT := EQ(machine_1, state_4);
+  _TMP_MOVE336_OUT := MOVE(EN := ps_2 AND _TMP_EQ145_OUT, IN := state_5, ENO => _TMP_MOVE336_ENO);
+  IF _TMP_MOVE336_ENO THEN
+      machine_1 := _TMP_MOVE336_OUT;
+  END_IF;
+  IF ps_2 AND _TMP_EQ145_OUT THEN
+    conveying_2 := FALSE; (*reset*)
+  END_IF;
+  IF ps_4 AND _TMP_EQ171_OUT THEN
+    conveying_3 := FALSE; (*reset*)
+  END_IF;
+  IF ps_5 AND _TMP_EQ210_OUT THEN
+    conveying_4 := FALSE; (*reset*)
+  END_IF;
+  _TMP_EQ347_OUT := EQ(machine_4, state_3);
+  _TMP_MOVE345_OUT := MOVE(EN := ps_6 AND _TMP_EQ347_OUT, IN := state_0, ENO => _TMP_MOVE345_ENO);
+  IF _TMP_MOVE345_ENO THEN
+      machine_4 := _TMP_MOVE345_OUT;
+  END_IF;
+  IF ps_6 AND _TMP_EQ347_OUT THEN
+    conveying_5 := FALSE; (*reset*)
+  END_IF;
+  IF palletizer AND NOT(palletizer_grabbing) AND ps_5 AND _TMP_EQ210_OUT THEN
+    palletizer_moving := TRUE; (*set*)
+  END_IF;
+  _TMP_MOVE238_OUT := MOVE(EN := palletizer AND NOT(palletizer_grabbing) AND ps_5 AND _TMP_EQ210_OUT, IN := pos_1, ENO => _TMP_MOVE238_ENO);
+  IF _TMP_MOVE238_ENO THEN
+      palletizer_rotation := _TMP_MOVE238_OUT;
+  END_IF;
+  _TMP_EQ204_OUT := EQ(machine_3, state_1);
+  IF roe_1 AND _TMP_EQ204_OUT THEN
+    palletizer_moving := FALSE; (*reset*)
+  END_IF;
+  _TMP_EQ232_OUT := EQ(machine_3, state_3);
+  _TMP_MOVE229_OUT := MOVE(EN := palletizer_grabbing AND roe_2 AND _TMP_EQ232_OUT, IN := state_4, ENO => _TMP_MOVE229_ENO);
+  IF _TMP_MOVE229_ENO THEN
+      machine_3 := _TMP_MOVE229_OUT;
+  END_IF;
+  IF roe_2 AND _TMP_EQ232_OUT THEN
+    palletizer_moving := FALSE; (*reset*)
+  END_IF;
+  _TMP_MOVE262_OUT := MOVE(EN := NOT(wrapper_wrapping) AND NOT(wrapper_conveying) AND palletizer AND _TMP_EQ243_OUT, IN := pos_3, ENO => _TMP_MOVE262_ENO);
+  IF _TMP_MOVE262_ENO THEN
+      palletizer_rotation := _TMP_MOVE262_OUT;
+  END_IF;
+  _TMP_EQ341_OUT := EQ(machine_3, state_5);
+  _TMP_MOVE303_OUT := MOVE(EN := roe_3 AND _TMP_EQ341_OUT, IN := state_6, ENO => _TMP_MOVE303_ENO);
+  IF _TMP_MOVE303_ENO THEN
+      machine_3 := _TMP_MOVE303_OUT;
+  END_IF;
+  IF roe_3 AND _TMP_EQ341_OUT THEN
+    palletizer_moving := FALSE; (*reset*)
+  END_IF;
+  _TMP_MOVE362_OUT := MOVE(EN := NOT(palletizer_grabbing) AND roe_2 AND _TMP_EQ232_OUT, IN := state_0, ENO => _TMP_MOVE362_ENO);
+  IF _TMP_MOVE362_ENO THEN
+      machine_3 := _TMP_MOVE362_OUT;
+  END_IF;
+  _TMP_MOVE186_OUT := MOVE(EN := roe_1 AND _TMP_EQ204_OUT, IN := state_2, ENO => _TMP_MOVE186_ENO);
+  IF _TMP_MOVE186_ENO THEN
+      machine_3 := _TMP_MOVE186_OUT;
+  END_IF;
+  IF palletizer AND NOT(palletizer_grabbing) AND ps_5 AND _TMP_EQ210_OUT THEN
+    palletizer_grabbing := TRUE; (*set*)
+  END_IF;
+  _TMP_MOVE273_OUT := MOVE(EN := NOT(ps_6) AND wrapper AND _TMP_AND353_OUT, IN := 0, ENO => _TMP_MOVE273_ENO);
+  IF _TMP_MOVE273_ENO THEN
+      box_count := _TMP_MOVE273_OUT;
+  END_IF;
 END_PROGRAM
 
 FUNCTION_BLOCK wirecut_ppm_function
