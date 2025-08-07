@@ -1,6 +1,7 @@
 import json
 import time
 import threading
+import socket
 import paho.mqtt.client as mqtt
 from paho import mqtt as mqtt_consts
 
@@ -19,6 +20,7 @@ class MqttClient:
         self.modbus_client = modbus_client
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
+        self.hostname = socket.gethostname()
 
     def connect(self):
         self.client.connect(BROKER, PORT, keepalive=60)
@@ -34,7 +36,7 @@ class MqttClient:
     def on_message(self, client, userdata, msg):
         try:
             payload = json.loads(msg.payload.decode())
-            if payload.get('source') == 'simulation':
+            if payload.get('source') == self.hostname:
                 return # Ignore messages from the simulation itself
             signal_name = msg.topic.split("/")[-1]
             for signal in self.signals:
@@ -51,12 +53,14 @@ class MqttClient:
             print(f"Failed to parse message: {e}")
 
     def publish_signal(self, signal_name, signal):
-        topic = f"{TOPIC_PREFIX}/{signal_name}"
-        payload = {
-            "name": signal_name,
-            "dataType": type(signal.get_value()).__name__,
-            "value": signal.get_value(),
-            "timestamp": int(time.time()),
-            "source": "simulation" 
-        }
-        self.client.publish(topic, json.dumps(payload))
+        if signal.get_value() != signal.latest_published_value or signal.latest_published_value is None:
+            topic = f"{TOPIC_PREFIX}/{signal_name}"
+            payload = {
+                "name": signal_name,
+                "dataType": type(signal.get_value()).__name__,
+                "value": signal.get_value(),
+                "timestamp": int(time.time()),
+                "source": self.hostname
+            }
+            self.client.publish(topic, json.dumps(payload))
+            signal.latest_published_value = signal.get_value()

@@ -9,6 +9,7 @@ class Signal:
         self.name = name
         self.value = value
         self.address = address
+        self.latest_published_value = None 
 
     def set_value(self, new_value):
         self.value = new_value
@@ -43,6 +44,7 @@ box_maker = Signal("box_maker", False, 723)
 taper = Signal("taper", False, 724)
 palletizer = Signal("palletizer", False, 726)
 palletizer_grabbing = Signal("palletizer_grabbing", False, 727)
+wrapper = Signal("wrapper", False, 728)
 wrapper_conveying = Signal("wrapper_conveying", False, 729)
 conveyor_1 = Signal("conveyor_1", False, 730)
 conveyor_2 = Signal("conveyor_2", False, 731)
@@ -115,6 +117,7 @@ SIGNALS = [
     taper,
     palletizer,
     palletizer_grabbing,
+    wrapper,
     wrapper_conveying,
     conveyor_1,
     conveyor_2,
