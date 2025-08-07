@@ -8,8 +8,7 @@ import random
 class SimulationEngine:
     def __init__(self):
         print("Connecting to OpenPLC...")
-        self.modbus_client = FloatModbusClient(host = "localhost", port = 502, auto_open= False, auto_close= True)
-        self.modbus_client.open()
+        self.modbus_client = FloatModbusClient(host = "localhost", port = 502, auto_open= True, auto_close= False)
         print("Connected to OpenPLC successfully.")
         print("Connecting to MQTT Broker...")
         self.mqtt_client = MqttClient(signals.SIGNALS, self.modbus_client)
@@ -30,13 +29,10 @@ class SimulationEngine:
         signal.set_value(value)
         self.mqtt_client.publish_signal(signal.get_name(), signal)
         if type(signal.get_value()) == bool:
-            print(f"Setting BOOL signal {signal.get_name()} to {value} at address {signal.get_address()}")
             self.modbus_client.write_single_coil(signal.get_address(), value)
         elif isinstance(signal.get_value(), int):
-            print(f"Setting INT signal {signal.get_name()} to {value} at address {signal.get_address()}")
             self.modbus_client.write_single_register(signal.get_address(), value)
         elif isinstance(signal.get_value(), float):
-            print(f"Setting FLOAT signal {signal.get_name()} to {value} at address {signal.get_address()}")
             self.modbus_client.write_float(signal.get_address(), value)
 
     def reset(self):
@@ -62,20 +58,19 @@ class SimulationEngine:
             if isinstance(signal.get_value(), bool):
                 result = self.modbus_client.read_coils(signal.get_address())
                 if result is not None:
-                    signal.set_value(result[0])
+                    self.set_signal(signal, result[0])
             # Set integers
             elif isinstance(signal.get_value(), int):
                 result = self.modbus_client.read_holding_registers(signal.get_address())
                 if result and len(result) > 0:
-                    signal.set_value(result[0])  # Extract first value
+                    self.set_signal(signal, result[0])  # Extract first value
             # Set floats
             elif isinstance(signal.get_value(), float):
                 result = self.modbus_client.read_float(signal.get_address())
                 if result is not None:
-                    signal.set_value(result[0])
+                    self.set_signal(signal, result[0])
     
     def write_signals(self):
-        print("Writing signals to OpenPLC...")
         lcf_weight = self.flour_silo/4.0
         lcs_weight = self.sugar_silo/4.0
 
@@ -126,9 +121,7 @@ class SimulationEngine:
             trough = mixer
             mixer = 0
             self.set_signal(signals.trough_transfer, False)
-        
-        print(flour_silo, sugar_silo, hopper, mixer, trough)
-        
+                
         self.flour_silo = flour_silo
         self.sugar_silo = sugar_silo
         self.hopper = hopper

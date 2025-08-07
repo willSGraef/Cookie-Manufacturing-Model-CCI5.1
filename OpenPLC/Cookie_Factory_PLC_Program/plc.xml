@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2025-02-05T12:34:47"/>
-  <contentHeader name="CookiePLC" modificationDateTime="2025-08-05T15:34:37">
+  <contentHeader name="CookiePLC" modificationDateTime="2025-08-07T10:59:44">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -7165,7 +7165,7 @@ END_IF;]]></xhtml:p>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="341" formalParameter="OUT">
                   <position x="2040" y="3010"/>
-                  <position x="1920" y="3010"/>
+                  <position x="1940" y="3010"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -7174,23 +7174,25 @@ END_IF;]]></xhtml:p>
               <variable>roe_3</variable>
             </contact>
             <block localId="341" typeName="EQ" width="70" height="80" executionOrderId="0">
-              <position x="1850" y="2970"/>
+              <position x="1870" y="2980"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
-                    <relPosition x="0" y="40"/>
+                    <relPosition x="0" y="30"/>
                     <connection refLocalId="354">
-                      <position x="1850" y="3010"/>
-                      <position x="1820" y="3010"/>
+                      <position x="1870" y="3010"/>
+                      <position x="1835" y="3010"/>
+                      <position x="1835" y="3000"/>
+                      <position x="1820" y="3000"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="IN2">
                   <connectionPointIn>
-                    <relPosition x="0" y="60"/>
+                    <relPosition x="0" y="70"/>
                     <connection refLocalId="282">
-                      <position x="1850" y="3030"/>
-                      <position x="1830" y="3030"/>
+                      <position x="1870" y="3050"/>
+                      <position x="1830" y="3050"/>
                       <position x="1830" y="3060"/>
                       <position x="1810" y="3060"/>
                     </connection>
@@ -7201,7 +7203,7 @@ END_IF;]]></xhtml:p>
               <outputVariables>
                 <variable formalParameter="OUT">
                   <connectionPointOut>
-                    <relPosition x="70" y="40"/>
+                    <relPosition x="70" y="30"/>
                   </connectionPointOut>
                 </variable>
               </outputVariables>

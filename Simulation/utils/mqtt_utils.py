@@ -34,16 +34,18 @@ class MqttClient:
     def on_message(self, client, userdata, msg):
         try:
             payload = json.loads(msg.payload.decode())
+            if payload.get('source') == 'simulation':
+                return # Ignore messages from the simulation itself
             signal_name = msg.topic.split("/")[-1]
             for signal in self.signals:
                 if signal.get_name() == signal_name:
                     value = payload['value']
-                    if isinstance(signal.get_value(), bool):
-                        self.modbus_client.write_single_coil(signal.get_address(), value)
-                    elif isinstance(signal.get_value(), int):
-                        self.modbus_client.write_single_register(signal.get_address(), value)
-                    elif isinstance(signal.get_value(), float):
-                        self.modbus_client.write_float(signal.get_address(), value)
+                    if type(signal.get_value()) == bool:
+                        self.modbus_client.write_single_coil(signal.get_address(), bool(value))
+                    elif type(signal.get_value()) == int:
+                        self.modbus_client.write_single_register(signal.get_address(), int(value))
+                    elif type(signal.get_value()) == float:
+                        self.modbus_client.write_float(signal.get_address(), float(value))
                     break
         except Exception as e:
             print(f"Failed to parse message: {e}")
@@ -55,5 +57,6 @@ class MqttClient:
             "dataType": type(signal.get_value()).__name__,
             "value": signal.get_value(),
             "timestamp": int(time.time()),
+            "source": "simulation" 
         }
         self.client.publish(topic, json.dumps(payload))
