@@ -20,7 +20,7 @@ class MqttClient:
         self.client.on_message = self.on_message
         self.hostname = socket.gethostname()
     
-    def wait_for_token(timeout=300):
+    def wait_for_token(self, timeout=300):
         print("Waiting for JWT_TOKEN environment variable to be set...")
         waited = 0
         while waited < timeout:
