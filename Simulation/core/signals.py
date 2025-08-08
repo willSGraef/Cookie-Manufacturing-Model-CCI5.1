@@ -32,6 +32,7 @@ dv = Signal("dv", False, 703)
 vacuum = Signal("vacuum", False, 704)
 mixer = Signal("mixer", False, 705)
 wirecutter = Signal("wirecutter", False, 711)
+vacuum_manual = Signal("vacuum_manual", False, 710)
 trough_transfer = Signal("trough_transfer", False, 713)
 gv_1 = Signal("gv_1", False, 718)
 fan_1 = Signal("fan_1", False, 719)
@@ -105,6 +106,7 @@ SIGNALS = [
     vacuum,
     mixer,
     wirecutter,
+    vacuum_manual,
     trough_transfer,
     gv_1,
     fan_1,

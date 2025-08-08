@@ -26,3 +26,9 @@ ARM_ROTATION_SPEED = 100 #Degrees a second
 # Cookie
 COOKIE_COUNT = 8.0
 COOKIE_WEIGHT = 0.3
+
+# MQTT
+TOKEN_TIMOUT = 60 # seconds
+USERNAME = "cyberarena"
+BROKER = "ualr-core-f8adc79d.a02.usw2.aws.hivemq.cloud"
+PORT = 8883

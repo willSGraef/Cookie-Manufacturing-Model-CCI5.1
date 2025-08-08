@@ -3,32 +3,39 @@ import time
 import threading
 import socket
 import os
+import sys
 import paho.mqtt.client as mqtt
 from paho import mqtt as mqtt_consts
+from core import constants
 
-BROKER = "ualr-core-f8adc79d.a02.usw2.aws.hivemq.cloud"
-PORT = 8883
-TOPIC_PREFIX = os.environ.get('BUILD_ID', 'DEFAULT_TOPIC')
-USERNAME = "cyberarena"
-PASSWORD = os.environ.get('JWT_TOKEN', 'TOKEN_NOT_SET')
+TOPIC_PREFIX = os.environ.get('BUILD_ID', 'BUILD_ID_NOT_SET')
 
 class MqttClient:
     def __init__(self, signals, modbus_client):
         self.client = mqtt.Client(client_id="", protocol=mqtt.MQTTv5)
         self.client.tls_set(tls_version=mqtt_consts.client.ssl.PROTOCOL_TLS)
-        self.client.username_pw_set(USERNAME, PASSWORD)
         self.signals = signals
         self.modbus_client = modbus_client
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
         self.hostname = socket.gethostname()
-
+    
+    def wait_for_token(timeout=300):
+        print("Waiting for JWT_TOKEN environment variable to be set...")
+        waited = 0
+        while waited < timeout:
+            token = os.environ.get('JWT_TOKEN', 'TOKEN_NOT_SET')
+            if token and token != 'TOKEN_NOT_SET':
+                return token
+            time.sleep(1)
+            waited += 1
+        print("ERROR: JWT_TOKEN environment variable not set after waiting. Exiting.")
+        sys.exit(1)
+    
     def connect(self):
-        if PASSWORD == 'TOKEN_NOT_SET':
-            print("ERROR: JWT_TOKEN environment variable not set. Exiting.")
-            import sys
-            sys.exit(1)
-        self.client.connect(BROKER, PORT, keepalive=60)
+        PASSWORD = self.wait_for_token(timeout=60)
+        self.client.username_pw_set(constants.USERNAME, PASSWORD)
+        self.client.connect(constants.BROKER, constants.PORT, keepalive=60)
         thread = threading.Thread(target=self.client.loop_forever)
         thread.daemon = True
         thread.start()
@@ -42,17 +49,39 @@ class MqttClient:
         try:
             payload = json.loads(msg.payload.decode())
             if payload.get('source') == self.hostname:
-                return # Ignore messages from the simulation itself
+                return
+            print(f"Received message on topic {msg.topic}: {payload}")
             signal_name = msg.topic.split("/")[-1]
             for signal in self.signals:
                 if signal.get_name() == signal_name:
                     value = payload['value']
-                    if type(signal.get_value()) == bool:
-                        self.modbus_client.write_single_coil(signal.get_address(), bool(value))
-                    elif type(signal.get_value()) == int:
-                        self.modbus_client.write_single_register(signal.get_address(), int(value))
-                    elif type(signal.get_value()) == float:
-                        self.modbus_client.write_float(signal.get_address(), float(value))
+                    data_type = payload.get('dataType', '').lower()
+                    # Cast value based on dataType in payload
+                    if 'bool' in data_type:
+                        if isinstance(value, str):
+                            value = value.lower() == 'true'
+                        else:
+                            value = bool(value)
+                        self.modbus_client.write_single_coil(signal.get_address(), value)
+                    elif 'int' in data_type:
+                        if isinstance(value, str):
+                            try:
+                                value = int(value)
+                            except ValueError:
+                                print(f"Invalid integer value '{value}' for signal {signal_name}")
+                                break
+                        self.modbus_client.write_single_register(signal.get_address(), value)
+                    elif 'float' in data_type:
+                        if isinstance(value, str):
+                            try:
+                                value = float(value)
+                                print(f"Converted string to float: {value} for signal {signal_name}")
+                            except ValueError:
+                                print(f"Invalid float value '{value}' for signal {signal_name}")
+                                break
+                        self.modbus_client.write_float(signal.get_address(), value)
+                    else:
+                        print(f"Unknown dataType '{data_type}' for signal {signal_name}")
                     break
         except Exception as e:
             print(f"Failed to parse message: {e}")
