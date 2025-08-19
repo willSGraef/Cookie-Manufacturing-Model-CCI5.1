@@ -679,7 +679,7 @@ PROGRAM tag_display
       machine_3 := _TMP_MOVE252_OUT;
   END_IF;
   _TMP_EQ256_OUT := EQ(machine_4, state_0);
-  _TMP_GE263_OUT := GE(box_count, 40);
+  _TMP_GE263_OUT := GE(box_count, 10);
   _TMP_AND353_OUT := AND(_TMP_EQ256_OUT, _TMP_GE263_OUT);
   IF NOT(ps_6) AND wrapper AND _TMP_AND353_OUT THEN
     wrapper_wrapping := TRUE; (*set*)

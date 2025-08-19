@@ -1495,7 +1495,7 @@ void TAG_DISPLAY_body__(TAG_DISPLAY *data__) {
     NULL,
     (UINT)2,
     (INT)__GET_VAR(data__->BOX_COUNT,),
-    (INT)40));
+    (INT)10));
   __SET_VAR(data__->,_TMP_AND353_OUT,,AND__BOOL__BOOL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,

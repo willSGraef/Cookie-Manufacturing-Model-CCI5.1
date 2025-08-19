@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2025-02-05T12:34:47"/>
-  <contentHeader name="CookiePLC" modificationDateTime="2025-08-07T10:59:44">
+  <contentHeader name="CookiePLC" modificationDateTime="2025-08-19T14:16:24">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -3472,25 +3472,27 @@ END_IF;]]></xhtml:p>
               <expression>tunnel_temp</expression>
             </outVariable>
             <block localId="167" typeName="EQ" width="70" height="80">
-              <position x="130" y="1170"/>
+              <position x="130" y="1180"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
-                    <relPosition x="0" y="40"/>
+                    <relPosition x="0" y="30"/>
                     <connection refLocalId="168">
                       <position x="130" y="1210"/>
-                      <position x="92" y="1210"/>
+                      <position x="111" y="1210"/>
+                      <position x="111" y="1200"/>
+                      <position x="92" y="1200"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="IN2">
                   <connectionPointIn>
-                    <relPosition x="0" y="60"/>
+                    <relPosition x="0" y="70"/>
                     <connection refLocalId="169">
-                      <position x="130" y="1230"/>
-                      <position x="110" y="1230"/>
+                      <position x="130" y="1250"/>
+                      <position x="110" y="1250"/>
                       <position x="110" y="1260"/>
-                      <position x="80" y="1260"/>
+                      <position x="90" y="1260"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -3499,7 +3501,7 @@ END_IF;]]></xhtml:p>
               <outputVariables>
                 <variable formalParameter="OUT">
                   <connectionPointOut>
-                    <relPosition x="70" y="40"/>
+                    <relPosition x="70" y="30"/>
                   </connectionPointOut>
                 </variable>
               </outputVariables>
@@ -3512,9 +3514,9 @@ END_IF;]]></xhtml:p>
               <expression>machine_1</expression>
             </inVariable>
             <inVariable localId="169" width="70" height="30" negated="false">
-              <position x="10" y="1250"/>
+              <position x="20" y="1250"/>
               <connectionPointOut>
-                <relPosition x="70" y="20"/>
+                <relPosition x="70" y="10"/>
               </connectionPointOut>
               <expression>state_0</expression>
             </inVariable>
@@ -3962,27 +3964,25 @@ END_IF;]]></xhtml:p>
               </content>
             </comment>
             <block localId="130" typeName="EQ" width="70" height="80" executionOrderId="0">
-              <position x="130" y="1970"/>
+              <position x="130" y="1980"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
-                    <relPosition x="0" y="40"/>
+                    <relPosition x="0" y="30"/>
                     <connection refLocalId="138">
                       <position x="130" y="2010"/>
-                      <position x="110" y="2010"/>
-                      <position x="110" y="2020"/>
-                      <position x="92" y="2020"/>
+                      <position x="92" y="2010"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="IN2">
                   <connectionPointIn>
-                    <relPosition x="0" y="60"/>
+                    <relPosition x="0" y="70"/>
                     <connection refLocalId="139">
-                      <position x="130" y="2030"/>
-                      <position x="110" y="2030"/>
-                      <position x="110" y="2080"/>
-                      <position x="100" y="2080"/>
+                      <position x="130" y="2050"/>
+                      <position x="110" y="2050"/>
+                      <position x="110" y="2070"/>
+                      <position x="90" y="2070"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -3991,20 +3991,20 @@ END_IF;]]></xhtml:p>
               <outputVariables>
                 <variable formalParameter="OUT">
                   <connectionPointOut>
-                    <relPosition x="70" y="40"/>
+                    <relPosition x="70" y="30"/>
                   </connectionPointOut>
                 </variable>
               </outputVariables>
             </block>
             <inVariable localId="138" width="82" height="30" negated="false" executionOrderId="0">
-              <position x="10" y="2010"/>
+              <position x="10" y="2000"/>
               <connectionPointOut>
-                <relPosition x="82" y="20"/>
+                <relPosition x="82" y="10"/>
               </connectionPointOut>
               <expression>machine_1</expression>
             </inVariable>
             <inVariable localId="139" width="70" height="30" negated="false" executionOrderId="0">
-              <position x="30" y="2060"/>
+              <position x="20" y="2050"/>
               <connectionPointOut>
                 <relPosition x="70" y="20"/>
               </connectionPointOut>
@@ -4258,11 +4258,11 @@ END_IF;]]></xhtml:p>
               </content>
             </comment>
             <block localId="154" typeName="EQ" width="70" height="80" executionOrderId="0">
-              <position x="810" y="1180"/>
+              <position x="810" y="1170"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
-                    <relPosition x="0" y="30"/>
+                    <relPosition x="0" y="40"/>
                     <connection refLocalId="155">
                       <position x="810" y="1210"/>
                       <position x="780" y="1210"/>
@@ -4273,10 +4273,10 @@ END_IF;]]></xhtml:p>
                 </variable>
                 <variable formalParameter="IN2">
                   <connectionPointIn>
-                    <relPosition x="0" y="70"/>
+                    <relPosition x="0" y="60"/>
                     <connection refLocalId="157">
-                      <position x="810" y="1250"/>
-                      <position x="780" y="1250"/>
+                      <position x="810" y="1230"/>
+                      <position x="780" y="1230"/>
                       <position x="780" y="1260"/>
                       <position x="760" y="1260"/>
                     </connection>
@@ -4287,7 +4287,7 @@ END_IF;]]></xhtml:p>
               <outputVariables>
                 <variable formalParameter="OUT">
                   <connectionPointOut>
-                    <relPosition x="70" y="30"/>
+                    <relPosition x="70" y="40"/>
                   </connectionPointOut>
                 </variable>
               </outputVariables>
@@ -4627,13 +4627,13 @@ END_IF;]]></xhtml:p>
               <variable>ps_4</variable>
             </contact>
             <block localId="197" typeName="EQ" width="70" height="80" executionOrderId="0">
-              <position x="810" y="1670"/>
+              <position x="800" y="1680"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
-                    <relPosition x="0" y="40"/>
+                    <relPosition x="0" y="30"/>
                     <connection refLocalId="198">
-                      <position x="810" y="1710"/>
+                      <position x="800" y="1710"/>
                       <position x="770" y="1710"/>
                       <position x="770" y="1700"/>
                       <position x="750" y="1700"/>
@@ -4642,10 +4642,10 @@ END_IF;]]></xhtml:p>
                 </variable>
                 <variable formalParameter="IN2">
                   <connectionPointIn>
-                    <relPosition x="0" y="60"/>
+                    <relPosition x="0" y="70"/>
                     <connection refLocalId="199">
-                      <position x="810" y="1730"/>
-                      <position x="770" y="1730"/>
+                      <position x="800" y="1750"/>
+                      <position x="770" y="1750"/>
                       <position x="770" y="1760"/>
                       <position x="740" y="1760"/>
                     </connection>
@@ -4656,7 +4656,7 @@ END_IF;]]></xhtml:p>
               <outputVariables>
                 <variable formalParameter="OUT">
                   <connectionPointOut>
-                    <relPosition x="70" y="40"/>
+                    <relPosition x="70" y="30"/>
                   </connectionPointOut>
                 </variable>
               </outputVariables>
@@ -5629,7 +5629,7 @@ END_IF;]]></xhtml:p>
               <connectionPointOut>
                 <relPosition x="30" y="20"/>
               </connectionPointOut>
-              <expression>40</expression>
+              <expression>10</expression>
             </inVariable>
             <contact localId="269" negated="false" width="21" height="20" executionOrderId="0">
               <position x="3150" y="1210"/>
@@ -7349,9 +7349,7 @@ END_IF;]]></xhtml:p>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="197" formalParameter="OUT">
                   <position x="918" y="1710"/>
-                  <position x="899" y="1710"/>
-                  <position x="899" y="1700"/>
-                  <position x="880" y="1700"/>
+                  <position x="870" y="1710"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
