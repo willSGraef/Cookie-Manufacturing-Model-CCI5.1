@@ -1,17 +1,20 @@
-#Date: 5/30/2025
+#Date: 9/2/2025
 #Author: William Graef, wgraef@uark.edu
 #RIOT LAB, UNIVERSITY OF ARKANSAS
 
-#Class description: Class for the different signals: currently has data_type, value, and address
+#Contains all the models signals, their values, and addresses
 
 class Signal:
-    def __init__(self, name, value, address):
+    def __init__(self, name, address, value = None):
         self.name = name
-        self.value = value
         self.address = address
+        self.value = value
         self.latest_published_value = None 
+        self.reset_value = None
 
     def set_value(self, new_value):
+        if self.value == None:
+            self.reset_value = new_value
         self.value = new_value
 
     def get_value(self):
@@ -25,76 +28,85 @@ class Signal:
 
 # Signal variables
 
-rv_1 = Signal("rv_1", False, 700)
-rv_2 = Signal("rv_2", False, 701)
-rv_3 = Signal("rv_3", False, 702)
-dv = Signal("dv", False, 703)
-vacuum = Signal("vacuum", False, 704)
-mixer = Signal("mixer", False, 705)
-wirecutter = Signal("wirecutter", False, 711)
-vacuum_manual = Signal("vacuum_manual", False, 710)
-trough_transfer = Signal("trough_transfer", False, 713)
-gv_1 = Signal("gv_1", False, 718)
-fan_1 = Signal("fan_1", False, 719)
-fan_2 = Signal("fan_2", False, 720)
-fan_3 = Signal("fan_3", False, 721)
-exhaust_fan = Signal("exhaust_fan", False, 722)
-conveyor = Signal("conveyor", False, 716)
-paper_cutter = Signal("paper_cutter", False, 717)
-box_maker = Signal("box_maker", False, 723)
-taper = Signal("taper", False, 724)
-palletizer = Signal("palletizer", False, 726)
-palletizer_grabbing = Signal("palletizer_grabbing", False, 727)
-wrapper = Signal("wrapper", False, 728)
-wrapper_conveying = Signal("wrapper_conveying", False, 729)
-conveyor_1 = Signal("conveyor_1", False, 730)
-conveyor_2 = Signal("conveyor_2", False, 731)
-conveyor_3 = Signal("conveyor_3", False, 732)
-conveyor_4 = Signal("conveyor_4", False, 733)
-conveyor_5 = Signal("conveyor_5", False, 734)
-ps_1 = Signal("ps_1", False, 735)
-ps_2 = Signal("ps_2", False, 736)
-ps_3 = Signal("ps_3", False, 737)
-ps_4 = Signal("ps_4", False, 738)
-ps_5 = Signal("ps_5", False, 739)
-ps_6 = Signal("ps_6", False, 740)
-bagger = Signal("bagger", False, 741)
-wrapper_wrapping = Signal("wrapper_wrapping", False, 742)
-boxing = Signal("boxing", False, 743)
-taping = Signal("taping", False, 744)
-conveying_1 = Signal("conveying_1", False, 745)
-conveying_2 = Signal("conveying_2", False, 746)
-conveying_3 = Signal("conveying_3", False, 747)
-conveying_4 = Signal("conveying_4", False, 748)
-conveying_5 = Signal("conveying_5", False, 749)
-palletizer_moving = Signal("palletizer_moving", False, 750)
-bagging = Signal("bagging", False, 751)
-roe_1 = Signal("roe_1", False, 752)
-roe_2 = Signal("roe_2", False, 753)
-roe_3 = Signal("roe_3", False, 754)
-reset = Signal("reset", False, 1000)
+# Boolean signals
+rv_1 = Signal("rv_1", 700)
+rv_2 = Signal("rv_2", 701)
+rv_3 = Signal("rv_3", 702)
+dv = Signal("dv", 703)
+vacuum = Signal("vacuum", 704)
+mixer = Signal("mixer", 705)
+flour_alarm = Signal("flour_alarm", 706)
+sugar_alarm = Signal("sugar_alarm", 707)
+hopper_alarm = Signal("hopper_alarm", 708)
+vacuum_alarm = Signal("vacuum_alarm", 709)
+wirecutter = Signal("wirecutter", 711)
+vacuum_manual = Signal("vacuum_manual", 710)
+trough_transfer = Signal("trough_transfer", 713)
+conveyor = Signal("conveyor", 716)
+paper_cutter = Signal("paper_cutter", 717)
+gv_1 = Signal("gv_1", 718)
+fan_1 = Signal("fan_1", 719)
+fan_2 = Signal("fan_2", 720)
+fan_3 = Signal("fan_3", 721)
+exhaust_fan = Signal("exhaust_fan", 722)
+box_maker = Signal("box_maker", 723)
+taper = Signal("taper", 724)
+palletizer = Signal("palletizer", 726)
+palletizer_grabbing = Signal("palletizer_grabbing", 727)
+wrapper = Signal("wrapper", 728)
+wrapper_conveying = Signal("wrapper_conveying", 729)
+conveyor_1 = Signal("conveyor_1", 730)
+conveyor_2 = Signal("conveyor_2", 731)
+conveyor_3 = Signal("conveyor_3", 732)
+conveyor_4 = Signal("conveyor_4", 733)
+conveyor_5 = Signal("conveyor_5", 734)
+ps_1 = Signal("ps_1", 735)
+ps_2 = Signal("ps_2", 736)
+ps_3 = Signal("ps_3", 737)
+ps_4 = Signal("ps_4", 738)
+ps_5 = Signal("ps_5", 739)
+ps_6 = Signal("ps_6", 740)
+bagger = Signal("bagger", 741)
+wrapper_wrapping = Signal("wrapper_wrapping", 742)
+boxing = Signal("boxing", 743)
+taping = Signal("taping", 744)
+conveying_1 = Signal("conveying_1", 745)
+conveying_2 = Signal("conveying_2", 746)
+conveying_3 = Signal("conveying_3", 747)
+conveying_4 = Signal("conveying_4", 748)
+conveying_5 = Signal("conveying_5", 749)
+palletizer_moving = Signal("palletizer_moving", 750)
+bagging = Signal("bagging", 751)
+roe_1 = Signal("roe_1", 752)
+roe_2 = Signal("roe_2", 753)
+roe_3 = Signal("roe_3", 754)
+reset = Signal("reset", 1000)
 
-vacuum_rpm = Signal("vacuum_rpm", 0, 1001)
-mixer_rpm = Signal("mixer_rpm", 0, 1003) 
-wirecut_cpm = Signal("wirecut_cpm", 0, 1006)
-conveyor_fpm = Signal("conveyor_fpm", 0, 1007)
-palletizer_target_rotation = Signal("palletizer_target_rotation", 0, 1012)
+# Integer signals
+vacuum_rpm = Signal("vacuum_rpm", 1001)
+mixer_rpm = Signal("mixer_rpm", 1003) 
+wirecut_cpm = Signal("wirecut_cpm", 1006)
+papercut_cpm = Signal("papercut_cpm", 1010)
+conveyor_fpm = Signal("conveyor_fpm", 1007)
+palletizer_target_rotation = Signal("palletizer_target_rotation", 1012)
+box_count = Signal("box_count", 1013)
 
-lcs_1 = Signal("lcs_1", 0.000, 100)
-lcs_2 = Signal("lcs_2", 0.000, 102)
-lcs_3 = Signal("lcs_3", 0.000, 104)
-lcs_4 = Signal("lcs_4", 0.000, 106)
-lcf_1 = Signal("lcf_1", 0.000, 108)
-lcf_2 = Signal("lcf_2", 0.000, 110)
-lcf_3 = Signal("lcf_3", 0.000, 112)
-lcf_4 = Signal("lcf_4", 0.000, 114)
-lch = Signal("lch", 0.000, 98)
-lcm = Signal("lcm", 0.000, 96)
-trough_weight = Signal("trough_weight", 0.000, 94)
-flour_weight = Signal("flour_weight", 0.000, 116)
-sugar_weight = Signal("sugar_weight", 0.000, 218)
-tunnel_temp = Signal("tunnel_temp", 0.000, 302)
-nitrogen_volume = Signal("nitrogen_volume", 0.000, 300)
+# Float signals
+lcs_1 = Signal("lcs_1", 100)
+lcs_2 = Signal("lcs_2", 102)
+lcs_3 = Signal("lcs_3", 104)
+lcs_4 = Signal("lcs_4", 106)
+lcf_1 = Signal("lcf_1", 108)
+lcf_2 = Signal("lcf_2", 110)
+lcf_3 = Signal("lcf_3", 112)
+lcf_4 = Signal("lcf_4", 114)
+lch = Signal("lch", 98)
+lcm = Signal("lcm", 96)
+trough_weight = Signal("trough_weight", 94)
+flour_weight = Signal("flour_weight", 116)
+sugar_weight = Signal("sugar_weight", 218)
+tunnel_temp = Signal("tunnel_temp", 302)
+nitrogen_volume = Signal("nitrogen_volume", 300)
 
 # Signal list
 
@@ -105,16 +117,20 @@ SIGNALS = [
     dv,
     vacuum,
     mixer,
+    flour_alarm,
+    sugar_alarm,
+    hopper_alarm,
+    vacuum_alarm,
     wirecutter,
     vacuum_manual,
     trough_transfer,
+    conveyor,
+    paper_cutter,
     gv_1,
     fan_1,
     fan_2,
     fan_3,
     exhaust_fan,
-    conveyor,
-    paper_cutter,
     box_maker,
     taper,
     palletizer,
@@ -150,8 +166,10 @@ SIGNALS = [
     vacuum_rpm,
     mixer_rpm,
     wirecut_cpm,
+    papercut_cpm,
     conveyor_fpm,
     palletizer_target_rotation,
+    box_count,
     lcs_1,
     lcs_2,
     lcs_3,
@@ -166,5 +184,4 @@ SIGNALS = [
     flour_weight,
     sugar_weight,
     tunnel_temp,
-    nitrogen_volume,
 ]

@@ -49,8 +49,7 @@ class SimulationEngine:
         self.packing = False
         # Reset signals
         for signal in signals.SIGNALS:
-            if isinstance(signal.get_value(), bool):
-                self.set_signal(signal, False)
+            self.set_signal(signal, signal.reset_value)
 
     def read_signals(self):
         for signal in signals.SIGNALS:
