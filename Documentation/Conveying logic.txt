@@ -1,0 +1,56 @@
+Conveying logic:
+a.
+PLC: if c1 = 0, ps2 = 0 then boxing = 1
+
+Python: start counter for boxing (2 seconds):
+If boxing = 1 and box_maker = 1; counter ++
+If counter >= 2; counter = 0, boxing = 0
+
+b.
+PLC: if boxing = 0, ps2 = 0, ps1 = 0 then c1 = 1
+
+Python: start counter for c1 (3 seconds):
+If c1 = 1; counter ++
+If counter >= 3; counter = 0, c1 = 0, ps1 = 1
+Python: start counter for ps1 (1 second):
+If ps1 = 1 and bagger; counter ++
+If counter >= 1; counter = 0, ps1 = 0
+
+c.
+PLC: if ps1 = 0, ps2 = 0, then c2 = 1
+
+Python: start counter for c2 (2 seconds):
+If c2 = 1; counter ++
+If counter >= 2; counter = 0, c2 = 0, ps2 = 1
+Python: start counter for ps2 (7.5-15.0 seconds)
+If ps2 = 1; counter ++
+If counter >= (7.5-15.0); counter = 0, ps2 = 0, ps3 = 1
+
+
+
+d. 
+PLC: if ps3 = 1, ps5 = 0, ps4 = 0 then c3 = 1, ps3 = 0
+
+Python: start counter for c3 (3 seconds):
+If c3 = 1; counter ++
+If counter >= 3; counter = 0, c3 = 0, ps4 = 1
+Python: start counter for ps4 (2 second):
+If ps4 = 1 and taper = 1; counter ++
+If counter >= 2; counter = 0, ps4 = 0
+
+e.
+PLC: if ps4 = 0, ps5 = 0 then c4 = 1
+Python: start counter for c4 (4 seconds):
+If c4 = 1; counter ++
+If counter >= 4; counter = 0, c4 = 0, ps5 = 1 
+
+f.
+PLC: if palletizer_grabbing, palletizer_pos = 2 then palletizer_grabbing = False, add one to box_count
+
+g.
+PLC: If box_count = 40, wrapper = 1 then wrapper_wrapping = 1
+
+h.
+PLC: if ps6 = 1 then conveyor_5 = 1
+
+
