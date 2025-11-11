@@ -2,7 +2,6 @@ from core.constants import *
 import core.signals as signals
 from utils.modbus_utils import FloatModbusClient
 from utils.engine_utils import transfer_material, CFM
-from utils.mqtt_utils import MqttClient
 import random
 
 class SimulationEngine:
@@ -10,10 +9,6 @@ class SimulationEngine:
         print("Connecting to OpenPLC...")
         self.modbus_client = FloatModbusClient(host = "localhost", port = 502, auto_open= True, auto_close= False)
         print("Connected to OpenPLC successfully.")
-        print("Connecting to MQTT Broker...")
-        self.mqtt_client = MqttClient(signals.SIGNALS, self.modbus_client)
-        self.mqtt_client.connect()
-        print("Connected to MQTT Broker successfully.")
         self.flour_silo = SILO_CAPACITY
         self.sugar_silo = SILO_CAPACITY
         self.hopper = 0
@@ -27,7 +22,6 @@ class SimulationEngine:
     
     def set_signal(self, signal, value):
         signal.set_value(value)
-        self.mqtt_client.publish_signal(signal.get_name(), signal)
         if type(signal.get_value()) == bool:
             self.modbus_client.write_single_coil(signal.get_address(), value)
         elif isinstance(signal.get_value(), int):
