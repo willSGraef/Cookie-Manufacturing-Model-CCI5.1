@@ -4,6 +4,7 @@
 
 from time import sleep
 import signal
+import traceback
 from core.engine import SimulationEngine
 
 running = True
@@ -24,5 +25,6 @@ if __name__ == "__main__":
             sleep(1)
     except Exception as e:
         print(f"Error: {e}")
+        traceback.print_exc()
     finally:
         print("Simulation stopped.")

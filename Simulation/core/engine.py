@@ -31,6 +31,7 @@ class SimulationEngine:
 
     def reset(self):
         # Reset constants
+        print("RESETTING")
         self.flour_silo = SILO_CAPACITY
         self.sugar_silo = SILO_CAPACITY
         self.hopper = 0
@@ -50,18 +51,24 @@ class SimulationEngine:
             # Set booleans
             if isinstance(signal.get_value(), bool):
                 result = self.modbus_client.read_coils(signal.get_address())
+                # print(signal.get_name() + " : " + (str)(result[0]))
                 if result is not None:
                     self.set_signal(signal, result[0])
+                    
             # Set integers
             elif isinstance(signal.get_value(), int):
                 result = self.modbus_client.read_holding_registers(signal.get_address())
+                # print(signal.get_name() + " : " + (str)(result[0]))
                 if result and len(result) > 0:
                     self.set_signal(signal, result[0])  # Extract first value
+                    
             # Set floats
             elif isinstance(signal.get_value(), float):
                 result = self.modbus_client.read_float(signal.get_address())
+                # print(signal.get_name() + " : " + (str)(result[0]))
                 if result is not None:
                     self.set_signal(signal, result[0])
+                    
     
     def write_signals(self):
         lcf_weight = self.flour_silo/4.0
@@ -111,10 +118,17 @@ class SimulationEngine:
             hopper, mixer = transfer_material(hopper, mixer, rate, MIXER_CAPACITY)
 
         if signals.trough_transfer.get_value():
-            trough = mixer
-            mixer = 0
+            if (trough + mixer < 60):
+                trough += mixer
+                mixer = 0
             self.set_signal(signals.trough_transfer, False)
-                
+        
+        # If the mixer isn't going to be overfilled by adding the non bulk ingredients, add them
+        if signals.add_ingredients.get_value():
+            if (mixer + NON_BULK_INGREDIENT_WEIGHT) < 60:
+                mixer = mixer + NON_BULK_INGREDIENT_WEIGHT
+            self.set_signal(signals.add_ingredients, False)
+    
         self.flour_silo = flour_silo
         self.sugar_silo = sugar_silo
         self.hopper = hopper
@@ -129,6 +143,8 @@ class SimulationEngine:
         if signals.trough_weight.get_value() > 0 and signals.wirecutter.get_value():
             rate = ((signals.wirecut_cpm.get_value() * COOKIE_COUNT * COOKIE_WEIGHT)/16.0)/SECONDS_PER_MIN
             trough -= rate
+        elif signals.trough_weight.get_value() < 0:
+            trough = 0
 
         if signals.gv_1.get_value():
             temp_noise = random.uniform(0.0, 1.0)

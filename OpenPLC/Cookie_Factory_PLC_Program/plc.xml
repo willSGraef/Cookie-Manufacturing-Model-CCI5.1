@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2025-02-05T12:34:47"/>
-  <contentHeader name="CookiePLC" modificationDateTime="2025-08-19T14:16:24">
+  <contentHeader name="CookiePLC" modificationDateTime="2025-11-13T16:56:54">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -1617,6 +1617,17 @@ END_IF;]]></xhtml:p>
               </initialValue>
               <documentation>
                 <xhtml:p><![CDATA[Sensor for palletizer pos_3]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="add_ingredients" address="%QX94.3">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Coil for adding additional non-bulk ingredients]]></xhtml:p>
               </documentation>
             </variable>
           </localVars>

@@ -409,6 +409,7 @@ PROGRAM tag_display
     roe_1 AT %QX94.0 : BOOL := false;
     roe_2 AT %QX94.1 : BOOL := false;
     roe_3 AT %QX94.2 : BOOL := false;
+    add_ingredients AT %QX94.3 : BOOL := false;
   END_VAR
   VAR
     _TMP_ADD37_OUT : REAL;

@@ -25,7 +25,9 @@ ARM_ROTATION_SPEED = 100 #Degrees a second
 
 # Cookie
 COOKIE_COUNT = 8.0
-COOKIE_WEIGHT = 0.3
+COOKIE_WEIGHT = 1.04 # oz
+# Non bulk ingredient weight based on ingredients in recipe
+NON_BULK_INGREDIENT_WEIGHT = 33.64
 
 # MQTT
 TOKEN_TIMOUT = 60 # seconds
