@@ -118,7 +118,7 @@ class SimulationEngine:
             hopper, mixer = transfer_material(hopper, mixer, rate, MIXER_CAPACITY)
 
         if signals.trough_transfer.get_value():
-            if (trough + mixer < 60):
+            if (trough + mixer <= 60):
                 trough += mixer
                 mixer = 0
             self.set_signal(signals.trough_transfer, False)
