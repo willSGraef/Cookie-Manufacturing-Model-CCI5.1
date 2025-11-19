@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Scenario details for the engineering workstation project."
+    />
+    <meta name="theme-color" content="#245d7a" />
+
+    <title>Scenario - Engineering Assessment</title>
+
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+
+  <body>
+    <!-- Skip to main content link -->
+    <a href="#main-content" class="sr-only">Skip to main content</a>
+
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Main Content -->
+    <main id="main-content">
+      <!-- Page Header -->
+      <section class="hero" style="padding: var(--spacing-3xl) 0">
+        <div class="container">
+          <h1>Project Scenario</h1>
+          <p>Real-world industrial control systems implementation</p>
+        </div>
+      </section>
+
+      <!-- Main Content -->
+      <section class="section">
+        <div class="container">
+          <h2>Scenario Overview</h2>
+
+          <div class="alert alert-info mb-2xl">
+            <strong>Placeholder Content:</strong> This section contains the
+            scenario framework. Replace with your specific project requirements
+            and scenario details.
+          </div>
+
+          <div class="card mb-2xl">
+            <h3 class="card-title">System Overview</h3>
+            <div class="scenario-grid-2col">
+              <!-- Left Column: Image and Download -->
+              <div class="scenario-image-column">
+                <h4 class="scenario-image-title">Network Topology</h4>
+                <img
+                  id="topology-image"
+                  src="../assets/images/net_topology.png"
+                  alt="Network topology diagram showing the cookie factory's industrial control system architecture"
+                  class="topology-image"
+                  onclick="openTopologyModal()"
+                  onmouseover="this.style.opacity='0.8'"
+                  onmouseout="this.style.opacity='1'"
+                  role="button"
+                  tabindex="0"
+                  aria-label="Click to enlarge network topology diagram"
+                />
+                <div>
+                  <a
+                    href="../assets/images/net_topology.png"
+                    download="network_topology.png"
+                    class="btn btn-primary btn-small"
+                    aria-label="Download network topology diagram as PNG file"
+                  >
+                    Download Topology
+                  </a>
+                </div>
+              </div>
+
+              <!-- Right Column: Links and Information -->
+              <div>
+                <h4 class="resources-column-title">Related Resources</h4>
+                <ul class="resources-list">
+                  <li class="resources-list-item">
+                    <a
+                      href="../assets/documents/Cookie_Factory_PLC_Program.zip"
+                      download="Cookie_Factory_PLC_Program.zip"
+                      class="resource-link download-link-with-icon"
+                      aria-label="Download OpenPLC project files as ZIP archive"
+                    >
+                      <svg
+                        class="icon-sm"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                        ></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                      </svg>
+                      OpenPLC Project Files
+                    </a>
+                  </li>
+                  <li class="resources-list-item">
+                    <a href="#" class="resource-link">Security Protocols</a>
+                  </li>
+                  <li class="resources-list-item">
+                    <a href="#" class="resource-link"
+                      >System Configuration Guide</a
+                    >
+                  </li>
+                  <li class="resources-list-item">
+                    <a href="#" class="resource-link">Troubleshooting Guide</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <h2 class="mt-3xl">Functional Areas</h2>
+
+          <div class="production-flow">
+            <button
+              class="card flow-item clickable-card"
+              data-modal="resource-modal"
+              aria-label="Open Resource Allocation details"
+            >
+              <h3 class="card-title">Resource Allocation</h3>
+              <p class="card-text">
+                Details about the mixing process, including ingredients
+                parameters.
+              </p>
+              <p
+                class="card-text mt-md"
+                style="font-size: var(--font-size-sm); color: rgb(0, 102, 204)"
+              >
+                Click to learn more &rarr;
+              </p>
+            </button>
+
+            <button
+              class="card flow-item clickable-card"
+              data-modal="production-modal"
+              aria-label="Open Production Area details"
+            >
+              <h3 class="card-title">Production Area</h3>
+              <p class="card-text">
+                Details about the forming, cutting, freezing of the dough.
+              </p>
+              <p
+                class="card-text mt-md"
+                style="font-size: var(--font-size-sm); color: rgb(0, 102, 204)"
+              >
+                Click to learn more &rarr;
+              </p>
+            </button>
+
+            <button
+              class="card flow-item clickable-card"
+              data-modal="finished-modal"
+              aria-label="Open Finished Goods details"
+            >
+              <h3 class="card-title">Finished Goods</h3>
+              <p class="card-text">
+                Details of the packaging and bulkpackaging processes.
+              </p>
+              <p
+                class="card-text mt-md"
+                style="font-size: var(--font-size-sm); color: rgb(0, 102, 204)"
+              >
+                Click to learn more &rarr;
+              </p>
+            </button>
+          </div>
+
+          <h2 class="mt-3xl">Key Requirements</h2>
+
+          <div class="grid grid-2">
+            <div class="card">
+              <h3 class="card-title">Hardware Requirements</h3>
+              <p class="card-text">
+                Details about the physical components and hardware
+                specifications needed for the project.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">Software Requirements</h3>
+              <p class="card-text">
+                Software tools, programming languages, and development
+                environments required.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">Communication Protocols</h3>
+              <p class="card-text">
+                Specification of protocols and communication standards (Modbus,
+                MQTT, etc.).
+              </p>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">Performance Metrics</h3>
+              <p class="card-text">
+                Key performance indicators and benchmarks for system evaluation.
+              </p>
+            </div>
+          </div>
+
+          <h2 class="mt-3xl">Control Logic Flow</h2>
+
+          <div class="card card-accent mb-2xl">
+            <p class="card-text">
+              <strong>State Diagram / Logic Flow:</strong> A visual or detailed
+              description of the control system state machine and logic flow
+              would go here.
+            </p>
+            <p class="card-text">
+              This should describe the sequence of operations, transitions, and
+              decision points in the control system.
+            </p>
+          </div>
+
+          <div class="mb-2xl">
+            <table>
+              <thead>
+                <tr>
+                  <th>Criterion</th>
+                  <th>Description</th>
+                  <th>Weight</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>System Configuration</td>
+                  <td>Proper setup and configuration of all components</td>
+                  <td>25%</td>
+                </tr>
+                <tr>
+                  <td>Programming Implementation</td>
+                  <td>Correct implementation of control logic</td>
+                  <td>35%</td>
+                </tr>
+                <tr>
+                  <td>Testing &amp; Documentation</td>
+                  <td>Comprehensive testing and clear documentation</td>
+                  <td>25%</td>
+                </tr>
+                <tr>
+                  <td>Problem Solving</td>
+                  <td>Troubleshooting and optimization</td>
+                  <td>15%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Resource Allocation Modal -->
+    <div
+      id="resource-modal"
+      class="modal"
+      role="dialog"
+      aria-labelledby="resource-modal-title"
+      aria-hidden="true"
+    >
+      <div class="modal-overlay" aria-label="Close dialog"></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close dialog">&times;</button>
+        <h2 id="resource-modal-title" class="modal-title">
+          Resource Allocation
+        </h2>
+
+        <h3>Silo System for Cookie Production Line</h3>
+        <img
+          src="../assets/images/resource_allowcation/resource_allowcation_process.png"
+          alt="Silo system for biscuit production line"
+          style="
+            width: 100%;
+            border-radius: var(--radius-md);
+            margin: var(--spacing-md) 0;
+          "
+        />
+
+        <p>
+          Golden Bake&trade; Integrated Dough Dosing and Mixing System is the
+          critical starting point for any high-performance cookie or biscuit
+          production line, engineered to ensure uncompromising quality and
+          resource efficiency. The system automates the allocation and combining
+          of all raw materials into a consistent dough batch.
+        </p>
+
+        <p>
+          Bulk ingredients, specifically Flour and Sugar, are efficiently drawn
+          from external storage silos and automatically conveyed to our
+          high-level Material Receiving Station. This station utilizes
+          Loss-in-Weight precision technology to guarantee the accurate,
+          gravimetric metering of these powdered resources, critical for
+          minimizing material waste and ensuring recipe uniformity. Water is
+          precisely metered through a dedicated piping system and introduced
+          into the robust Industrial Mixer.
+        </p>
+
+        <p>
+          The core of our system is the mixer itself, which is designed for
+          speed and quality. It achieves a superior coefficient of variation
+          (CV) value of &ge;95&percnt; in just 120 seconds, demonstrating rapid
+          and near-perfect ingredient distribution. Furthermore, the design
+          ensures less than 0.1&percnt; residue after mixing, maximizing yield
+          and minimizing waste between batches. To ensure the integrity of your
+          product, the mixer causes no damage to the product structure,
+          maintaining the desired texture. The mixer features a maximum 60&deg;
+          closed large opening, allowing for both thorough mixing and rapid
+          unloading in the shortest possible time.
+        </p>
+
+        <p>
+          The entire process is managed via an intuitive HMI screen, allowing
+          the operator to oversee the automated dosing and manage the manual
+          introduction of specialized minor ingredients. This blend of precision
+          automation and controlled labor ensures that every batch leaves the
+          mixing area perfectly prepared, delivering the highest quality dough
+          with optimized resource and time usage.
+        </p>
+
+        <div class="modal-layout">
+          <div class="modal-column">
+            <div class="modal-grid">
+              <div class="modal-item">
+                <h4>Equipment</h4>
+                <div
+                  class="image-carousel"
+                  data-images="resource_allowcation/mixing_process.png,resource_allowcation/mixer_front.png,resource_allowcation/mixer_bowl.png,resource_allowcation/mixer.png"
+                >
+                  <img
+                    src="../assets/images/resource_allowcation/mixing_process.png"
+                    alt="Mixing equipment"
+                    class="carousel-image"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                      border-radius: var(--radius-md);
+                      margin: 0;
+                      cursor: pointer;
+                    "
+                  />
+                  <p
+                    style="
+                      font-size: var(--font-size-xs);
+                      color: var(--color-text-primary);
+                      text-align: center;
+                      margin: var(--spacing-xs) 0 0 0;
+                    "
+                  >
+                    Click image to rotate views (1/4)
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-column">
+            <div class="modal-resources">
+              <h4>Resources</h4>
+              <a
+                href="https://www.foodsmachine.net/650-ii-multi-speed-horizontal-dough-mixer-dough-kneading-machine.html"
+                rel="noreferrer noopener"
+                target="_blank"
+                class="resource-link"
+                >Golden Bake&trade; 650 Multi-speed Horizontal Dough Mixer</a
+              >
+              <a
+                href="https://www.foodsmachine.net/material-mixing-system-feeding-mixing-dosing-system.html"
+                rel="noreferrer noopener"
+                target="_blank"
+                class="resource-link"
+                >Golden Bake&trade; Mixing System - Feeding, Mixing &amp; Dosing
+                System For Biscuit Line</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Production Area Modal -->
+    <div
+      id="production-modal"
+      class="modal"
+      role="dialog"
+      aria-labelledby="production-modal-title"
+      aria-hidden="true"
+    >
+      <div class="modal-overlay" aria-label="Close dialog"></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close dialog">&times;</button>
+        <h2 id="production-modal-title" class="modal-title">Production Area</h2>
+
+        <div class="modal-section">
+          <h3>Forming, Cutting & Freezing</h3>
+          <img
+            src="../assets/images/production_area/production_area.png"
+            alt="Production area process flow"
+            style="
+              width: 100%;
+              border-radius: var(--radius-md);
+              margin: var(--spacing-md) 0;
+            "
+          />
+          <p>
+            The Production Area transforms the prepared dough into frozen,
+            retail-ready cookies through a highly efficient, two-stage process.
+            The journey begins with the dough batch entering the Baker Perkins
+            TruClean™ Wirecut, a machine engineered to handle soft, sticky, or
+            chunky doughs and capable of producing cookies ranging from
+            1.5&Prime; (38mm) to 4.8&Prime; (121mm) in size, with an impressive
+            output of up to 200 rows per minute. After the dough is extruded and
+            formed, the system&apos;s quiet, reliable servo-driven paper cutter
+            precisely slices the supporting paper sheet to maximize product
+            patterning and ensure efficient use of freezer space. Immediately
+            following forming, the cookies enter the Linde Cryovantage Tunnel
+            Freezer for rapid flash-freezing. This cryogenic system relies on
+            precise resource allocation, primarily liquid Nitrogen (LN 2),
+            controlled via a main gas valve (GV 1) to rapidly drop the product
+            temperature to optimal levels for freezing. To ensure consistent
+            freezing quality, the tunnel incorporates three independent fan
+            sections (Fan 1, Fan 2, Fan 3) that regulate air circulation and
+            manage temperature distribution within the freezing chamber. Once
+            the cookies exit the freezer fully frozen, they smoothly transition
+            into the Finished Goods Area, completing the primary production
+            phase and making the product ready for subsequent packing and
+            storage.
+          </p>
+
+          <div class="modal-layout">
+            <div class="modal-column">
+              <div class="modal-grid">
+                <!-- Forming and cutting images-->
+                <div class="modal-item">
+                  <h4>Dough Forming &amp; Cutting</h4>
+                  <div
+                    class="image-carousel"
+                    data-images="production_area/dough_machine.png,production_area/frozen-dough-wirecut-1.png,production_area/frozen-dough-wirecut-3.png,production_area/frozen-dough-wirecut-4.png"
+                  >
+                    <img
+                      src="../assets/images/production_area/dough_machine.png"
+                      alt="Dough forming and cutting equipment"
+                      class="carousel-image"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        border-radius: var(--radius-md);
+                        margin: 0;
+                        cursor: pointer;
+                      "
+                    />
+                    <p
+                      style="
+                        font-size: var(--font-size-xs);
+                        color: var(--color-text-primary);
+                        text-align: center;
+                        margin: var(--spacing-xs) 0 0 0;
+                      "
+                    >
+                      Click image to rotate views (1/4)
+                    </p>
+                    <p>TruClean&trade; Frozen Dough Machine by Baker Perkins</p>
+                  </div>
+                </div>
+
+                <!-- Freezing images-->
+                <div class="modal-item">
+                  <h4>Dough Freezing</h4>
+                  <div
+                    class="image-carousel"
+                    data-images="production_area/linde_cryovantage.png"
+                  >
+                    <img
+                      src="../assets/images/production_area/linde_cryovantage.png"
+                      alt="Dough freezing equipment"
+                      class="carousel-image"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        border-radius: var(--radius-md);
+                        margin: 0;
+                        cursor: pointer;
+                      "
+                    />
+                    <p
+                      style="
+                        font-size: var(--font-size-xs);
+                        color: var(--color-text-primary);
+                        text-align: center;
+                        margin: var(--spacing-xs) 0 0 0;
+                      "
+                    ></p>
+                    <p>TruClean&trade; Frozen Dough Machine by Baker Perkins</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-column">
+              <div class="modal-resources">
+                <h4>Resources</h4>
+                <a
+                  href="https://online.flippingbook.com/view/302177475/"
+                  noreferrer
+                  noopener
+                  target="_blank"
+                  class="resource-link"
+                  >Baker Perkins TruClean&trade; Frozen Dough Machine</a
+                >
+                <a
+                  href="https://youtu.be/2IH3w-Wr8jU"
+                  noreferrer
+                  noopener
+                  target="_blank"
+                  class="resource-link"
+                  >Video: Baker Perkins TruClean&trade; Frozen Dough Machine</a
+                >
+                <a
+                  href="https://assets.linde.com/-/media/global/usa/linde-us/literature/food-and-beverage/p-40-4589-linde-cvt-cryovantage-tunnel-freezer---x.pdf"
+                  noreferrer
+                  noopener
+                  target="_blank"
+                  class="resource-link"
+                  >Linde CRYOLINE&trade; Cryovantage Tunnel Freezer</a
+                >
+                <a
+                  href="https://cdnapisec.kaltura.com/p/2051881/sp/205188100/playManifest/entryId/1_gf4stse8/protocol/https/format/applehttp/flavorIds/1_9sdalt2u,1_juhv92rk,1_kfdp0zsr,1_hv8jo6zd,1_8wo2b9vt/ks/djJ8MjA1MTg4MXwZ22rQdARfPmT1SG4_cS8bLsECPo1HfUzzkg5tmSd_kOqma-vSchanPD2cyV8ZqgoJeiMLKuQB1Irrk01HtqemgUGEBETUB9120Q00pEuhSoserV7Prn5B7xLf19uShDiPoMey0FVkhnMHmKHvNUxXWPd-LZd6dD6XEM4q-iOVi-rtH8vXNIoSmwvjat-mU_8=/a.m3u8?uiConfId=54847132&playSessionId=ffaf0602-d2dc-be65-245e-ca1231109f32:d7cf4b49-0e8c-3c06-e0ae-a2e77336b847&referrer=aHR0cHM6Ly93d3cubGluZGV1cy5jb20vaW5kdXN0cmllcy9mb29kLWFuZC1iZXZlcmFnZS9mcmVlemluZy1zeXN0ZW1zL2NyeW92YW50YWdl&clientTag=html5:v7.207"
+                  noreferrer
+                  noopener
+                  target="_blank"
+                  class="resource-link"
+                  >Video: Linde Cryovantage Freezing System Overview</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finished Goods Modal -->
+    <div
+      id="finished-modal"
+      class="modal"
+      role="dialog"
+      aria-labelledby="finished-modal-title"
+      aria-hidden="true"
+    >
+      <div class="modal-overlay" aria-label="Close dialog"></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close dialog">&times;</button>
+        <h2 id="finished-modal-title" class="modal-title">Finished Goods</h2>
+
+        <div class="modal-section">
+          <h3>Packaging & Distribution</h3>
+          <img
+            src="../assets/images/finished_goods//InfoGraphic__HighSpeedLine.png"
+            alt="Finished goods packaging process flow"
+            style="
+              width: 100%;
+              border-radius: var(--radius-md);
+              margin: var(--spacing-md) 0;
+            "
+          />
+          <p>Details of the packaging and bulk packaging processes.</p>
+
+          <div class="modal-layout">
+            <div class="modal-column">
+              <div class="modal-grid">
+                <div class="modal-item">
+                  <h4>Box Forming</h4>
+                  <div class="image-carousel">
+                    <img
+                      src="../assets/images/finished_goods/machinesloveshawCF-50T_former.webp"
+                      alt="Box forming equipment"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        border-radius: var(--radius-md);
+                        margin: 0;
+                      "
+                    />
+                  </div>
+                </div>
+
+                <div class="modal-item">
+                  <h4>Bag Inserter</h4>
+                  <div class="image-carousel">
+                    <img
+                      src="../assets/images/finished_goods/machinespearsonBI18_bagger.webp"
+                      alt="Bag inserter equipment"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        border-radius: var(--radius-md);
+                        margin: 0;
+                      "
+                    />
+                  </div>
+                </div>
+
+                <div class="modal-item">
+                  <h4>Box Taper</h4>
+                  <div class="image-carousel">
+                    <img
+                      src="../assets/images/finished_goods/LD-24.png"
+                      alt="Box taper equipment"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        border-radius: var(--radius-md);
+                        margin: 0;
+                      "
+                    />
+                  </div>
+                </div>
+
+                <div class="modal-item">
+                  <h4>Palletizer</h4>
+                  <div class="image-carousel">
+                    <img
+                      src="../assets/images/finished_goods/palletizer.png"
+                      alt="Palletizer equipment"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        border-radius: var(--radius-md);
+                        margin: 0;
+                      "
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--------Resource Links----------->
+            <div class="modal-column">
+              <div class="modal-resources">
+                <h4>Resources</h4>
+                <a
+                  href="https://www.propac.com/packaging-equipment/case-erecting-packing/little-david/cf-50t//"
+                  noreferrer
+                  noopener
+                  target="_blank"
+                  class="resource-link"
+                  >Website: Little David CF-50T Automatic Case Former</a
+                >
+                <a
+                  href="https://www.rocketindustrial.com/media/binaryanvil/media_library/1098_cf5manual.pdf?srsltid=AfmBOorKDLeMtsC1IBsLENGroaXzD6-CUmd01nB8N3eIMUYv-CuG1BDy"
+                  noreferrer
+                  noopener
+                  target="_blank"
+                  class="resource-link"
+                  >Manual: Little David CF-50T Case Former</a
+                >
+                <a
+                  href="https://pearsonpkg.com/equipment/bag-insertion/bi18/"
+                  noreferrer
+                  noopener
+                  target="_blank"
+                  class="resource-link"
+                  >Website: Pearson BI18 Bag Inserter</a
+                >
+                <a
+                  href="https://pearsonpkg.com/equipment/bag-insertion/bi18/#downloads"
+                  noreferrer
+                  noopener
+                  target="_blank"
+                  class="resource-link"
+                  >Documents: Pearson BI18 Bag Inserter</a
+                >
+                <a
+                  href="https://www.signode.com/en-us/productslist/ld-24/"
+                  noreferrer
+                  noopener
+                  target="_blank"
+                  class="resource-link"
+                  >Website: Little David LD-24 Automatic Case Sealer</a
+                >
+                <a
+                  href="../assets/documents/LD24_LittleDavid_200427_English_US_SIG-45_Bro.pdf"
+                  noreferrer
+                  noopener
+                  target="_blank"
+                  class="resource-link"
+                  >Documents: Little David LD-24 Automatic Case Sealer</a
+                >
+                <a
+                  href="https://www.ptchronos.com/products/palletizing/palletizing-robots/high-performant-palletizing-robot"
+                  noreferrer
+                  noopener
+                  target="_blank"
+                  class="resource-link"
+                  >Website: CHRONOS RPL-4000 SERIES</a
+                >
+                <a
+                  href="../assets/documents/RPL-4000-Series-20230223-EN-LR.pdf"
+                  noreferrer
+                  noopener
+                  target="_blank"
+                  class="resource-link"
+                  >Document: CHRONOS RPL-4000 SERIES</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Dock Navigation -->
+    <nav class="dock" aria-label="Main Navigation Dock">
+      <a href="../index.html" class="dock-item">Home</a>
+      <a href="scenario.html" class="dock-item active" aria-current="page"
+        >Scenario</a
+      >
+      <a href="assessment.html" class="dock-item">Assessment</a>
+      <a href="resources.html" class="dock-item">Resources</a>
+    </nav>
+
+    <!-- Topology Image Modal -->
+    <div
+      id="topology-modal"
+      class="topology-modal"
+      onclick="closeTopologyModal()"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Enlarged network topology diagram"
+    >
+      <img
+        src="../assets/images/net_topology.png"
+        alt="Network topology diagram showing the cookie factory's industrial control system architecture - enlarged view"
+        class="topology-modal-image"
+      />
+    </div>
+
+    <!-- Main Script -->
+    <script type="module" src="../scripts/main.js"></script>
+
+    <!-- Topology Modal Script -->
+    <script>
+      function openTopologyModal() {
+        const modal = document.getElementById("topology-modal");
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+        // Set focus to modal for screen readers
+        modal.focus();
+      }
+
+      function closeTopologyModal() {
+        const modal = document.getElementById("topology-modal");
+        modal.style.display = "none";
+        document.body.style.overflow = "";
+        // Return focus to the topology image
+        const topologyImage = document.getElementById("topology-image");
+        if (topologyImage) {
+          topologyImage.focus();
+        }
+      }
+
+      // Close modal on Escape key
+      document.addEventListener("keydown", function (e) {
+        const modal = document.getElementById("topology-modal");
+        if (e.key === "Escape" && modal.style.display === "flex") {
+          closeTopologyModal();
+        }
+      });
+
+      // Add keyboard support for topology image
+      document.addEventListener("DOMContentLoaded", function () {
+        const topologyImage = document.getElementById("topology-image");
+        if (topologyImage) {
+          topologyImage.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              openTopologyModal();
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

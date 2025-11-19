@@ -1,0 +1,115 @@
+:root {
+    /* Primary Colors - Apple-inspired minimalist */
+    --color-primary: rgb(29, 29, 31);
+    --color-secondary: #6b6b71;
+    --color-accent-gold: rgb(0, 102, 204);
+    --color-accent-red: #d70015;
+    --color-accent-light-green: #00b34b;
+    --color-accent-dark-green: #00997a;
+    --color-accent-blue: rgb(0, 102, 204);
+
+    /* Neutral Colors - Premium grays */
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-gray-100: #f5f5f7;
+    --color-gray-200: #e8e8ed;
+    --color-gray-300: #d2d2d7;
+    --color-gray-400: #c6c6c6;
+    --color-gray-500: #8e8e93;
+    --color-gray-600: #6b6b71;
+    --color-gray-700: #555559;
+    --color-gray-800: #424245;
+    --color-gray-900: #1d1d1f;
+
+    /* Semantic Colors */
+    --color-success: #00b34b;
+    --color-warning: #cc7500;
+    --color-danger: #d70015;
+    --color-info: rgb(0, 102, 204);
+
+    /* Light Mode Colors (Default) */
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #ffffff;
+    --color-text-primary: rgb(29, 29, 31);
+    --color-text-secondary: #6b6b71;
+    --color-border: #e5e5e7;
+
+    /* Theme variables for light/dark mode */
+    --glass-reflex-dark: 1;
+    --glass-reflex-light: 1;
+    --saturation: 150%;
+    /* Typography */
+    --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-family-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
+
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    --line-height-loose: 2;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 2.5rem;
+    --spacing-3xl: 3rem;
+    --spacing-4xl: 4rem;
+    --spacing-5xl: 6rem;
+
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+    /* Transitions */
+    --transition-fast: 150ms ease-in-out;
+    --transition-base: 250ms ease-in-out;
+    --transition-slow: 350ms ease-in-out;
+
+    /* Z-index */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+
+    /* Breakpoints */
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-2xl: 1400px;
+
+    /* Container */
+    --container-max-width: 1200px;
+    --container-padding: var(--spacing-lg);
+}

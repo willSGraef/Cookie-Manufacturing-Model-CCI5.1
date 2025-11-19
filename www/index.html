@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CIE workstation assessment platform for students learning industrial control systems."
+    />
+    <meta name="theme-color" content="#245d7a" />
+
+    <title>Home - CIE Assessment</title>
+
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <!-- Skip to main content link -->
+    <a href="#main-content" class="sr-only">Skip to main content</a>
+
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Main Content -->
+    <main id="main-content">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="container">
+          <h1>
+            Welcome to the Cyber-Informed Engineering (CIE) Assessment Platform
+          </h1>
+          <p>
+            A comprehensive workstation-based learning experience for students
+            to master CIE concepts and skills.
+          </p>
+        </div>
+      </section>
+
+      <!-- Getting Started Section -->
+      <section class="section">
+        <div class="container">
+          <h2 class="text-center mb-2xl">Getting Started</h2>
+
+          <div class="max-w-1200 mx-auto">
+            <div class="alert alert-info mb-2xl">
+              <strong>Welcome!</strong> This platform guides you through an CIE
+              assessment using your workstation. Make sure all required software
+              is installed before beginning. Please read through the entire
+              scenario before starting any of the assessment items.
+            </div>
+
+            <div class="grid grid-2 gap-2xl">
+              <!-- System Requirements Card -->
+              <div class="card">
+                <div class="flex items-center mb-lg">
+                  <h3 class="text-primary text-2xl m-0">System Requirements</h3>
+                </div>
+                <ul class="text-primary pl-xl lh-relaxed m-0">
+                  <li class="mb-sm">OpenPLC Runtime (installed)</li>
+                  <li class="mb-sm">OpenPLC Editor (installed)</li>
+                  <li class="mb-sm">
+                    Ignition and Ignition Designer (installed)
+                  </li>
+                  <li class="mb-sm">
+                    Modern web browser (Chrome, Firefox, Safari, or Edge)
+                  </li>
+                  <li>Debian based Linux distribution (installed)</li>
+                </ul>
+              </div>
+
+              <!-- Quick Start Card -->
+              <div class="card">
+                <div class="flex items-center mb-lg">
+                  <h3 class="text-primary text-2xl m-0">Quick Start</h3>
+                </div>
+                <ol class="text-primary pl-xl lh-relaxed m-0">
+                  <li class="mb-sm">Review the scenario details</li>
+                  <li class="mb-sm">Access the resources section</li>
+                  <li class="mb-sm">Complete the assessment tasks</li>
+                  <li>
+                    Submit your work through your Learning Management System
+                    (LMS) platform
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="text-center mt-xl">
+              <a href="pages/scenario.html" class="btn btn-primary btn-large"
+                >Read Scenario</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Dock Navigation -->
+    <nav class="dock" aria-label="Main Navigation Dock">
+      <a href="index.html" class="dock-item active" aria-current="page">Home</a>
+      <a href="pages/scenario.html" class="dock-item">Scenario</a>
+      <a href="pages/assessment.html" class="dock-item">Assessment</a>
+      <a href="pages/resources.html" class="dock-item">Resources</a>
+    </nav>
+
+    <!-- Main Script -->
+    <script type="module" src="scripts/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,127 @@
+{
+  "site": {
+    "title": "Cyber-Informed Engineering Assessment Platform",
+    "description": "Cyber-Informed Engineering engineering assessment workstation",
+    "version": "1.0.0",
+    "author": "CORE/UA Little Rock Engineering Program",
+    "institution": "University of Arkansas",
+    "email": "engineering@ualr.edu",
+    "phone": "+1 (501) 569-5000"
+  },
+  "theme": {
+    "primary": "#1d1d1f",
+    "secondary": "#6b6b71",
+    "accent": {
+      "gold": "#0071e3",
+      "red": "#d70015",
+      "green": "#00b34b",
+      "lightGreen": "#00b34b",
+      "darkGreen": "#00997a",
+      "teal": "#00997a",
+      "blue": "#0071e3"
+    },
+    "contrast": {
+      "textOnWhiteRatio": "13:1",
+      "secondaryTextRatio": "5.8:1",
+      "standardForWCAGAA": "4.5:1"
+    },
+    "designSystem": {
+      "inspiration": "Apple.com & iOS26",
+      "principles": [
+        "Minimalist design with generous whitespace",
+        "Clean typography hierarchy",
+        "Subtle shadows instead of bold borders",
+        "Glass-morphism effects with backdrop blur",
+        "Smooth transitions and micro-interactions",
+        "Focus on content clarity"
+      ]
+    }
+  },
+  "components": {
+    "dock": {
+      "description": "Fixed bottom navigation with glass-morphism effect",
+      "position": "fixed bottom center",
+      "style": "glass-morphism with blur(20px)",
+      "platforms": ["all pages"],
+      "accessibility": "Keyboard navigable, ARIA labels, focus visible"
+    },
+    "header": {
+      "style": "Minimalist Apple-inspired",
+      "padding": "reduced (var(--spacing-sm))",
+      "features": "backdrop blur, subtle border"
+    },
+    "cards": {
+      "shadows": "Subtle (0 1px 3px) to elevated (0 12px 24px)",
+      "borders": "None - uses shadows only",
+      "hover": "Slight lift effect with enhanced shadow"
+    }
+  },
+  "pages": {
+    "home": {
+      "path": "/index.html",
+      "title": "Home",
+      "description": "Welcome to the CIE Assessment Platform"
+    },
+    "assessment": {
+      "path": "/pages/assessment.html",
+      "title": "Assessment",
+      "description": "Assessment tasks and submission"
+    },
+    "scenario": {
+      "path": "/pages/scenario.html",
+      "title": "Scenario",
+      "description": "Project scenario and requirements"
+    },
+    "resources": {
+      "path": "/pages/resources.html",
+      "title": "Resources",
+      "description": "Learning resources and documentation"
+    },
+    "support": {
+      "path": "/pages/support.html",
+      "title": "Support",
+      "description": "Support and help center"
+    }
+  },
+  "assessment": {
+    "totalTasks": 4,
+    "timelineEstimate": "12-15 hours",
+    "submissionDeadline": "Check course syllabus"
+  },
+  "software": {
+    "required": [
+      {
+        "name": "OpenPLC Runtime",
+        "type": "PLC Runtime",
+        "purpose": "Programmable Logic Controller execution"
+      },
+      {
+        "name": "OpenPLC Editor",
+        "type": "Development Environment",
+        "purpose": "PLC program creation and editing"
+      },
+      {
+        "name": "Ignition",
+        "type": "HMI/SCADA Platform",
+        "purpose": "Industrial system integration and monitoring"
+      },
+      {
+        "name": "Ignition Designer",
+        "type": "Design Tool",
+        "purpose": "HMI interface and dashboard design"
+      }
+    ]
+  },
+  "accessibility": {
+    "wcagLevel": "AA",
+    "features": [
+      "Semantic HTML5",
+      "ARIA labels and roles",
+      "Keyboard navigation",
+      "Focus management",
+      "Color contrast compliance",
+      "Screen reader optimization",
+      "Reduced motion support"
+    ]
+  }
+}

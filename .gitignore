@@ -11,6 +11,8 @@ __pycache__/
 .claude_history/
 Claude.md
 .github/
+.playwright-mcp/
+copilot-instructions.md
 
 # MAcOS
 .DS_Store

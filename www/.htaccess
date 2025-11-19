@@ -1,0 +1,82 @@
+# Cyber-Informed Engineering Platform - Web Server Configuration
+
+# Enable compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+</IfModule>
+
+# Set expiration headers for caching
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # Images
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  
+  # CSS and JavaScript
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  
+  # HTML
+  ExpiresByType text/html "access plus 1 day"
+  
+  # Fonts
+  ExpiresByType application/x-font-ttf "access plus 1 year"
+  ExpiresByType application/x-font-opentype "access plus 1 year"
+  ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+  ExpiresByType font/eot "access plus 1 year"
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+  # Prevent clickjacking
+  Header always set X-Frame-Options "SAMEORIGIN"
+  
+  # Prevent MIME type sniffing
+  Header always set X-Content-Type-Options "nosniff"
+  
+  # Enable XSS protection
+  Header always set X-XSS-Protection "1; mode=block"
+  
+  # Referrer Policy
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Redirect HTTP to HTTPS
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # Redirect www to non-www
+  RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+  RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+  
+  # Redirect HTTP to HTTPS (uncomment when HTTPS is available)
+  # RewriteCond %{HTTPS} off
+  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+  
+  # Rewrite requests to index.html for single-page app behavior if needed
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  # RewriteRule ^ index.html [QSA,L]
+</IfModule>
+
+# Block access to sensitive files
+<FilesMatch "\.env$|\.json$|\.md$|\.xml$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Enable UTF-8 encoding
+AddDefaultCharset utf-8
+
+# Set MIME types
+<IfModule mod_mime.c>
+  AddType application/javascript js
+  AddType application/json json
+  AddType application/xml xml
+  AddType image/svg+xml svg svgz
+  AddEncoding gzip svgz
+</IfModule>
