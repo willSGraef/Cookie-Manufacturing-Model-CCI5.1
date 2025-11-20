@@ -211,16 +211,16 @@
 
           <h2 class="mt-3xl">Control Logic Flow</h2>
 
-          <div class="card card-accent mb-2xl">
-            <p class="card-text">
-              <strong>State Diagram / Logic Flow:</strong> A visual or detailed
-              description of the control system state machine and logic flow
-              would go here.
-            </p>
-            <p class="card-text">
-              This should describe the sequence of operations, transitions, and
-              decision points in the control system.
-            </p>
+          <div
+            class="flex"
+            style="gap: var(--spacing-md); margin-bottom: var(--spacing-2xl)"
+          >
+            <button
+              id="view-state-diagrams-btn"
+              class="btn btn-primary btn-small"
+            >
+              View State Diagrams
+            </button>
           </div>
 
           <div class="mb-2xl">
@@ -259,6 +259,123 @@
         </div>
       </section>
     </main>
+
+    <!-- State Diagrams Modal -->
+    <div class="modal" id="state-diagrams-modal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+        <h2 class="modal-title">State Diagrams</h2>
+
+        <div class="modal-section">
+          <p>
+            Below are the state diagrams for each processing area in the cookie
+            manufacturing system. These diagrams illustrate the operational
+            states and transitions for each machine and process.
+          </p>
+
+          <div style="margin-top: var(--spacing-2xl)">
+            <h3>Production Area</h3>
+            <img
+              src="../assets/images/production_area/sd_prod_area.png"
+              alt="Production Area State Diagram"
+              style="
+                max-width: 100%;
+                height: auto;
+                border-radius: var(--radius-lg);
+                margin-top: var(--spacing-lg);
+              "
+            />
+          </div>
+
+          <div style="margin-top: var(--spacing-3xl)">
+            <h3>Resource Allocation Area</h3>
+            <img
+              src="../assets/images/resource_allowcation/sd_resource_area.png"
+              alt="Resource Allocation Area State Diagram"
+              style="
+                max-width: 100%;
+                height: auto;
+                border-radius: var(--radius-lg);
+                margin-top: var(--spacing-lg);
+              "
+            />
+          </div>
+
+          <div style="margin-top: var(--spacing-3xl)">
+            <h3>Finished Goods Area</h3>
+
+            <div style="margin-top: var(--spacing-lg)">
+              <h4>Boxing Machine</h4>
+              <img
+                src="../assets/images/finished_goods/sd_boxing_machine.png"
+                alt="Boxing Machine State Diagram"
+                style="
+                  max-width: 100%;
+                  height: auto;
+                  border-radius: var(--radius-lg);
+                  margin-top: var(--spacing-md);
+                "
+              />
+            </div>
+
+            <div style="margin-top: var(--spacing-xl)">
+              <h4>Palletizer</h4>
+              <img
+                src="../assets/images/finished_goods/sd_palletizer.png"
+                alt="Palletizer State Diagram"
+                style="
+                  max-width: 100%;
+                  height: auto;
+                  border-radius: var(--radius-lg);
+                  margin-top: var(--spacing-md);
+                "
+              />
+            </div>
+
+            <div style="margin-top: var(--spacing-xl)">
+              <h4>Taping Machine</h4>
+              <img
+                src="../assets/images/finished_goods/sd_taping_machine.png"
+                alt="Taping Machine State Diagram"
+                style="
+                  max-width: 100%;
+                  height: auto;
+                  border-radius: var(--radius-lg);
+                  margin-top: var(--spacing-md);
+                "
+              />
+            </div>
+
+            <div style="margin-top: var(--spacing-xl)">
+              <h4>Wrapping Machine</h4>
+              <img
+                src="../assets/images/finished_goods/sd_wrapping_machine.png"
+                alt="Wrapping Machine State Diagram"
+                style="
+                  max-width: 100%;
+                  height: auto;
+                  border-radius: var(--radius-lg);
+                  margin-top: var(--spacing-md);
+                "
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="flex"
+          style="gap: var(--spacing-lg); margin-top: var(--spacing-2xl)"
+        >
+          <button
+            id="state-diagrams-close-btn"
+            class="btn btn-outline btn-large"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Resource Allocation Modal -->
     <div
@@ -734,7 +851,6 @@
         >Scenario</a
       >
       <a href="assessment.html" class="dock-item">Assessment</a>
-      <a href="resources.html" class="dock-item">Resources</a>
     </nav>
 
     <!-- Topology Image Modal -->
@@ -796,6 +912,58 @@
             }
           });
         }
+
+        // State Diagrams Modal setup
+        const stateDiagramsModal = document.getElementById(
+          "state-diagrams-modal"
+        );
+        const viewStateDiagramsBtn = document.getElementById(
+          "view-state-diagrams-btn"
+        );
+        const stateDiagramsCloseBtn = document.getElementById(
+          "state-diagrams-close-btn"
+        );
+
+        // Open State Diagrams modal
+        if (viewStateDiagramsBtn) {
+          viewStateDiagramsBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            stateDiagramsModal.classList.add("active");
+          });
+        }
+
+        // Close State Diagrams modal
+        function closeStateDiagramsModal() {
+          stateDiagramsModal.classList.remove("active");
+        }
+
+        // State Diagrams modal close handlers
+        if (stateDiagramsCloseBtn) {
+          stateDiagramsCloseBtn.addEventListener(
+            "click",
+            closeStateDiagramsModal
+          );
+        }
+
+        // Close State Diagrams modal on overlay click
+        const stateDiagramsOverlay =
+          stateDiagramsModal.querySelector(".modal-overlay");
+        if (stateDiagramsOverlay) {
+          stateDiagramsOverlay.addEventListener(
+            "click",
+            closeStateDiagramsModal
+          );
+        }
+
+        // Close State Diagrams modal on Escape key
+        document.addEventListener("keydown", function (e) {
+          if (
+            e.key === "Escape" &&
+            stateDiagramsModal.classList.contains("active")
+          ) {
+            closeStateDiagramsModal();
+          }
+        });
       });
     </script>
   </body>

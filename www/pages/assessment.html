@@ -47,46 +47,17 @@
                   to operational technology (OT) systems and Cyber-Informed
                   Engineering principles.
                 </p>
-                <h4>Deliverables:</h4>
-                <p>
-                  You will be required to hand in a comprehensive report. The
-                  requirements for this report are detailed in each task below.
-                  Ensure the report is formatted professionally and includes all
-                  necessary sections as specified. Format your report as
-                  follows:
-                </p>
-                <ul>
-                  <li>
-                    Title Page: Include the assessment title, your name, and the
-                    date
-                  </li>
-                  <li>
-                    Table of Contents: List all sections and their page numbers
-                  </li>
-                  <li>
-                    Executive Summary: Summarize the key points of the report.
-                    Should be 300-400 words
-                  </li>
-                  <li>Task: List each task by their task number and title.</li>
-                  <ul>
-                    <li>Task &num;: Title of the task</li>
-                    <li>Task &num;: Title of the task</li>
-                    <li>Task &num;: Title of the task</li>
-                  </ul>
-                  <li>
-                    Top 10 Mitigation: List the top 10 mitigation strategies
-                    identified during the assessment.
-                  </li>
-                  <li>
-                    References: List all sources and references used in the
-                    report.
-                  </li>
-                  <li>
-                    Acknowledgements: If using AI, acknowledge the tools and
-                    resources utilized.
-                  </li>
-                  <li>Appendices (if necessary)</li>
-                </ul>
+                <div
+                  class="flex"
+                  style="gap: var(--spacing-md); margin-top: var(--spacing-lg)"
+                >
+                  <button
+                    id="view-deliverables-btn"
+                    class="btn btn-primary btn-small"
+                  >
+                    View Deliverables
+                  </button>
+                </div>
               </div>
 
               <div
@@ -329,6 +300,115 @@
       </div>
     </div>
 
+    <!-- Deliverables Modal -->
+    <div class="modal" id="deliverables-modal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+        <h2 class="modal-title">Deliverables</h2>
+
+        <div class="modal-section">
+          <h3>Report Requirements</h3>
+          <p>
+            You will be required to hand in a comprehensive report. The
+            requirements for this report are detailed in each task below. Ensure
+            the report is formatted professionally and includes all necessary
+            sections as specified.
+          </p>
+
+          <h3 style="margin-top: var(--spacing-2xl)">Report Format:</h3>
+          <ul
+            style="
+              list-style: disc;
+              padding-left: var(--spacing-lg);
+              line-height: 1.8;
+            "
+          >
+            <li>
+              <strong>Title Page:</strong> Include the assessment title, your
+              name, and the date
+            </li>
+            <li>
+              <strong>Table of Contents:</strong> List all sections and their
+              page numbers
+            </li>
+            <li>
+              <strong>Executive Summary:</strong> Summarize the key points of
+              the report (300-400 words)
+            </li>
+            <li>
+              <strong>Tasks:</strong> List each task by their task number and
+              title
+              <ul style="margin-top: var(--spacing-md)">
+                <li>Task 1: Component Identification</li>
+                <li>Task 2: Threat Intelligence</li>
+                <li>Task 3: Engineering Controls</li>
+                <li>Task 4: Supply Chain Security</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Top 10 Mitigation Strategies:</strong> List the top 10
+              mitigation strategies identified during the assessment
+            </li>
+            <li>
+              <strong>References:</strong> List all sources and references used
+              in the report
+            </li>
+            <li>
+              <strong>Acknowledgements:</strong> If using AI, acknowledge the
+              tools and resources utilized
+            </li>
+            <li><strong>Appendices:</strong> Include if necessary</li>
+          </ul>
+
+          <h3 style="margin-top: var(--spacing-3xl)">Example Report</h3>
+          <p
+            style="
+              color: var(--color-text-secondary);
+              margin-bottom: var(--spacing-lg);
+            "
+          >
+            Review the example report to see how your report should be organized
+            and formatted:
+          </p>
+
+          <a
+            href="../assets/documents/example_report.pdf"
+            class="resource-link download-link-with-icon"
+            download
+            aria-label="Download example report PDF"
+          >
+            <svg
+              class="icon-sm"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download Example Report
+          </a>
+        </div>
+
+        <div
+          class="flex"
+          style="gap: var(--spacing-lg); margin-top: var(--spacing-2xl)"
+        >
+          <button id="deliverables-close-btn" class="btn btn-outline btn-large">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- State Diagrams Modal -->
+
     <!-- Footer -->
     <div id="footer-placeholder"></div>
 
@@ -339,7 +419,6 @@
       <a href="assessment.html" class="dock-item active" aria-current="page"
         >Assessment</a
       >
-      <a href="resources.html" class="dock-item">Resources</a>
     </nav>
 
     <!-- Main Script -->
@@ -494,16 +573,25 @@
 
       // Initialize
       document.addEventListener("DOMContentLoaded", function () {
-        // Modal setup
-        const modal = document.getElementById("task-modal");
-        const modalOverlay = document.querySelector(".modal-overlay");
-        const modalClose = document.querySelector(".modal-close");
+        // Task Modal setup
+        const taskModal = document.getElementById("task-modal");
+        const taskModalOverlay = document.querySelector(".modal-overlay");
+        const taskModalClose = document.querySelector(".modal-close");
         const viewDetailsButtons =
           document.querySelectorAll(".view-details-btn");
         const taskCompleteBtn = document.getElementById("task-complete-btn");
         const taskCloseBtn = document.getElementById("task-close-btn");
 
-        // Open modal when View Details is clicked
+        // Deliverables Modal setup
+        const deliverablesModal = document.getElementById("deliverables-modal");
+        const viewDeliverablesBtn = document.getElementById(
+          "view-deliverables-btn"
+        );
+        const deliverablesCloseBtn = document.getElementById(
+          "deliverables-close-btn"
+        );
+
+        // Open Task Details modal when View Details is clicked
         viewDetailsButtons.forEach((btn) => {
           btn.addEventListener("click", function (e) {
             e.preventDefault();
@@ -528,24 +616,56 @@
             statusBadge.classList.add("badge-info");
 
             // Open modal
-            modal.classList.add("active");
+            taskModal.classList.add("active");
           });
         });
 
-        // Close modal
-        function closeModal() {
-          modal.classList.remove("active");
+        // Open Deliverables modal
+        viewDeliverablesBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          deliverablesModal.classList.add("active");
+        });
+
+        // Close Task modal
+        function closeTaskModal() {
+          taskModal.classList.remove("active");
           currentTaskId = null;
         }
 
-        modalClose.addEventListener("click", closeModal);
-        modalOverlay.addEventListener("click", closeModal);
-        taskCloseBtn.addEventListener("click", closeModal);
+        // Close Deliverables modal
+        function closeDeliverablesModal() {
+          deliverablesModal.classList.remove("active");
+        }
 
-        // Close modal on Escape key
+        // Task modal close handlers
+        taskModalClose.addEventListener("click", closeTaskModal);
+        taskCloseBtn.addEventListener("click", closeTaskModal);
+
+        // Deliverables modal close handlers
+        deliverablesCloseBtn.addEventListener("click", closeDeliverablesModal);
+
+        // Close modals on overlay click
+        const overlays = document.querySelectorAll(".modal-overlay");
+        overlays.forEach((overlay) => {
+          overlay.addEventListener("click", function () {
+            if (taskModal.classList.contains("active")) {
+              closeTaskModal();
+            }
+            if (deliverablesModal.classList.contains("active")) {
+              closeDeliverablesModal();
+            }
+          });
+        });
+
+        // Close modals on Escape key
         document.addEventListener("keydown", function (e) {
-          if (e.key === "Escape" && modal.classList.contains("active")) {
-            closeModal();
+          if (e.key === "Escape") {
+            if (taskModal.classList.contains("active")) {
+              closeTaskModal();
+            }
+            if (deliverablesModal.classList.contains("active")) {
+              closeDeliverablesModal();
+            }
           }
         });
 
@@ -563,7 +683,7 @@
           alert("Task marked as complete!");
 
           // Close modal
-          closeModal();
+          closeTaskModal();
         });
       });
     </script>
