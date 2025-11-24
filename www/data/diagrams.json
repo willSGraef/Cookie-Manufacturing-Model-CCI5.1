@@ -1,0 +1,32 @@
+[
+  {
+    "src": "../assets/images/resource_allowcation/sd_resource_area.png",
+    "title": "Resource Allocation",
+    "alt": "Resource Allocation Area State Diagram showing operational states and transitions",
+    "description": "<h4>Resource Allocation Logic</h4><p>The Resource Allocation Area controls the mixing and preparation of dough ingredients.</p><h5>Control Logic Flow:</h5><ul style=\"list-style: disc; padding-left: var(--spacing-lg);\"><li><strong>Conveyor 2 Control:</strong> When ps1 = 0 and ps2 = 0, set c2 = 1. Count for 2 seconds, then set c2 = 0 and ps2 = 1.</li><li><strong>Conveyor 2 Pusher:</strong> When ps2 = 1, count for 7.5 to 15.0 seconds. After the time interval, set ps2 = 0 and ps3 = 1 to advance to the next stage.</li><li>This stage ensures proper material allocation and mixing before moving product to finished goods area.</li></ul>"
+  },
+  {
+    "src": "../assets/images/production_area/sd_prod_area.png",
+    "title": "Production Area",
+    "alt": "Production Area State Diagram showing operational states and transitions",
+    "description": "<h4>Production Area Logic</h4><p>The Production Area manages the flow of cookies through dough forming, cutting, and freezing processes.</p><h5>Control Logic Flow:</h5><ul style=\"list-style: disc; padding-left: var(--spacing-lg);\"><li><strong>Boxing Machine Control:</strong> When c1 = 0 and ps2 = 0, initiate boxing = 1. The system counts for 2 seconds if boxing = 1 and box_maker = 1. After 2 seconds, reset boxing to 0.</li><li><strong>Conveyor 1 Control:</strong> When boxing = 0, ps2 = 0, and ps1 = 0, set c1 = 1. Count for 3 seconds, then set c1 = 0 and ps1 = 1.</li><li><strong>Conveyor 1 Pusher:</strong> When ps1 = 1 and bagger is active, count for 1 second. After 1 second, reset ps1 to 0.</li></ul>"
+  },
+  {
+    "src": "../assets/images/finished_goods/sd_boxing_machine.png",
+    "title": "Boxing & Taping",
+    "alt": "Boxing and Taping Machine State Diagram showing operational states and transitions",
+    "description": "<h4>Boxing & Taping Machine Logic</h4><p>The Boxing Machine packages cookies into individual boxes while the Taping Machine seals them securely for transport.</p><h5>Control Logic Flow:</h5><ul style=\"list-style: disc; padding-left: var(--spacing-lg);\"><li><strong>Conveyor 3 Control:</strong> When ps3 = 1, ps5 = 0, and ps4 = 0, set c3 = 1 and ps3 = 0. Count for 3 seconds, then set c3 = 0 and ps4 = 1.</li><li><strong>Conveyor 3 Pusher:</strong> When ps4 = 1 and taper = 1, count for 2 seconds. After 2 seconds, set ps4 = 0.</li><li><strong>Taping Process:</strong> The taping machine is synchronized with the boxing machine through the ps4 control signal.</li><li><strong>Coordination:</strong> When the boxing machine finishes (ps4 = 0), the taping machine can proceed with sealing operations.</li><li>The boxing and taping processes work together to ensure secure packaging before moving to the palletizer.</li></ul>"
+  },
+  {
+    "src": "../assets/images/finished_goods/sd_palletizer.png",
+    "title": "Palletizer",
+    "alt": "Palletizer State Diagram showing operational states and transitions",
+    "description": "<h4>Palletizer Logic</h4><p>The Palletizer stacks and organizes finished boxes for shipping.</p><h5>Control Logic Flow:</h5><ul style=\"list-style: disc; padding-left: var(--spacing-lg);\"><li><strong>Conveyor 4 Control:</strong> When ps4 = 0 and ps5 = 0, set c4 = 1. Count for 4 seconds, then set c4 = 0 and ps5 = 1.</li><li><strong>Palletizer Grab Logic:</strong> When palletizer_grabbing = 1 and palletizer_pos = 2, set palletizer_grabbing = 0 and increment box_count by 1.</li><li><strong>Wrapping Trigger:</strong> When box_count = 40 and wrapper = 1, set wrapper_wrapping = 1 to begin wrapping the full pallet.</li><li>When ps6 = 1, activate conveyor_5 for final product movement.</li></ul>"
+  },
+  {
+    "src": "../assets/images/finished_goods/sd_wrapping_machine.png",
+    "title": "Wrapping Machine",
+    "alt": "Wrapping Machine State Diagram showing operational states and transitions",
+    "description": "<h4>Wrapping Machine Logic</h4><p>The Wrapping Machine applies protective wrapping to pallets for shipping.</p><h5>Control Logic Flow:</h5><ul style=\"list-style: disc; padding-left: var(--spacing-lg);\"><li><strong>Pallet Wrapping Initiation:</strong> When box_count reaches 40 and wrapper = 1, the wrapping operation begins (wrapper_wrapping = 1).</li><li><strong>Final Conveyor:</strong> When ps6 = 1, conveyor_5 is activated to move wrapped pallets to storage or shipping.</li><li><strong>Completion:</strong> The wrapping process ensures pallets are protected during storage and transportation.</li><li>This is the final stage in the cookie manufacturing sequence before product distribution.</li></ul>"
+  }
+]

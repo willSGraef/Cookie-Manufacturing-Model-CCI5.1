@@ -2,6 +2,8 @@ import { getCurrentPage, isPagesDirectory } from './utils.js';
 
 /**
  * Initialize navigation active state
+ * Highlights the current page in navigation links and sets aria-current attribute
+ * @returns {void}
  */
 export function initializeNavigation() {
     const currentPage = getCurrentPage();
@@ -20,7 +22,10 @@ export function initializeNavigation() {
 }
 
 /**
- * Initialize dynamic breadcrumb
+ * Initialize dynamic breadcrumb navigation
+ * Builds breadcrumb trail based on current page location.
+ * Hides breadcrumb on home page, shows "Home > [Current Page]" on other pages.
+ * @returns {void}
  */
 export function initializeBreadcrumb() {
     const breadcrumbContainer = document.getElementById('dynamic-breadcrumb');

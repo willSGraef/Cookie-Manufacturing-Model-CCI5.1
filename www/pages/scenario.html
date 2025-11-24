@@ -8,6 +8,54 @@
       content="Scenario details for the engineering workstation project."
     />
     <meta name="theme-color" content="#245d7a" />
+    <meta
+      name="keywords"
+      content="industrial scenario, cookie manufacturing, control systems, SCADA topology, process control, automation engineering, OT infrastructure"
+    />
+    <meta name="author" content="CORE/UA Little Rock Engineering Program" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://ualr.edu/cie-assessment/pages/scenario.html"
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://ualr.edu/cie-assessment/pages/scenario.html"
+    />
+    <meta
+      property="og:title"
+      content="Project Scenario - CIE Assessment Platform"
+    />
+    <meta
+      property="og:description"
+      content="Real-world industrial control systems implementation for cookie manufacturing facility."
+    />
+    <meta
+      property="og:image"
+      content="https://ualr.edu/cie-assessment/assets/images/og-preview.png"
+    />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:url"
+      content="https://ualr.edu/cie-assessment/pages/scenario.html"
+    />
+    <meta
+      name="twitter:title"
+      content="Project Scenario - CIE Assessment Platform"
+    />
+    <meta
+      name="twitter:description"
+      content="Real-world industrial control systems implementation for cookie manufacturing facility."
+    />
+    <meta
+      name="twitter:image"
+      content="https://ualr.edu/cie-assessment/assets/images/og-preview.png"
+    />
 
     <title>Scenario - Engineering Assessment</title>
 
@@ -24,7 +72,7 @@
     <!-- Main Content -->
     <main id="main-content">
       <!-- Page Header -->
-      <section class="hero" style="padding: var(--spacing-3xl) 0">
+      <section class="hero">
         <div class="container">
           <h1>Project Scenario</h1>
           <p>Real-world industrial control systems implementation</p>
@@ -101,15 +149,22 @@
                     </a>
                   </li>
                   <li class="resources-list-item">
-                    <a href="#" class="resource-link">Security Protocols</a>
-                  </li>
-                  <li class="resources-list-item">
-                    <a href="#" class="resource-link"
-                      >System Configuration Guide</a
+                    <span class="resource-link disabled"
+                      >Security Protocols
+                      <span class="badge badge-info">Coming Soon</span></span
                     >
                   </li>
                   <li class="resources-list-item">
-                    <a href="#" class="resource-link">Troubleshooting Guide</a>
+                    <span class="resource-link disabled"
+                      >System Configuration Guide
+                      <span class="badge badge-info">Coming Soon</span></span
+                    >
+                  </li>
+                  <li class="resources-list-item">
+                    <span class="resource-link disabled"
+                      >Troubleshooting Guide
+                      <span class="badge badge-info">Coming Soon</span></span
+                    >
                   </li>
                 </ul>
               </div>
@@ -120,10 +175,7 @@
             <h3 class="card-title">Control Logic Flow</h3>
 
             <!-- Control Logic Carousel on Main Page -->
-            <div
-              class="control-logic-main-container"
-              style="margin-top: var(--spacing-lg)"
-            >
+            <div class="control-logic-main-container mt-lg">
               <!-- Carousel Section -->
               <div class="carousel-section-main">
                 <div
@@ -138,12 +190,7 @@
                     src=""
                     alt="State diagram"
                     class="enlargeable-image"
-                    style="
-                      width: 100%;
-                      height: auto;
-                      max-height: 500px;
-                      object-fit: contain;
-                    "
+                    class="img-carousel-main"
                     onclick="openControlLogicImageModal()"
                     role="button"
                     tabindex="0"
@@ -179,21 +226,13 @@
                     >
                     <span id="control-logic-counter-main">(1 of 6)</span>
                   </p>
-                  <p
-                    style="
-                      font-size: var(--font-size-sm);
-                      color: var(--color-text-secondary);
-                      margin: 0;
-                    "
-                  >
-                    Click image to enlarge
-                  </p>
+                  <p class="text-muted-sm">Click image to enlarge</p>
                 </div>
               </div>
 
               <!-- Text Description Section -->
               <div class="description-section-main">
-                <h4 style="margin-top: 0">Control Logic Explanation</h4>
+                <h4 class="mt-0">Control Logic Explanation</h4>
                 <div
                   id="control-logic-description-main"
                   class="description-content"
@@ -217,10 +256,7 @@
                 Details about the mixing process, including ingredients
                 parameters.
               </p>
-              <p
-                class="card-text mt-md"
-                style="font-size: var(--font-size-sm); color: rgb(0, 102, 204)"
-              >
+              <p class="card-text mt-md text-link">
                 Click to learn more &rarr;
               </p>
             </button>
@@ -234,10 +270,7 @@
               <p class="card-text">
                 Details about the forming, cutting, freezing of the dough.
               </p>
-              <p
-                class="card-text mt-md"
-                style="font-size: var(--font-size-sm); color: rgb(0, 102, 204)"
-              >
+              <p class="card-text mt-md text-link">
                 Click to learn more &rarr;
               </p>
             </button>
@@ -251,10 +284,7 @@
               <p class="card-text">
                 Details of the packaging and bulkpackaging processes.
               </p>
-              <p
-                class="card-text mt-md"
-                style="font-size: var(--font-size-sm); color: rgb(0, 102, 204)"
-              >
+              <p class="card-text mt-md text-link">
                 Click to learn more &rarr;
               </p>
             </button>
@@ -299,11 +329,19 @@
     </main>
 
     <!-- Control Logic Modal - Carousel with Text Descriptions -->
-    <div class="modal" id="control-logic-modal">
-      <div class="modal-overlay"></div>
+    <div
+      class="modal"
+      id="control-logic-modal"
+      role="dialog"
+      aria-labelledby="control-logic-modal-title"
+      aria-hidden="true"
+    >
+      <div class="modal-overlay" aria-label="Close dialog"></div>
       <div class="modal-content control-logic-modal-content">
         <button class="modal-close" aria-label="Close modal">&times;</button>
-        <h2 class="modal-title">Control Logic Flow - State Diagrams</h2>
+        <h2 id="control-logic-modal-title" class="modal-title">
+          Control Logic Flow - State Diagrams
+        </h2>
 
         <div class="control-logic-container">
           <!-- Carousel Section (Left) -->
@@ -315,7 +353,7 @@
                 src=""
                 alt="State diagram"
                 class="enlargeable-image"
-                style="width: 100%; height: 100%; object-fit: contain"
+                class="img-contain"
                 onclick="openControlLogicImageModal()"
                 role="button"
                 tabindex="0"
@@ -349,31 +387,20 @@
                 <strong id="control-logic-title">Production Area</strong>
                 <span id="control-logic-counter">(1 of 6)</span>
               </p>
-              <p
-                style="
-                  font-size: var(--font-size-sm);
-                  color: var(--color-text-secondary);
-                  margin: 0;
-                "
-              >
-                Click image to enlarge
-              </p>
+              <p class="text-muted-sm">Click image to enlarge</p>
             </div>
           </div>
 
           <!-- Text Description Section (Right) -->
           <div class="description-section">
-            <h3 style="margin-top: 0">Control Logic Explanation</h3>
+            <h3 class="mt-0">Control Logic Explanation</h3>
             <div id="control-logic-description" class="description-content">
               <!-- Description will be populated by JavaScript -->
             </div>
           </div>
         </div>
 
-        <div
-          class="flex"
-          style="gap: var(--spacing-lg); margin-top: var(--spacing-2xl)"
-        >
+        <div class="flex gap-lg mt-2xl">
           <button
             id="control-logic-close-btn"
             class="btn btn-outline btn-large"
@@ -403,11 +430,7 @@
         <img
           src="../assets/images/resource_allowcation/resource_allowcation_process.png"
           alt="Silo system for biscuit production line"
-          style="
-            width: 100%;
-            border-radius: var(--radius-md);
-            margin: var(--spacing-md) 0;
-          "
+          loading="lazy"
         />
 
         <p>
@@ -464,24 +487,12 @@
                     src="../assets/images/resource_allowcation/mixing_process.png"
                     alt="Mixing equipment"
                     class="carousel-image enlargeable-image"
-                    style="
-                      width: 100%;
-                      height: 100%;
-                      object-fit: cover;
-                      border-radius: var(--radius-md);
-                      margin: 0;
-                    "
+                    loading="lazy"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Click or press Enter to rotate through mixing equipment views"
                   />
-                  <p
-                    style="
-                      font-size: var(--font-size-xs);
-                      color: var(--color-text-primary);
-                      text-align: center;
-                      margin: var(--spacing-xs) 0 0 0;
-                    "
-                  >
-                    Click image to rotate views (1/4)
-                  </p>
+                  <p>Click image to rotate views (1/4)</p>
                 </div>
               </div>
             </div>
@@ -529,11 +540,7 @@
           <img
             src="../assets/images/production_area/production_area.png"
             alt="Production area process flow"
-            style="
-              width: 100%;
-              border-radius: var(--radius-md);
-              margin: var(--spacing-md) 0;
-            "
+            loading="lazy"
           />
           <p>
             The Production Area transforms the prepared dough into frozen,
@@ -574,24 +581,12 @@
                       src="../assets/images/production_area/dough_machine.png"
                       alt="Dough forming and cutting equipment"
                       class="carousel-image enlargeable-image"
-                      style="
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                        border-radius: var(--radius-md);
-                        margin: 0;
-                      "
+                      loading="lazy"
+                      role="button"
+                      tabindex="0"
+                      aria-label="Click or press Enter to rotate through dough forming equipment views"
                     />
-                    <p
-                      style="
-                        font-size: var(--font-size-xs);
-                        color: var(--color-text-primary);
-                        text-align: center;
-                        margin: var(--spacing-xs) 0 0 0;
-                      "
-                    >
-                      Click image to rotate views (1/4)
-                    </p>
+                    <p>Click image to rotate views (1/4)</p>
                     <p>TruClean&trade; Frozen Dough Machine by Baker Perkins</p>
                   </div>
                 </div>
@@ -607,22 +602,12 @@
                       src="../assets/images/production_area/linde_cryovantage.png"
                       alt="Dough freezing equipment"
                       class="carousel-image enlargeable-image"
-                      style="
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                        border-radius: var(--radius-md);
-                        margin: 0;
-                      "
+                      loading="lazy"
+                      role="button"
+                      tabindex="0"
+                      aria-label="Click or press Enter to rotate through dough freezing equipment views"
                     />
-                    <p
-                      style="
-                        font-size: var(--font-size-xs);
-                        color: var(--color-text-primary);
-                        text-align: center;
-                        margin: var(--spacing-xs) 0 0 0;
-                      "
-                    ></p>
+                    <p></p>
                     <p>TruClean&trade; Frozen Dough Machine by Baker Perkins</p>
                   </div>
                 </div>
@@ -689,11 +674,7 @@
           <img
             src="../assets/images/finished_goods//InfoGraphic__HighSpeedLine.png"
             alt="Finished goods packaging process flow"
-            style="
-              width: 100%;
-              border-radius: var(--radius-md);
-              margin: var(--spacing-md) 0;
-            "
+            loading="lazy"
           />
           <p>Details of the packaging and bulk packaging processes.</p>
 
@@ -706,13 +687,6 @@
                     <img
                       src="../assets/images/finished_goods/machinesloveshawCF-50T_former.webp"
                       alt="Box forming equipment"
-                      style="
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                        border-radius: var(--radius-md);
-                        margin: 0;
-                      "
                     />
                   </div>
                 </div>
@@ -723,13 +697,6 @@
                     <img
                       src="../assets/images/finished_goods/machinespearsonBI18_bagger.webp"
                       alt="Bag inserter equipment"
-                      style="
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                        border-radius: var(--radius-md);
-                        margin: 0;
-                      "
                     />
                   </div>
                 </div>
@@ -740,13 +707,7 @@
                     <img
                       src="../assets/images/finished_goods/LD-24.png"
                       alt="Box taper equipment"
-                      style="
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                        border-radius: var(--radius-md);
-                        margin: 0;
-                      "
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -757,13 +718,7 @@
                     <img
                       src="../assets/images/finished_goods/palletizer.png"
                       alt="Palletizer equipment"
-                      style="
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                        border-radius: var(--radius-md);
-                        margin: 0;
-                      "
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -881,7 +836,7 @@
       role="dialog"
       aria-modal="true"
       aria-label="Full screen state diagram"
-      style="z-index: 10001"
+      class="z-10001"
     >
       <img
         id="carousel-image-fullscreen"
@@ -893,379 +848,5 @@
 
     <!-- Main Script -->
     <script type="module" src="../scripts/main.js"></script>
-
-    <!-- Carousel and Modal Script -->
-    <script>
-      // Control Logic Diagrams with Descriptions
-      const controlLogicDiagrams = [
-        {
-          src: "../assets/images/resource_allowcation/sd_resource_area.png",
-          title: "Resource Allocation",
-          alt: "Resource Allocation Area State Diagram showing operational states and transitions",
-          description: `
-            <h4>Resource Allocation Logic</h4>
-            <p>The Resource Allocation Area controls the mixing and preparation of dough ingredients.</p>
-            <h5>Control Logic Flow:</h5>
-            <ul style="list-style: disc; padding-left: var(--spacing-lg);">
-              <li><strong>Conveyor 2 Control:</strong> When ps1 = 0 and ps2 = 0, set c2 = 1. Count for 2 seconds, then set c2 = 0 and ps2 = 1.</li>
-              <li><strong>Conveyor 2 Pusher:</strong> When ps2 = 1, count for 7.5 to 15.0 seconds. After the time interval, set ps2 = 0 and ps3 = 1 to advance to the next stage.</li>
-              <li>This stage ensures proper material allocation and mixing before moving product to finished goods area.</li>
-            </ul>
-          `,
-        },
-        {
-          src: "../assets/images/production_area/sd_prod_area.png",
-          title: "Production Area",
-          alt: "Production Area State Diagram showing operational states and transitions",
-          description: `
-            <h4>Production Area Logic</h4>
-            <p>The Production Area manages the flow of cookies through dough forming, cutting, and freezing processes.</p>
-            <h5>Control Logic Flow:</h5>
-            <ul style="list-style: disc; padding-left: var(--spacing-lg);">
-              <li><strong>Boxing Machine Control:</strong> When c1 = 0 and ps2 = 0, initiate boxing = 1. The system counts for 2 seconds if boxing = 1 and box_maker = 1. After 2 seconds, reset boxing to 0.</li>
-              <li><strong>Conveyor 1 Control:</strong> When boxing = 0, ps2 = 0, and ps1 = 0, set c1 = 1. Count for 3 seconds, then set c1 = 0 and ps1 = 1.</li>
-              <li><strong>Conveyor 1 Pusher:</strong> When ps1 = 1 and bagger is active, count for 1 second. After 1 second, reset ps1 to 0.</li>
-            </ul>
-          `,
-        },
-        {
-          src: "../assets/images/finished_goods/sd_boxing_machine.png",
-          title: "Boxing & Taping",
-          alt: "Boxing and Taping Machine State Diagram showing operational states and transitions",
-          description: `
-            <h4>Boxing & Taping Machine Logic</h4>
-            <p>The Boxing Machine packages cookies into individual boxes while the Taping Machine seals them securely for transport.</p>
-            <h5>Control Logic Flow:</h5>
-            <ul style="list-style: disc; padding-left: var(--spacing-lg);">
-              <li><strong>Conveyor 3 Control:</strong> When ps3 = 1, ps5 = 0, and ps4 = 0, set c3 = 1 and ps3 = 0. Count for 3 seconds, then set c3 = 0 and ps4 = 1.</li>
-              <li><strong>Conveyor 3 Pusher:</strong> When ps4 = 1 and taper = 1, count for 2 seconds. After 2 seconds, set ps4 = 0.</li>
-              <li><strong>Taping Process:</strong> The taping machine is synchronized with the boxing machine through the ps4 control signal.</li>
-              <li><strong>Coordination:</strong> When the boxing machine finishes (ps4 = 0), the taping machine can proceed with sealing operations.</li>
-              <li>The boxing and taping processes work together to ensure secure packaging before moving to the palletizer.</li>
-            </ul>
-          `,
-        },
-        {
-          src: "../assets/images/finished_goods/sd_palletizer.png",
-          title: "Palletizer",
-          alt: "Palletizer State Diagram showing operational states and transitions",
-          description: `
-            <h4>Palletizer Logic</h4>
-            <p>The Palletizer stacks and organizes finished boxes for shipping.</p>
-            <h5>Control Logic Flow:</h5>
-            <ul style="list-style: disc; padding-left: var(--spacing-lg);">
-              <li><strong>Conveyor 4 Control:</strong> When ps4 = 0 and ps5 = 0, set c4 = 1. Count for 4 seconds, then set c4 = 0 and ps5 = 1.</li>
-              <li><strong>Palletizer Grab Logic:</strong> When palletizer_grabbing = 1 and palletizer_pos = 2, set palletizer_grabbing = 0 and increment box_count by 1.</li>
-              <li><strong>Wrapping Trigger:</strong> When box_count = 40 and wrapper = 1, set wrapper_wrapping = 1 to begin wrapping the full pallet.</li>
-              <li>When ps6 = 1, activate conveyor_5 for final product movement.</li>
-            </ul>
-          `,
-        },
-        {
-          src: "../assets/images/finished_goods/sd_wrapping_machine.png",
-          title: "Wrapping Machine",
-          alt: "Wrapping Machine State Diagram showing operational states and transitions",
-          description: `
-            <h4>Wrapping Machine Logic</h4>
-            <p>The Wrapping Machine applies protective wrapping to pallets for shipping.</p>
-            <h5>Control Logic Flow:</h5>
-            <ul style="list-style: disc; padding-left: var(--spacing-lg);">
-              <li><strong>Pallet Wrapping Initiation:</strong> When box_count reaches 40 and wrapper = 1, the wrapping operation begins (wrapper_wrapping = 1).</li>
-              <li><strong>Final Conveyor:</strong> When ps6 = 1, conveyor_5 is activated to move wrapped pallets to storage or shipping.</li>
-              <li><strong>Completion:</strong> The wrapping process ensures pallets are protected during storage and transportation.</li>
-              <li>This is the final stage in the cookie manufacturing sequence before product distribution.</li>
-            </ul>
-          `,
-        },
-      ];
-
-      let currentControlLogicIndex = 0;
-
-      function updateControlLogicDisplay() {
-        const diagram = controlLogicDiagrams[currentControlLogicIndex];
-
-        // Update main page carousel
-        const controlLogicImageMain = document.getElementById(
-          "control-logic-image-main"
-        );
-        const controlLogicTitleMain = document.getElementById(
-          "control-logic-title-main"
-        );
-        const controlLogicCounterMain = document.getElementById(
-          "control-logic-counter-main"
-        );
-        const descriptionAreaMain = document.getElementById(
-          "control-logic-description-main"
-        );
-
-        if (controlLogicImageMain) {
-          controlLogicImageMain.src = diagram.src;
-          controlLogicImageMain.alt = diagram.alt;
-        }
-        if (controlLogicTitleMain) {
-          controlLogicTitleMain.textContent = diagram.title;
-        }
-        if (controlLogicCounterMain) {
-          controlLogicCounterMain.textContent = `(${
-            currentControlLogicIndex + 1
-          } of ${controlLogicDiagrams.length})`;
-        }
-        if (descriptionAreaMain) {
-          descriptionAreaMain.innerHTML = diagram.description;
-        }
-
-        // Update modal carousel if it exists
-        const controlLogicImage = document.getElementById(
-          "control-logic-image"
-        );
-        const controlLogicTitle = document.getElementById(
-          "control-logic-title"
-        );
-        const controlLogicCounter = document.getElementById(
-          "control-logic-counter"
-        );
-        const descriptionArea = document.getElementById(
-          "control-logic-description"
-        );
-
-        if (controlLogicImage) {
-          controlLogicImage.src = diagram.src;
-          controlLogicImage.alt = diagram.alt;
-        }
-        if (controlLogicTitle) {
-          controlLogicTitle.textContent = diagram.title;
-        }
-        if (controlLogicCounter) {
-          controlLogicCounter.textContent = `(${
-            currentControlLogicIndex + 1
-          } of ${controlLogicDiagrams.length})`;
-        }
-        if (descriptionArea) {
-          descriptionArea.innerHTML = diagram.description;
-        }
-      }
-
-      function showCarouselArrows() {
-        // Visibility is now handled by CSS hover
-        const img = document.getElementById("control-logic-image-main");
-        if (img) img.style.opacity = "0.9";
-      }
-
-      function hideCarouselArrows() {
-        // Visibility is now handled by CSS hover
-        const img = document.getElementById("control-logic-image-main");
-        if (img) img.style.opacity = "1";
-      }
-      function openControlLogicModal() {
-        const modal = document.getElementById("control-logic-modal");
-        currentControlLogicIndex = 0;
-        updateControlLogicDisplay();
-        modal.classList.add("active");
-        document.body.style.overflow = "hidden";
-        modal.focus();
-      }
-
-      function closeControlLogicModal() {
-        const modal = document.getElementById("control-logic-modal");
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
-      }
-
-      function nextControlLogicDiagram() {
-        currentControlLogicIndex =
-          (currentControlLogicIndex + 1) % controlLogicDiagrams.length;
-        updateControlLogicDisplay();
-      }
-
-      function prevControlLogicDiagram() {
-        currentControlLogicIndex =
-          (currentControlLogicIndex - 1 + controlLogicDiagrams.length) %
-          controlLogicDiagrams.length;
-        updateControlLogicDisplay();
-      }
-
-      function openControlLogicImageModal() {
-        // Try to get image from main page first, then fall back to modal
-        let controlLogicImage = document.getElementById(
-          "control-logic-image-main"
-        );
-        if (!controlLogicImage) {
-          controlLogicImage = document.getElementById("control-logic-image");
-        }
-
-        const fullscreenImage = document.getElementById(
-          "carousel-image-fullscreen"
-        );
-        const modal = document.getElementById("carousel-image-modal");
-
-        fullscreenImage.src = controlLogicImage.src;
-        fullscreenImage.alt = controlLogicImage.alt;
-        modal.setAttribute(
-          "aria-label",
-          "Full screen " + controlLogicDiagrams[currentControlLogicIndex].title
-        );
-        modal.classList.add("active");
-        document.body.style.overflow = "hidden";
-        modal.focus();
-      }
-
-      function closeCarouselImageModal() {
-        const modal = document.getElementById("carousel-image-modal");
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
-      }
-
-      function openTopologyModal() {
-        const modal = document.getElementById("topology-modal");
-        modal.classList.add("active");
-        document.body.style.overflow = "hidden";
-        modal.focus();
-      }
-
-      function closeTopologyModal() {
-        const modal = document.getElementById("topology-modal");
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
-        const topologyImage = document.getElementById("topology-image");
-        if (topologyImage) {
-          topologyImage.focus();
-        }
-      }
-
-      // Close modals on Escape key
-      document.addEventListener("keydown", function (e) {
-        const controlLogicModal = document.getElementById(
-          "control-logic-modal"
-        );
-        const imageModal = document.getElementById("carousel-image-modal");
-        const topologyModal = document.getElementById("topology-modal");
-
-        if (e.key === "Escape") {
-          if (imageModal.classList.contains("active")) {
-            closeCarouselImageModal();
-          } else if (controlLogicModal.classList.contains("active")) {
-            closeControlLogicModal();
-          } else if (topologyModal.classList.contains("active")) {
-            closeTopologyModal();
-          }
-        }
-
-        // Arrow keys and WASD for carousel navigation
-        if (controlLogicModal.classList.contains("active")) {
-          if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
-            e.preventDefault();
-            prevControlLogicDiagram();
-          } else if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
-            e.preventDefault();
-            nextControlLogicDiagram();
-          }
-        }
-      });
-
-      // Add keyboard support for topology image
-      document.addEventListener("DOMContentLoaded", function () {
-        // Initialize main page carousel display
-        currentControlLogicIndex = 0;
-        updateControlLogicDisplay();
-
-        const topologyImage = document.getElementById("topology-image");
-        if (topologyImage) {
-          topologyImage.addEventListener("keydown", function (e) {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              openTopologyModal();
-            }
-          });
-        }
-
-        // View Control Logic button (remove if no longer needed)
-        const viewControlLogicBtn = document.getElementById(
-          "view-control-logic-btn"
-        );
-        if (viewControlLogicBtn) {
-          viewControlLogicBtn.addEventListener("click", openControlLogicModal);
-        }
-
-        // Control Logic carousel navigation buttons - Main page
-        const prevBtnMain = document.getElementById(
-          "control-logic-prev-btn-main"
-        );
-        const nextBtnMain = document.getElementById(
-          "control-logic-next-btn-main"
-        );
-
-        if (prevBtnMain) {
-          prevBtnMain.addEventListener("click", prevControlLogicDiagram);
-        }
-        if (nextBtnMain) {
-          nextBtnMain.addEventListener("click", nextControlLogicDiagram);
-        }
-
-        // Control Logic carousel navigation buttons - Modal
-        const prevBtn = document.getElementById("control-logic-prev-btn");
-        const nextBtn = document.getElementById("control-logic-next-btn");
-
-        if (prevBtn) {
-          prevBtn.addEventListener("click", prevControlLogicDiagram);
-        }
-        if (nextBtn) {
-          nextBtn.addEventListener("click", nextControlLogicDiagram);
-        }
-
-        // Control Logic image keyboard support - Main page
-        const controlLogicImageMain = document.getElementById(
-          "control-logic-image-main"
-        );
-        if (controlLogicImageMain) {
-          controlLogicImageMain.addEventListener("keydown", function (e) {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              openControlLogicImageModal();
-            }
-          });
-        }
-
-        // Control Logic image keyboard support - Modal
-        const controlLogicImage = document.getElementById(
-          "control-logic-image"
-        );
-        if (controlLogicImage) {
-          controlLogicImage.addEventListener("keydown", function (e) {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              openControlLogicImageModal();
-            }
-          });
-        }
-
-        // Modal close buttons
-        const controlLogicCloseBtn = document.getElementById(
-          "control-logic-close-btn"
-        );
-        if (controlLogicCloseBtn) {
-          controlLogicCloseBtn.addEventListener(
-            "click",
-            closeControlLogicModal
-          );
-        }
-
-        // Modal overlay clicks
-        const modals = document.querySelectorAll(".modal");
-        modals.forEach((modal) => {
-          const overlay = modal.querySelector(".modal-overlay");
-          if (overlay) {
-            overlay.addEventListener("click", function (e) {
-              if (modal.id === "control-logic-modal") {
-                closeControlLogicModal();
-              } else if (modal.id === "carousel-image-modal") {
-                closeCarouselImageModal();
-              } else if (modal.id === "topology-modal") {
-                closeTopologyModal();
-              }
-            });
-          }
-        });
-      });
-    </script>
   </body>
 </html>

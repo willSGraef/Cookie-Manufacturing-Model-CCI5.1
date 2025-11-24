@@ -1,0 +1,26 @@
+{
+  "name": "cie-assessment-platform",
+  "version": "1.0.0",
+  "description": "CIE Assessment Platform - Educational workstation for engineering students",
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
+  },
+  "keywords": [
+    "CIE",
+    "assessment",
+    "education",
+    "engineering"
+  ],
+  "author": "CORE/UA Little Rock Engineering Program",
+  "license": "ISC",
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.0.13",
+    "@vitest/ui": "^4.0.13",
+    "happy-dom": "^20.0.10",
+    "jsdom": "^27.2.0",
+    "vitest": "^4.0.13"
+  }
+}

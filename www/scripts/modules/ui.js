@@ -1,7 +1,55 @@
 import { isPagesDirectory } from './utils.js';
 
 /**
- * Initialize Modals
+ * Open a modal by ID
+ * Adds active class, sets aria-hidden to false, prevents body scroll, and focuses modal
+ * @param {string} modalId - The ID of the modal element to open
+ * @returns {void}
+ */
+export function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) {
+        console.warn(`Modal with ID "${modalId}" not found`);
+        return;
+    }
+
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+
+    // Focus on modal for accessibility
+    modal.focus();
+}
+
+/**
+ * Close a modal by ID
+ * Removes active class, sets aria-hidden to true, restores body scroll, and optionally returns focus
+ * @param {string} modalId - The ID of the modal element to close
+ * @param {HTMLElement} [returnFocus=null] - Optional element to return keyboard focus to after closing
+ * @returns {void}
+ */
+export function closeModal(modalId, returnFocus = null) {
+    const modal = document.getElementById(modalId);
+    if (!modal) {
+        console.warn(`Modal with ID "${modalId}" not found`);
+        return;
+    }
+
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+
+    // Return focus to triggering element if provided
+    if (returnFocus) {
+        returnFocus.focus();
+    }
+}
+
+/**
+ * Initialize modal event handlers
+ * Sets up click and keyboard handlers for opening/closing modals.
+ * Handles clickable cards, close buttons, overlay clicks, and Escape key.
+ * @returns {void}
  */
 export function initializeModals() {
     const clickableCards = document.querySelectorAll(".clickable-card");
@@ -52,7 +100,10 @@ export function initializeModals() {
 }
 
 /**
- * Initialize Image Carousels
+ * Initialize image carousel functionality
+ * Sets up image rotation with click, keyboard (arrows/Enter/Space), and navigation buttons.
+ * Automatically adjusts paths based on page directory location.
+ * @returns {void}
  */
 export function initializeCarousels() {
     const carousels = document.querySelectorAll(".image-carousel");
@@ -146,6 +197,8 @@ export function initializeCarousels() {
 
 /**
  * Enhance accessibility features
+ * Adds keyboard support (Enter/Space) for details/summary disclosure elements
+ * @returns {void}
  */
 export function initializeAccessibility() {
     // Add keyboard support for details/summary elements

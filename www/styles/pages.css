@@ -137,7 +137,7 @@
 .topology-image:hover {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
   transform: translateY(-4px);
-  border-color: rgb(0, 102, 204);
+  border-color: var(--color-accent-blue);
 }
 
 /* Enlargeable Images - Reusable class for all clickable images */
@@ -151,7 +151,7 @@
 .enlargeable-image:hover {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
   transform: translateY(-4px);
-  border-color: rgb(0, 102, 204);
+  border-color: var(--color-accent-blue);
 }
 
 .enlargeable-image:focus-visible {
@@ -383,7 +383,10 @@ details summary:focus-visible {
   object-fit: contain;
 }
 
-.carousel-arrow {
+/* Shared carousel arrow base styles - used by all carousel types */
+.carousel-arrow,
+.carousel-arrow-main,
+.image-carousel-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -415,12 +418,25 @@ details summary:focus-visible {
   transition: opacity 0.3s cubic-bezier(1, 0, 0.4, 1), all 0.3s cubic-bezier(1, 0, 0.4, 1);
 }
 
-.carousel-wrapper:hover .carousel-arrow {
+/* Size modifier for main page carousel - larger arrows */
+.carousel-arrow-main {
+  width: 60px;
+  height: 60px;
+  font-size: 28px;
+}
+
+/* Show arrows on parent hover - all carousel types */
+.carousel-wrapper:hover .carousel-arrow,
+.carousel-wrapper-main:hover .carousel-arrow-main,
+.image-carousel:hover .image-carousel-arrow {
   opacity: 0.7;
   pointer-events: auto;
 }
 
-.carousel-arrow:hover {
+/* Hover state - all carousel arrows */
+.carousel-arrow:hover,
+.carousel-arrow-main:hover,
+.image-carousel-arrow:hover {
   background-color: color-mix(in srgb, var(--color-accent-blue) 15%, transparent);
   border-color: color-mix(in srgb, var(--color-text-primary) 15%, transparent);
   color: var(--color-accent-blue);
@@ -435,16 +451,31 @@ details summary:focus-visible {
   pointer-events: auto;
 }
 
-.carousel-arrow:focus-visible {
+/* Focus state - all carousel arrows */
+.carousel-arrow:focus-visible,
+.carousel-arrow-main:focus-visible,
+.image-carousel-arrow:focus-visible {
   outline: 2px solid var(--color-accent-blue);
   outline-offset: 2px;
 }
 
-.carousel-arrow-left {
+/* Positioning - standard size arrows */
+.carousel-arrow-left,
+.image-carousel-arrow-left {
   left: var(--spacing-lg);
 }
 
-.carousel-arrow-right {
+.carousel-arrow-right,
+.image-carousel-arrow-right {
+  right: var(--spacing-lg);
+}
+
+/* Positioning - main page larger arrows */
+.carousel-arrow-left-main {
+  left: var(--spacing-lg);
+}
+
+.carousel-arrow-right-main {
   right: var(--spacing-lg);
 }
 
@@ -525,6 +556,29 @@ details summary:focus-visible {
   }
 }
 
+/* Tablet breakpoint for better layout */
+@media (max-width: 900px) {
+  .control-logic-container {
+    gap: var(--spacing-md);
+  }
+
+  .carousel-wrapper {
+    height: 350px;
+  }
+
+  .description-section {
+    max-height: 350px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .carousel-arrow {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+}
+
 @media (max-width: 768px) {
   .carousel-wrapper {
     height: 300px;
@@ -588,75 +642,7 @@ details summary:focus-visible {
   display: block;
 }
 
-.carousel-arrow-main {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: color-mix(in srgb, var(--color-text-primary) 2%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
-  color: var(--color-accent-blue);
-  width: 60px;
-  height: 60px;
-  border-radius: 99em;
-  cursor: pointer;
-  font-size: 28px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(1, 0, 0.4, 1);
-  z-index: 10;
-  padding: 0;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 0 color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 20%), transparent),
-    inset 0 -1px 0 0 color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-dark) * 10%), transparent),
-    inset 0 0 0 1px color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 10%), transparent),
-    inset 1.8px 3px 0px -2px color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 90%), transparent),
-    inset -2px -2px 0px -2px color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 80%), transparent);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s cubic-bezier(1, 0, 0.4, 1), all 0.3s cubic-bezier(1, 0, 0.4, 1);
-}
-
-.carousel-wrapper-main:hover .carousel-arrow-main {
-  opacity: 0.7;
-  pointer-events: auto;
-}
-
-.carousel-arrow-main:hover {
-  background-color: color-mix(in srgb, var(--color-accent-blue) 15%, transparent);
-  border-color: color-mix(in srgb, var(--color-text-primary) 15%, transparent);
-  color: var(--color-accent-blue);
-  box-shadow: 0 12px 32px rgba(0, 102, 204, 0.15),
-    inset 0 1px 0 0 color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 30%), transparent),
-    inset 0 -1px 0 0 color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-dark) * 15%), transparent),
-    inset 0 0 0 1px color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 20%), transparent),
-    inset 1.8px 3px 0px -2px color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 90%), transparent),
-    inset -2px -2px 0px -2px color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 80%), transparent);
-  opacity: 1;
-  transform: translateY(-50%) scale(1.05);
-  pointer-events: auto;
-}
-
-.carousel-arrow-main:focus-visible {
-  outline: 2px solid var(--color-accent-blue);
-  outline-offset: 4px;
-}
-
-.carousel-arrow-main:focus-visible {
-  outline: 2px solid var(--color-accent-blue);
-  outline-offset: 4px;
-}
-
-.carousel-arrow-left-main {
-  left: var(--spacing-lg);
-}
-
-.carousel-arrow-right-main {
-  right: var(--spacing-lg);
-}
+/* carousel-arrow-main styles consolidated above with base carousel arrow styles */
 
 .carousel-info-main {
   text-align: center;
@@ -731,70 +717,7 @@ details summary:focus-visible {
   position: relative;
 }
 
-.image-carousel-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: color-mix(in srgb, var(--color-text-primary) 2%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
-  color: var(--color-accent-blue);
-  width: 50px;
-  height: 50px;
-  border-radius: 99em;
-  cursor: pointer;
-  font-size: 24px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(1, 0, 0.4, 1);
-  z-index: 10;
-  padding: 0;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 0 color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 20%), transparent),
-    inset 0 -1px 0 0 color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-dark) * 10%), transparent),
-    inset 0 0 0 1px color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 10%), transparent),
-    inset 1.8px 3px 0px -2px color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 90%), transparent),
-    inset -2px -2px 0px -2px color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 80%), transparent);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s cubic-bezier(1, 0, 0.4, 1), all 0.3s cubic-bezier(1, 0, 0.4, 1);
-}
-
-.image-carousel:hover .image-carousel-arrow {
-  opacity: 0.7;
-  pointer-events: auto;
-}
-
-.image-carousel-arrow:hover {
-  background-color: color-mix(in srgb, var(--color-accent-blue) 15%, transparent);
-  border-color: color-mix(in srgb, var(--color-text-primary) 15%, transparent);
-  color: var(--color-accent-blue);
-  box-shadow: 0 12px 32px rgba(0, 102, 204, 0.15),
-    inset 0 1px 0 0 color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 30%), transparent),
-    inset 0 -1px 0 0 color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-dark) * 15%), transparent),
-    inset 0 0 0 1px color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 20%), transparent),
-    inset 1.8px 3px 0px -2px color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 90%), transparent),
-    inset -2px -2px 0px -2px color-mix(in srgb, var(--color-text-primary) calc(var(--glass-reflex-light) * 80%), transparent);
-  opacity: 1;
-  transform: translateY(-50%) scale(1.05);
-  pointer-events: auto;
-}
-
-.image-carousel-arrow:focus-visible {
-  outline: 2px solid var(--color-accent-blue);
-  outline-offset: 4px;
-}
-
-.image-carousel-arrow-left {
-  left: var(--spacing-lg);
-}
-
-.image-carousel-arrow-right {
-  right: var(--spacing-lg);
-}
+/* image-carousel-arrow styles consolidated above with base carousel arrow styles */
 
 @media (max-width: 768px) {
   .carousel-arrow-main {

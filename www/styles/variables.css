@@ -2,11 +2,10 @@
     /* Primary Colors - Apple-inspired minimalist */
     --color-primary: rgb(29, 29, 31);
     --color-secondary: #6b6b71;
-    --color-accent-gold: rgb(0, 102, 204);
-    --color-accent-red: #d70015;
-    --color-accent-light-green: #00b34b;
-    --color-accent-dark-green: #00997a;
     --color-accent-blue: rgb(0, 102, 204);
+    --color-accent-red: #d70015;
+    --color-accent-green: #00b34b;
+    --color-accent-teal: #00997a;
 
     /* Neutral Colors - Premium grays */
     --color-white: #ffffff;
@@ -21,11 +20,11 @@
     --color-gray-800: #424245;
     --color-gray-900: #1d1d1f;
 
-    /* Semantic Colors */
-    --color-success: #00b34b;
+    /* Semantic Colors - Using accent colors for consistency */
+    --color-success: var(--color-accent-green);
     --color-warning: #cc7500;
-    --color-danger: #d70015;
-    --color-info: rgb(0, 102, 204);
+    --color-danger: var(--color-accent-red);
+    --color-info: var(--color-accent-blue);
 
     /* Light Mode Colors (Default) */
     --color-bg-primary: #ffffff;

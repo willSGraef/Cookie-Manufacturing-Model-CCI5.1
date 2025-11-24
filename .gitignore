@@ -229,3 +229,29 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node Files
+node_modules/
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Test Coverage
+coverage/
+.nyc_output/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
