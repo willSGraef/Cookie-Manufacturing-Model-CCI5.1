@@ -42,7 +42,7 @@ After running `npm run test:coverage`, coverage reports are generated in the `co
 
 Tests are organized alongside their corresponding modules:
 
-```
+```sh
 scripts/modules/
 ├── forms.js
 ├── forms.test.js          # Tests for form validation
