@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2025-02-05T12:34:47"/>
-  <contentHeader name="CookiePLC" modificationDateTime="2025-11-13T16:56:54">
+  <contentHeader name="CookiePLC" modificationDateTime="2025-11-16T22:54:03">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -1754,8 +1754,8 @@ END_IF;]]></xhtml:p>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="9">
                       <position x="150" y="230"/>
-                      <position x="130" y="230"/>
-                      <position x="130" y="220"/>
+                      <position x="120" y="230"/>
+                      <position x="120" y="220"/>
                       <position x="110" y="220"/>
                     </connection>
                   </connectionPointIn>
@@ -1765,8 +1765,8 @@ END_IF;]]></xhtml:p>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="10">
                       <position x="150" y="250"/>
-                      <position x="130" y="250"/>
-                      <position x="130" y="260"/>
+                      <position x="120" y="250"/>
+                      <position x="120" y="260"/>
                       <position x="110" y="260"/>
                     </connection>
                   </connectionPointIn>
@@ -2176,14 +2176,16 @@ END_IF;]]></xhtml:p>
             <inOutVariable localId="12" width="50" height="30" negatedOut="false" negatedIn="false">
               <position x="320" y="210"/>
               <connectionPointIn>
-                <relPosition x="0" y="20"/>
+                <relPosition x="0" y="10"/>
                 <connection refLocalId="11" formalParameter="Result">
-                  <position x="320" y="230"/>
+                  <position x="320" y="220"/>
+                  <position x="530" y="220"/>
+                  <position x="530" y="230"/>
                   <position x="270" y="230"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
-                <relPosition x="50" y="20"/>
+                <relPosition x="50" y="10"/>
               </connectionPointOut>
               <expression>lcf_3</expression>
             </inOutVariable>
