@@ -85,6 +85,34 @@ export function initializeCarousels() {
             }
         };
 
+        // Add navigation arrows if there are multiple images
+        if (images.length > 1 && !carousel.querySelector(".image-carousel-arrow")) {
+            // Create left arrow
+            const leftArrow = document.createElement("button");
+            leftArrow.className = "image-carousel-arrow image-carousel-arrow-left";
+            leftArrow.setAttribute("aria-label", "Previous image");
+            leftArrow.textContent = "❮";
+            leftArrow.addEventListener("click", (e) => {
+                e.preventDefault();
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                updateImage();
+            });
+
+            // Create right arrow
+            const rightArrow = document.createElement("button");
+            rightArrow.className = "image-carousel-arrow image-carousel-arrow-right";
+            rightArrow.setAttribute("aria-label", "Next image");
+            rightArrow.textContent = "❯";
+            rightArrow.addEventListener("click", (e) => {
+                e.preventDefault();
+                currentIndex = (currentIndex + 1) % images.length;
+                updateImage();
+            });
+
+            carousel.appendChild(leftArrow);
+            carousel.appendChild(rightArrow);
+        }
+
         if (img) {
             img.addEventListener("click", function () {
                 currentIndex = (currentIndex + 1) % images.length;
@@ -97,6 +125,19 @@ export function initializeCarousels() {
                 if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
                     this.click();
+                }
+            });
+
+            // Allow keyboard arrow keys to navigate
+            img.addEventListener("keydown", function (e) {
+                if (e.key === "ArrowLeft") {
+                    e.preventDefault();
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    updateImage();
+                } else if (e.key === "ArrowRight") {
+                    e.preventDefault();
+                    currentIndex = (currentIndex + 1) % images.length;
+                    updateImage();
                 }
             });
         }

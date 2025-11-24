@@ -174,12 +174,6 @@ textarea::placeholder {
     border: 1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
 }
 
-.card:hover {
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-    z-index: 5;
-}
-
 .card-title {
     color: var(--color-text-primary);
     margin-bottom: var(--spacing-md);
