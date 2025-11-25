@@ -1,5 +1,9 @@
 import { isPagesDirectory } from './utils.js';
 
+// Track last active trigger to restore focus and manage aria-expanded
+let lastActiveTrigger = null;
+const modalKeydownHandlers = new Map();
+
 /**
  * Open a modal by ID
  * Adds active class, sets aria-hidden to false, prevents body scroll, and focuses modal
@@ -13,12 +17,51 @@ export function openModal(modalId) {
         return;
     }
 
+    // Remember the element that triggered open for focus restore
+    lastActiveTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    if (lastActiveTrigger && lastActiveTrigger.getAttribute('aria-controls') === modalId) {
+        lastActiveTrigger.setAttribute('aria-expanded', 'true');
+    }
+
     modal.classList.add("active");
     modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
 
-    // Focus on modal for accessibility
-    modal.focus();
+    // Focus management: prefer modal-content, else modal itself
+    const modalContent = modal.querySelector('.modal-content');
+    const focusTarget = (modalContent instanceof HTMLElement ? modalContent : modal);
+    if (focusTarget && focusTarget instanceof HTMLElement) {
+        if (!focusTarget.hasAttribute('tabindex')) {
+            focusTarget.setAttribute('tabindex', '-1');
+        }
+        focusTarget.focus();
+    }
+
+    // Focus trap within modal
+    const getFocusable = () => Array.from(modal.querySelectorAll(
+        'a[href], area[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(el => el instanceof HTMLElement && el.offsetParent !== null);
+
+    const trapHandler = (e) => {
+        if (e.key !== 'Tab') return;
+        const focusables = getFocusable();
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey) {
+            if (document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            }
+        } else {
+            if (document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    };
+    modal.addEventListener('keydown', trapHandler);
+    modalKeydownHandlers.set(modalId, trapHandler);
 }
 
 /**
@@ -39,9 +82,20 @@ export function closeModal(modalId, returnFocus = null) {
     modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
 
-    // Return focus to triggering element if provided
-    if (returnFocus) {
-        returnFocus.focus();
+    // Remove focus trap
+    const handler = modalKeydownHandlers.get(modalId);
+    if (handler) {
+        modal.removeEventListener('keydown', handler);
+        modalKeydownHandlers.delete(modalId);
+    }
+
+    // Restore aria-expanded on trigger and return focus
+    let targetToFocus = returnFocus || lastActiveTrigger;
+    if (lastActiveTrigger && lastActiveTrigger.getAttribute('aria-controls') === modalId) {
+        lastActiveTrigger.setAttribute('aria-expanded', 'false');
+    }
+    if (targetToFocus && targetToFocus instanceof HTMLElement) {
+        targetToFocus.focus();
     }
 }
 
@@ -58,15 +112,21 @@ export function initializeModals() {
 
     // Open modal when trigger is clicked
     modalTriggers.forEach((trigger) => {
+        // Annotate triggers for a11y
+        const targetId = trigger.getAttribute('data-modal');
+        if (targetId) {
+            if (!trigger.hasAttribute('aria-controls')) {
+                trigger.setAttribute('aria-controls', targetId);
+            }
+            if (!trigger.hasAttribute('aria-expanded')) {
+                trigger.setAttribute('aria-expanded', 'false');
+            }
+        }
+
         trigger.addEventListener("click", function () {
             const modalId = this.getAttribute("data-modal");
             if (modalId) {
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.add("active");
-                    modal.setAttribute("aria-hidden", "false");
-                    document.body.style.overflow = "hidden";
-                }
+                openModal(modalId);
             }
         });
 
@@ -84,11 +144,7 @@ export function initializeModals() {
         const closeBtn = modal.querySelector(".modal-close");
         const overlay = modal.querySelector(".modal-overlay");
 
-        const closeModalFn = () => {
-            modal.classList.remove("active");
-            modal.setAttribute("aria-hidden", "true");
-            document.body.style.overflow = "";
-        };
+        const closeModalFn = () => closeModal(modal.id);
 
         if (closeBtn) closeBtn.addEventListener("click", closeModalFn);
         if (overlay) overlay.addEventListener("click", closeModalFn);
@@ -120,6 +176,13 @@ export function initializeCarousels() {
         const img = carousel.querySelector(".carousel-image");
         const imageCounter = carousel.querySelector("p");
 
+        // Ensure the counter is announced to assistive tech
+        if (imageCounter) {
+            imageCounter.setAttribute('role', 'status');
+            imageCounter.setAttribute('aria-live', 'polite');
+            imageCounter.setAttribute('aria-atomic', 'true');
+        }
+
         // Helper to update image
         const updateImage = () => {
             // Determine path prefix based on location
@@ -144,6 +207,7 @@ export function initializeCarousels() {
             // Create left arrow
             const leftArrow = document.createElement("button");
             leftArrow.className = "image-carousel-arrow image-carousel-arrow-left";
+            leftArrow.type = 'button';
             leftArrow.setAttribute("aria-label", "Previous image");
             leftArrow.textContent = "❮";
             leftArrow.addEventListener("click", (e) => {
@@ -155,6 +219,7 @@ export function initializeCarousels() {
             // Create right arrow
             const rightArrow = document.createElement("button");
             rightArrow.className = "image-carousel-arrow image-carousel-arrow-right";
+            rightArrow.type = 'button';
             rightArrow.setAttribute("aria-label", "Next image");
             rightArrow.textContent = "❯";
             rightArrow.addEventListener("click", (e) => {

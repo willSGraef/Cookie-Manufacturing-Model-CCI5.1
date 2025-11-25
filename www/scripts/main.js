@@ -24,11 +24,4 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Initialize page-specific functionality (now async)
     await initializeAssessment();
     await initializeScenario();
-});// Export functions for external use if needed
-export {
-    initializeNavigation,
-    initializeAccessibility,
-    scrollToSection,
-    validateForm,
-    validateEmail
-};
+});

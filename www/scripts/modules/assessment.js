@@ -5,6 +5,7 @@
 
 import { isPagesDirectory } from './utils.js';
 import { openModal, closeModal } from './ui.js';
+import { safeSetInnerHTML } from './sanitizer.js';
 
 // Task data - loaded from external JSON
 let taskData = {};
@@ -104,8 +105,10 @@ export async function initializeAssessment() {
             document.getElementById("modal-task-title").textContent = task.title;
             document.getElementById("modal-task-description").textContent =
                 task.description;
-            document.getElementById("modal-task-instructions").innerHTML =
-                task.instructions;
+            
+            // Safely insert HTML instructions (prevents XSS)
+            const instructionsElement = document.getElementById("modal-task-instructions");
+            safeSetInnerHTML(instructionsElement, task.instructions);
 
             // Change status to "Started"
             const statusBadge = document.querySelector(

@@ -85,203 +85,250 @@
       <!-- Main Content -->
       <section class="section">
         <div class="container">
-          <div class="grid grid-2">
-            <main class="grid-col-span-full">
-              <h2>Assessment Overview</h2>
+          <h2>Assessment Tasks</h2>
 
-              <div class="alert alert-info">
-                <h3>Instructions</h3>
-                <p>
-                  The purpose of this assessment is to evaluate your
-                  understanding and application of the concepts covered in the
-                  in this course. You will be required to complete a series of
-                  tasks that simulate real-world engineering challenges related
-                  to operational technology (OT) systems and Cyber-Informed
-                  Engineering principles.
-                </p>
-                <div class="flex gap-md mt-lg">
-                  <button
-                    id="view-deliverables-btn"
-                    class="btn btn-primary btn-small"
-                  >
-                    View Deliverables
-                  </button>
-                </div>
-              </div>
-
-              <div class="card mb-2xl" data-task="1">
-                <h3 class="card-title">Task 1: Component Identification</h3>
-                <p class="card-text">
-                  Identify and list all components associated with Operational
-                  Technology (OT).
-                </p>
-                <p class="card-text">
-                  <strong>Status:</strong>
-                  <span class="badge badge-warning task-status"
-                    >Not Started</span
-                  >
-                </p>
-                <button
-                  class="btn btn-primary view-details-btn btn-small"
-                  data-task="1"
-                >
-                  View Details
-                </button>
-              </div>
-
-              <div class="card mb-2xl" data-task="2">
-                <h3 class="card-title">Task 2: Threat Intelligence</h3>
-                <p class="card-text">
-                  Identify potential threats and vulnerabilities in the OT
-                  system.
-                </p>
-                <p class="card-text">
-                  <strong>Status:</strong>
-                  <span class="badge badge-warning task-status"
-                    >Not Started</span
-                  >
-                </p>
-                <button
-                  class="btn btn-primary view-details-btn btn-small"
-                  data-task="2"
-                >
-                  View Details
-                </button>
-              </div>
-
-              <div class="card mb-2xl" data-task="3">
-                <h3 class="card-title">Task 3: Engineering Controls</h3>
-                <p class="card-text">
-                  Identify and describe five (5) engineering controls or design
-                  modifications that could be implemented to mitigate the risk
-                  of equipment destruction or hazards to personnel resulting
-                  from cyber-attacks. Consider both physical and cyber controls
-                  that align with industry best practices.
-                </p>
-                <p class="card-text">
-                  <strong>Status:</strong>
-                  <span class="badge badge-warning task-status"
-                    >Not Started</span
-                  >
-                </p>
-                <button
-                  class="btn btn-primary view-details-btn btn-small"
-                  data-task="3"
-                >
-                  View Details
-                </button>
-              </div>
-
-              <div class="card mb-2xl" data-task="4">
-                <h3 class="card-title">Task 4: Supply Chain Security</h3>
-                <p class="card-text">
-                  Identify and assess risks associated with the supply chain.
-                </p>
-                <p class="card-text">
-                  <strong>Status:</strong>
-                  <span class="badge badge-warning task-status"
-                    >Not Started</span
-                  >
-                </p>
-                <button
-                  class="btn btn-primary view-details-btn btn-small"
-                  data-task="4"
-                >
-                  View Details
-                </button>
-              </div>
-
-              <!-- Submission Section -->
-              <section class="mt-3xl">
-                <h2>Submission</h2>
-                <div class="alert alert-info">
-                  <p>
-                    Once all tasks are complete, submit your work using the form
-                    below.
-                  </p>
-                  <p class="assessment-submission-info">
-                    <strong>Submission Deadline:</strong> Check your course
-                    syllabus for exact dates.
-                  </p>
-                </div>
-
-                <form class="mt-2xl" aria-label="Assessment Submission Form">
-                  <div class="form-group">
-                    <label for="student-name" class="form-label">
-                      Student Name <span aria-label="required">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="student-name"
-                      name="student-name"
-                      required
-                      class="form-input"
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="student-id" class="form-label">
-                      Student ID <span aria-label="required">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="student-id"
-                      name="student-id"
-                      required
-                      class="form-input"
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="submission-notes" class="form-label">
-                      Submission Notes
-                    </label>
-                    <textarea
-                      id="submission-notes"
-                      name="submission-notes"
-                      rows="4"
-                      class="form-textarea"
-                    ></textarea>
-                  </div>
-
-                  <div class="flex">
-                    <button type="submit" class="btn btn-primary btn-small">
-                      Submit Assessment
-                    </button>
-                    <button type="reset" class="btn btn-outline btn-small">
-                      Clear Form
-                    </button>
-                  </div>
-                </form>
-              </section>
-            </main>
+          <div class="alert alert-info">
+            <h3 class="card-title">
+              <i class="bi bi-info-circle" aria-hidden="true"></i>
+              Assessment Overview
+            </h3>
+            <p>
+              This assessment evaluates your understanding and application of
+              Cyber-Informed Engineering (CIE) principles. You will complete a
+              series of interconnected tasks that simulate real-world
+              engineering challenges in operational technology (OT) systems.
+            </p>
+            <p class="mb-0 mt-lg">
+              <strong>Deliverables:</strong> A comprehensive report synthesizing
+              all task findings, including a prioritized list of mitigation
+              strategies. See the Deliverables section below for full
+              requirements.
+            </p>
+            <div class="flex gap-md mt-lg">
+              <button
+                id="view-deliverables-btn"
+                class="btn btn-primary btn-small"
+              >
+                View Deliverables & Rubric
+              </button>
+            </div>
           </div>
+
+          <div class="production-flow">
+            <button
+              type="button"
+              class="card flow-item clickable-card view-details-btn"
+              data-task="1"
+              aria-label="Open Task 1: Component Identification details"
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: var(--spacing-md);
+                "
+              >
+                <h3 class="card-title" style="margin: 0">Task 1</h3>
+                <span class="badge badge-warning task-status">Not Started</span>
+              </div>
+              <p class="card-text">
+                <strong>Component Identification</strong>
+              </p>
+              <p class="card-text">
+                Create a comprehensive Asset Inventory Matrix categorizing all
+                OT components by Purdue Model levels.
+              </p>
+              <p class="card-text mt-lg text-link">View Details &rarr;</p>
+            </button>
+
+            <button
+              type="button"
+              class="card flow-item clickable-card view-details-btn"
+              data-task="2"
+              aria-label="Open Task 2: Threat Intelligence details"
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: var(--spacing-md);
+                "
+              >
+                <h3 class="card-title" style="margin: 0">Task 2</h3>
+                <span class="badge badge-warning task-status">Not Started</span>
+              </div>
+              <p class="card-text">
+                <strong>Threat Intelligence</strong>
+              </p>
+              <p class="card-text">
+                Map specific scenario vulnerabilities to threat actors and
+                identify three high-probability attack vectors.
+              </p>
+              <p class="card-text mt-lg text-link">View Details &rarr;</p>
+            </button>
+
+            <button
+              type="button"
+              class="card flow-item clickable-card view-details-btn"
+              data-task="3"
+              aria-label="Open Task 3: Engineering Controls details"
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: var(--spacing-md);
+                "
+              >
+                <h3 class="card-title" style="margin: 0">Task 3</h3>
+                <span class="badge badge-warning task-status">Not Started</span>
+              </div>
+              <p class="card-text">
+                <strong>Engineering Controls (CIE)</strong>
+              </p>
+              <p class="card-text">
+                Propose five physical and digital controls that mitigate risk
+                even if software is compromised.
+              </p>
+              <p class="card-text mt-lg text-link">View Details &rarr;</p>
+            </button>
+
+            <button
+              type="button"
+              class="card flow-item clickable-card view-details-btn"
+              data-task="4"
+              aria-label="Open Task 4: Supply Chain Security details"
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: var(--spacing-md);
+                "
+              >
+                <h3 class="card-title" style="margin: 0">Task 4</h3>
+                <span class="badge badge-warning task-status">Not Started</span>
+              </div>
+              <p class="card-text">
+                <strong>Supply Chain Security</strong>
+              </p>
+              <p class="card-text">
+                Evaluate vendor-specific risks and develop mitigation strategies
+                for LSI, Golden Bake, and Linde.
+              </p>
+              <p class="card-text mt-lg text-link">View Details &rarr;</p>
+            </button>
+          </div>
+
+          <!-- Submission Section -->
+          <section class="mt-3xl card">
+            <h2 class="mt-0">Submit Your Work</h2>
+            <p class="text-muted">
+              Once all tasks are complete and your report is finalized, submit
+              using the form below.
+            </p>
+            <div class="alert alert-info mt-lg">
+              <i class="bi bi-calendar-event" aria-hidden="true"></i>
+              <strong>Submission Deadline:</strong> Check your course syllabus
+              for exact dates and submission requirements.
+            </div>
+
+            <form class="mt-2xl" aria-label="Assessment Submission Form">
+              <div class="form-group">
+                <label for="student-name" class="form-label">
+                  Student Name <span aria-label="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="student-name"
+                  name="student-name"
+                  required
+                  class="form-input"
+                  placeholder="Enter your full name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="student-id" class="form-label">
+                  Student ID <span aria-label="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="student-id"
+                  name="student-id"
+                  required
+                  class="form-input"
+                  placeholder="Enter your student ID"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="submission-notes" class="form-label">
+                  Submission Notes (Optional)
+                </label>
+                <textarea
+                  id="submission-notes"
+                  name="submission-notes"
+                  rows="4"
+                  class="form-textarea"
+                  placeholder="Add any notes or comments about your submission"
+                ></textarea>
+              </div>
+
+              <div class="flex gap-md">
+                <button type="submit" class="btn btn-primary btn-small">
+                  Submit Assessment
+                </button>
+                <button type="reset" class="btn btn-outline btn-small">
+                  Clear Form
+                </button>
+              </div>
+            </form>
+          </section>
         </div>
       </section>
     </main>
 
     <!-- Task Details Modal -->
-    <div class="modal" id="task-modal">
-      <div class="modal-overlay"></div>
-      <div class="modal-content">
-        <button class="modal-close" aria-label="Close modal">&times;</button>
+    <div
+      class="modal"
+      id="task-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-task-title"
+      aria-hidden="true"
+    >
+      <div class="modal-overlay" aria-label="Close dialog"></div>
+      <div class="modal-content" tabindex="-1">
+        <button class="modal-close" type="button" aria-label="Close modal">
+          &times;
+        </button>
         <h2 class="modal-title" id="modal-task-title">Task Details</h2>
 
         <div id="task-content" class="modal-section">
-          <h3>Task Description</h3>
-          <p id="modal-task-description"></p>
-
-          <div class="mt-2xl">
-            <h3>Instructions:</h3>
-            <div id="modal-task-instructions"></div>
+          <div class="alert alert-info mb-lg">
+            <p id="modal-task-description" class="mb-0"></p>
           </div>
+
+          <div class="modal-section-header">
+            <span class="section-icon"
+              ><i class="bi bi-list-check" aria-hidden="true"></i
+            ></span>
+            <h3 style="margin: 0">Instructions</h3>
+          </div>
+          <div id="modal-task-instructions" class="mt-lg"></div>
         </div>
 
         <div class="flex gap-lg mt-2xl">
-          <button id="task-complete-btn" class="btn btn-primary btn-large">
-            Complete
-          </button>
-          <button id="task-close-btn" class="btn btn-outline btn-large">
+          <button
+            id="task-close-btn"
+            type="button"
+            class="btn btn-primary btn-small"
+          >
             Close
           </button>
         </div>
@@ -289,64 +336,193 @@
     </div>
 
     <!-- Deliverables Modal -->
-    <div class="modal" id="deliverables-modal">
-      <div class="modal-overlay"></div>
-      <div class="modal-content">
-        <button class="modal-close" aria-label="Close modal">&times;</button>
-        <h2 class="modal-title">Deliverables</h2>
+    <div
+      class="modal"
+      id="deliverables-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="deliverables-modal-title"
+      aria-hidden="true"
+    >
+      <div class="modal-overlay" aria-label="Close dialog"></div>
+      <div class="modal-content" tabindex="-1">
+        <button class="modal-close" type="button" aria-label="Close modal">
+          &times;
+        </button>
+        <h2 class="modal-title" id="deliverables-modal-title">
+          Deliverables & Grading Rubric
+        </h2>
 
         <div class="modal-section">
-          <h3>Report Requirements</h3>
-          <p>
-            You will be required to hand in a comprehensive report. The
-            requirements for this report are detailed in each task below. Ensure
-            the report is formatted professionally and includes all necessary
-            sections as specified.
+          <div class="modal-section-header">
+            <span class="section-icon"
+              ><i class="bi bi-file-text" aria-hidden="true"></i
+            ></span>
+            <h3 style="margin: 0">Report Requirements</h3>
+          </div>
+          <p class="mt-lg">
+            You will submit a comprehensive report synthesizing all task
+            findings. The report must be professionally formatted and include
+            all required sections below.
           </p>
 
-          <h3 class="mt-2xl">Report Format:</h3>
-          <ul class="list-disc">
-            <li>
-              <strong>Title Page:</strong> Include the assessment title, your
-              name, and the date
-            </li>
-            <li>
-              <strong>Table of Contents:</strong> List all sections and their
-              page numbers
-            </li>
-            <li>
-              <strong>Executive Summary:</strong> Summarize the key points of
-              the report (300-400 words)
-            </li>
-            <li>
-              <strong>Tasks:</strong> List each task by their task number and
-              title
-              <ul class="mt-md">
+          <h4 class="mt-2xl mb-md">Report Sections</h4>
+          <div class="deliverables-panel">
+            <div class="deliverables-content">
+              <p>
+                <strong>Title Page:</strong> Include the assessment title, your
+                name, and the date
+              </p>
+              <p>
+                <strong>Table of Contents:</strong> List all sections and their
+                page numbers
+              </p>
+              <p>
+                <strong>Executive Summary:</strong> Summarize the key points of
+                the report (300-400 words)
+              </p>
+              <p><strong>Tasks:</strong> Include sections for each task:</p>
+              <ul class="deliverables-sublist">
                 <li>Task 1: Component Identification</li>
                 <li>Task 2: Threat Intelligence</li>
                 <li>Task 3: Engineering Controls</li>
                 <li>Task 4: Supply Chain Security</li>
               </ul>
-            </li>
-            <li>
-              <strong>Top 10 Mitigation Strategies:</strong> List the top 10
-              mitigation strategies identified during the assessment
-            </li>
-            <li>
-              <strong>References:</strong> List all sources and references used
-              in the report
-            </li>
-            <li>
-              <strong>Acknowledgements:</strong> If using AI, acknowledge the
-              tools and resources utilized
-            </li>
-            <li><strong>Appendices:</strong> Include if necessary</li>
-          </ul>
+              <p>
+                <strong>Top 10 Mitigation Strategies:</strong> Compile a
+                prioritized list based on your findings across all tasks. Mix
+                immediate fixes, engineering projects, and policy changes.
+              </p>
+              <p>
+                <strong>Acknowledgements:</strong> If using AI, acknowledge the
+                tools and resources utilized
+              </p>
+              <p>
+                <strong>References:</strong> List all sources and references
+                used in the report
+              </p>
+              <p><strong>Appendices:</strong> Include if necessary</p>
+            </div>
+          </div>
 
-          <h3 class="mt-3xl">Example Report</h3>
-          <p class="text-muted mb-lg">
-            Review the example report to see how your report should be organized
-            and formatted:
+          <div
+            class="modal-section-header"
+            style="margin-top: var(--spacing-3xl)"
+          >
+            <span class="section-icon"
+              ><i class="bi bi-graph-up" aria-hidden="true"></i
+            ></span>
+            <h3 style="margin: 0">Grading Rubric</h3>
+          </div>
+          <p class="mt-lg text-muted">
+            Use this rubric to understand how each task will be evaluated.
+          </p>
+          <div class="table-container mt-lg">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Criterion</th>
+                  <th>Excellent (9-10 pts)</th>
+                  <th>Satisfactory (6-8 pts)</th>
+                  <th>Needs Improvement (0-5 pts)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Task 1</strong></td>
+                  <td><strong>Asset Inventory</strong></td>
+                  <td>
+                    Comprehensive list categorized correctly by Level (0, 1, 2).
+                    Identifies critical "kill step" assets clearly.
+                  </td>
+                  <td>
+                    List is present but lacks categorization or misses key
+                    assets (e.g., omits the LSI Gateway).
+                  </td>
+                  <td>
+                    Incomplete list; confuses IT assets (printers) with OT
+                    assets (PLCs).
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Task 2</strong></td>
+                  <td><strong>Threat Mapping</strong></td>
+                  <td>
+                    Connects specific scenario facts (e.g., "VPN to Resource
+                    LAN") to specific consequences. Identifies specific actors.
+                  </td>
+                  <td>
+                    Generic threat list (e.g., "Hackers could attack"). Lacks
+                    specific attack vectors from the topology.
+                  </td>
+                  <td>
+                    Vague or theoretical only. No reference to the SSS scenario.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Task 3</strong></td>
+                  <td><strong>CIE Controls</strong></td>
+                  <td>
+                    Proposes valid <em>physical/mechanical</em> controls (fuses,
+                    clutches, valves) that mitigate specific scenario physics
+                    risks.
+                  </td>
+                  <td>
+                    Proposes controls, but relies heavily on digital solutions
+                    (firewalls/passwords) rather than engineering controls.
+                  </td>
+                  <td>
+                    Fails to identify physical risks. Proposes standard IT
+                    security measures only.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Task 4</strong></td>
+                  <td><strong>Supply Chain</strong></td>
+                  <td>
+                    Deeply analyzes specific vendor risks (LSI credentials,
+                    Golden Bake telemetry, OpenPLC).
+                  </td>
+                  <td>
+                    Identifies the vendors but lists generic risks (e.g.,
+                    "Vendor might get hacked").
+                  </td>
+                  <td>
+                    Fails to address the specific vendors listed in the
+                    scenario.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Report</strong></td>
+                  <td><strong>Structure & Quality</strong></td>
+                  <td>
+                    Professional formatting, includes Executive Summary and "Top
+                    10" list. Clear, concise writing.
+                  </td>
+                  <td>
+                    Follows structure but lacks polish or Executive Summary is
+                    weak.
+                  </td>
+                  <td>
+                    Missing sections (e.g., no Top 10 list); poor formatting.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div
+            class="modal-section-header"
+            style="margin-top: var(--spacing-3xl)"
+          >
+            <span class="section-icon"
+              ><i class="bi bi-file-pdf" aria-hidden="true"></i
+            ></span>
+            <h3 style="margin: 0">Example Report</h3>
+          </div>
+          <p class="mt-lg text-muted">
+            Review the example report to see proper organization and formatting:
           </p>
 
           <a
@@ -360,14 +536,16 @@
         </div>
 
         <div class="flex gap-lg mt-2xl">
-          <button id="deliverables-close-btn" class="btn btn-primary btn-small">
+          <button
+            id="deliverables-close-btn"
+            type="button"
+            class="btn btn-primary btn-small"
+          >
             Close
           </button>
         </div>
       </div>
     </div>
-
-    <!-- State Diagrams Modal -->
 
     <!-- Footer -->
     <div id="footer-placeholder"></div>

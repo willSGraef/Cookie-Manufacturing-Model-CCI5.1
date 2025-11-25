@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { scrollToSection, adjustPaths, getCurrentPage, isPagesDirectory } from './utils.js';
+import { scrollToSection, adjustPaths, getCurrentPage, isPagesDirectory } from '../scripts/modules/utils.js';
 
 describe('Utility Functions Module', () => {
     describe('scrollToSection', () => {

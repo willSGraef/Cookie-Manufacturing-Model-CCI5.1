@@ -187,15 +187,17 @@
 
             <div class="company-info-links">
               <button
+                type="button"
                 class="btn btn-primary btn-small"
-                onclick="openOrganizationModal()"
+                data-action="open-organization"
                 aria-label="View organization structure and personnel"
               >
                 Organization
               </button>
               <button
+                type="button"
                 class="btn btn-primary btn-small"
-                onclick="openVendorModal()"
+                data-action="open-vendor"
                 aria-label="View vendor and external partner information"
               >
                 Vendor Information
@@ -214,7 +216,6 @@
                   src="../assets/images/net_topology.png"
                   alt="Network topology diagram showing the cookie factory's industrial control system architecture"
                   class="topology-image enlargeable-image"
-                  onclick="openTopologyModal()"
                   role="button"
                   tabindex="0"
                   aria-label="Click to enlarge network topology diagram"
@@ -250,7 +251,7 @@
                     <a
                       href="#network-modal"
                       class="resource-link"
-                      onclick="openNetworkModal(); return false;"
+                      data-action="open-network"
                       aria-label="View network architecture and topology details"
                     >
                       <i class="bi bi-diagram-3 icon-sm" aria-hidden="true"></i>
@@ -261,7 +262,7 @@
                     <a
                       href="#ot-network-modal"
                       class="resource-link"
-                      onclick="openOTNetworkModal(); return false;"
+                      data-action="open-ot-network"
                       aria-label="View operational technology network details"
                     >
                       <i
@@ -270,12 +271,6 @@
                       ></i>
                       OT Network Details
                     </a>
-                  </li>
-                  <li class="resources-list-item">
-                    <span class="resource-link disabled"
-                      >Security Protocols
-                      <span class="badge badge-info">Coming Soon</span></span
-                    >
                   </li>
                 </ul>
               </div>
@@ -289,20 +284,13 @@
             <div class="control-logic-main-container mt-lg">
               <!-- Carousel Section -->
               <div class="carousel-section-main">
-                <div
-                  class="carousel-wrapper-main"
-                  id="carousel-wrapper-main"
-                  onmouseover="showCarouselArrows()"
-                  onmouseout="hideCarouselArrows()"
-                >
+                <div class="carousel-wrapper-main" id="carousel-wrapper-main">
                   <!-- Carousel image with arrows overlaid -->
                   <img
                     id="control-logic-image-main"
                     src=""
                     alt="State diagram"
-                    class="enlargeable-image"
-                    class="img-carousel-main"
-                    onclick="openControlLogicImageModal()"
+                    class="enlargeable-image img-carousel-main"
                     role="button"
                     tabindex="0"
                     aria-label="Click to enlarge diagram, hover to show navigation arrows"
@@ -310,6 +298,7 @@
 
                   <!-- Left arrow -->
                   <button
+                    type="button"
                     id="control-logic-prev-btn-main"
                     class="carousel-arrow-main carousel-arrow-left-main"
                     aria-label="Previous diagram"
@@ -320,6 +309,7 @@
 
                   <!-- Right arrow -->
                   <button
+                    type="button"
                     id="control-logic-next-btn-main"
                     class="carousel-arrow-main carousel-arrow-right-main"
                     aria-label="Next diagram"
@@ -335,7 +325,12 @@
                     <strong id="control-logic-title-main"
                       >Production Area</strong
                     >
-                    <span id="control-logic-counter-main">(1 of 6)</span>
+                    <span
+                      id="control-logic-counter-main"
+                      aria-live="polite"
+                      aria-atomic="true"
+                      >(1 of 6)</span
+                    >
                   </p>
                   <p class="text-muted-sm">Click image to enlarge</p>
                 </div>
@@ -358,6 +353,7 @@
 
           <div class="production-flow">
             <button
+              type="button"
               class="card flow-item clickable-card zone-a"
               data-modal="resource-modal"
               aria-label="Open Resource Allocation details"
@@ -373,6 +369,7 @@
             </button>
 
             <button
+              type="button"
               class="card flow-item clickable-card zone-b"
               data-modal="production-modal"
               aria-label="Open Production Area details"
@@ -387,6 +384,7 @@
             </button>
 
             <button
+              type="button"
               class="card flow-item clickable-card zone-c"
               data-modal="finished-modal"
               aria-label="Open Finished Goods details"
@@ -410,12 +408,15 @@
       class="modal"
       id="control-logic-modal"
       role="dialog"
+      aria-modal="true"
       aria-labelledby="control-logic-modal-title"
       aria-hidden="true"
     >
       <div class="modal-overlay" aria-label="Close dialog"></div>
-      <div class="modal-content control-logic-modal-content">
-        <button class="modal-close" aria-label="Close modal">&times;</button>
+      <div class="modal-content control-logic-modal-content" tabindex="-1">
+        <button class="modal-close" type="button" aria-label="Close modal">
+          &times;
+        </button>
         <h2 id="control-logic-modal-title" class="modal-title">
           Control Logic Flow - State Diagrams
         </h2>
@@ -429,9 +430,7 @@
                 id="control-logic-image"
                 src=""
                 alt="State diagram"
-                class="enlargeable-image"
-                class="img-contain"
-                onclick="openControlLogicImageModal()"
+                class="enlargeable-image img-contain"
                 role="button"
                 tabindex="0"
                 aria-label="Click to open diagram in full window"
@@ -439,6 +438,7 @@
 
               <!-- Left arrow -->
               <button
+                type="button"
                 id="control-logic-prev-btn"
                 class="carousel-arrow carousel-arrow-left"
                 aria-label="Previous diagram"
@@ -449,6 +449,7 @@
 
               <!-- Right arrow -->
               <button
+                type="button"
                 id="control-logic-next-btn"
                 class="carousel-arrow carousel-arrow-right"
                 aria-label="Next diagram"
@@ -462,7 +463,12 @@
             <div class="carousel-info">
               <p>
                 <strong id="control-logic-title">Production Area</strong>
-                <span id="control-logic-counter">(1 of 6)</span>
+                <span
+                  id="control-logic-counter"
+                  aria-live="polite"
+                  aria-atomic="true"
+                  >(1 of 6)</span
+                >
               </p>
               <p class="text-muted-sm">Click image to enlarge</p>
             </div>
@@ -479,6 +485,7 @@
 
         <div class="flex gap-lg mt-2xl">
           <button
+            type="button"
             id="control-logic-close-btn"
             class="btn btn-primary btn-small"
           >
@@ -493,12 +500,15 @@
       id="resource-modal"
       class="modal zone-a-modal"
       role="dialog"
+      aria-modal="true"
       aria-labelledby="resource-modal-title"
       aria-hidden="true"
     >
       <div class="modal-overlay" aria-label="Close dialog"></div>
-      <div class="modal-content">
-        <button class="modal-close" aria-label="Close dialog">&times;</button>
+      <div class="modal-content" tabindex="-1">
+        <button class="modal-close" type="button" aria-label="Close dialog">
+          &times;
+        </button>
         <h2 id="resource-modal-title" class="modal-title zone-a-title">
           Resource Allocation
         </h2>
@@ -551,6 +561,17 @@
           with optimized resource and time usage.
         </p>
 
+        <div class="alert alert-danger mt-lg mb-lg">
+          <p>
+            <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+            <strong>Critical Failure Mode:</strong> The mixer motor contactor is
+            "Latching." If the HMI or PLC loses network connection during
+            operation, the mixerretains the last known state. If it was mixing,
+            it will continue to mix indefinitely until physically powered down
+            at the breaker, risking motor burnout or fire.
+          </p>
+        </div>
+
         <div class="modal-layout">
           <div class="modal-column">
             <div class="modal-grid">
@@ -593,6 +614,15 @@
                 >Golden Bake&trade; Mixing System - Feeding, Mixing &amp; Dosing
                 System For Biscuit Line</a
               >
+              <div class="alert alert-warning mt-md">
+                <small>
+                  <strong>Telemetry Warning:</strong> <br />
+                  Wi-Fi packet captures indicate the mixer sends not only
+                  diagnostic motor data but also production recipe
+                  quantities(flour/sugar ratios) to the vendor's cloud in plain
+                  text.
+                </small>
+              </div>
             </div>
           </div>
         </div>
@@ -604,12 +634,15 @@
       id="production-modal"
       class="modal zone-b-modal"
       role="dialog"
+      aria-modal="true"
       aria-labelledby="production-modal-title"
       aria-hidden="true"
     >
       <div class="modal-overlay" aria-label="Close dialog"></div>
-      <div class="modal-content">
-        <button class="modal-close" aria-label="Close dialog">&times;</button>
+      <div class="modal-content" tabindex="-1">
+        <button class="modal-close" type="button" aria-label="Close dialog">
+          &times;
+        </button>
         <h2 id="production-modal-title" class="modal-title zone-b-title">
           Production Area
         </h2>
@@ -621,6 +654,7 @@
             alt="Production area process flow"
             loading="lazy"
           />
+
           <p>
             The Production Area transforms the prepared dough into frozen,
             retail-ready cookies through a highly efficient, two-stage process.
@@ -645,6 +679,16 @@
             phase and making the product ready for subsequent packing and
             storage.
           </p>
+          <div class="alert alert-warning mt-lg mb-lg">
+            <p>
+              <i class="bi bi-fire" aria-hidden="true"></i>
+              <strong>Engineering Control Gap:</strong> The oven gas valve is
+              digitally controlled via the PLC. There is no mechanical
+              high-limit thermal fuse currently installed. Safety relies
+              entirely on the software reading the temperature sensor. If the
+              sensor is spoofed, the gas valve will remain open.
+            </p>
+          </div>
 
           <div class="modal-layout">
             <div class="modal-column">
@@ -698,33 +742,29 @@
                 <h4>Resources</h4>
                 <a
                   href="https://online.flippingbook.com/view/302177475/"
-                  noreferrer
-                  noopener
                   target="_blank"
+                  rel="noreferrer noopener"
                   class="resource-link"
                   >Baker Perkins TruClean&trade; Frozen Dough Machine</a
                 >
                 <a
                   href="https://youtu.be/2IH3w-Wr8jU"
-                  noreferrer
-                  noopener
                   target="_blank"
+                  rel="noreferrer noopener"
                   class="resource-link"
                   >Video: Baker Perkins TruClean&trade; Frozen Dough Machine</a
                 >
                 <a
                   href="https://assets.linde.com/-/media/global/usa/linde-us/literature/food-and-beverage/p-40-4589-linde-cvt-cryovantage-tunnel-freezer---x.pdf"
-                  noreferrer
-                  noopener
                   target="_blank"
+                  rel="noreferrer noopener"
                   class="resource-link"
                   >Linde CRYOLINE&trade; Cryovantage Tunnel Freezer</a
                 >
                 <a
                   href="https://cdnapisec.kaltura.com/p/2051881/sp/205188100/playManifest/entryId/1_gf4stse8/protocol/https/format/applehttp/flavorIds/1_9sdalt2u,1_juhv92rk,1_kfdp0zsr,1_hv8jo6zd,1_8wo2b9vt/ks/djJ8MjA1MTg4MXwZ22rQdARfPmT1SG4_cS8bLsECPo1HfUzzkg5tmSd_kOqma-vSchanPD2cyV8ZqgoJeiMLKuQB1Irrk01HtqemgUGEBETUB9120Q00pEuhSoserV7Prn5B7xLf19uShDiPoMey0FVkhnMHmKHvNUxXWPd-LZd6dD6XEM4q-iOVi-rtH8vXNIoSmwvjat-mU_8=/a.m3u8?uiConfId=54847132&playSessionId=ffaf0602-d2dc-be65-245e-ca1231109f32:d7cf4b49-0e8c-3c06-e0ae-a2e77336b847&referrer=aHR0cHM6Ly93d3cubGluZGV1cy5jb20vaW5kdXN0cmllcy9mb29kLWFuZC1iZXZlcmFnZS9mcmVlemluZy1zeXN0ZW1zL2NyeW92YW50YWdl&clientTag=html5:v7.207"
-                  noreferrer
-                  noopener
                   target="_blank"
+                  rel="noreferrer noopener"
                   class="resource-link"
                   >Video: Linde Cryovantage Freezing System Overview</a
                 >
@@ -740,12 +780,15 @@
       id="finished-modal"
       class="modal zone-c-modal"
       role="dialog"
+      aria-modal="true"
       aria-labelledby="finished-modal-title"
       aria-hidden="true"
     >
       <div class="modal-overlay" aria-label="Close dialog"></div>
-      <div class="modal-content">
-        <button class="modal-close" aria-label="Close dialog">&times;</button>
+      <div class="modal-content" tabindex="-1">
+        <button class="modal-close" type="button" aria-label="Close dialog">
+          &times;
+        </button>
         <h2 id="finished-modal-title" class="modal-title zone-c-title">
           Finished Goods
         </h2>
@@ -753,7 +796,7 @@
         <div class="modal-section">
           <h3>Packaging & Distribution</h3>
           <img
-            src="../assets/images/finished_goods//InfoGraphic__HighSpeedLine.png"
+            src="../assets/images/finished_goods/InfoGraphic__HighSpeedLine.png"
             alt="Finished goods packaging process flow"
             loading="lazy"
           />
@@ -812,64 +855,56 @@
                 <h4>Resources</h4>
                 <a
                   href="https://www.propac.com/packaging-equipment/case-erecting-packing/little-david/cf-50t//"
-                  noreferrer
-                  noopener
+                  rel="noreferrer noopener"
                   target="_blank"
                   class="resource-link"
                   >Website: Little David CF-50T Automatic Case Former</a
                 >
                 <a
                   href="https://www.rocketindustrial.com/media/binaryanvil/media_library/1098_cf5manual.pdf?srsltid=AfmBOorKDLeMtsC1IBsLENGroaXzD6-CUmd01nB8N3eIMUYv-CuG1BDy"
-                  noreferrer
-                  noopener
+                  rel="noreferrer noopener"
                   target="_blank"
                   class="resource-link"
                   >Manual: Little David CF-50T Case Former</a
                 >
                 <a
                   href="https://pearsonpkg.com/equipment/bag-insertion/bi18/"
-                  noreferrer
-                  noopener
+                  rel="noreferrer noopener"
                   target="_blank"
                   class="resource-link"
                   >Website: Pearson BI18 Bag Inserter</a
                 >
                 <a
                   href="https://pearsonpkg.com/equipment/bag-insertion/bi18/#downloads"
-                  noreferrer
-                  noopener
+                  rel="noreferrer noopener"
                   target="_blank"
                   class="resource-link"
                   >Documents: Pearson BI18 Bag Inserter</a
                 >
                 <a
                   href="https://www.signode.com/en-us/productslist/ld-24/"
-                  noreferrer
-                  noopener
+                  rel="noreferrer noopener"
                   target="_blank"
                   class="resource-link"
                   >Website: Little David LD-24 Automatic Case Sealer</a
                 >
                 <a
                   href="../assets/documents/LD24_LittleDavid_200427_English_US_SIG-45_Bro.pdf"
-                  noreferrer
-                  noopener
+                  rel="noreferrer noopener"
                   target="_blank"
                   class="resource-link"
                   >Documents: Little David LD-24 Automatic Case Sealer</a
                 >
                 <a
                   href="https://www.ptchronos.com/products/palletizing/palletizing-robots/high-performant-palletizing-robot"
-                  noreferrer
-                  noopener
+                  rel="noreferrer noopener"
                   target="_blank"
                   class="resource-link"
                   >Website: CHRONOS RPL-4000 SERIES</a
                 >
                 <a
                   href="../assets/documents/RPL-4000-Series-20230223-EN-LR.pdf"
-                  noreferrer
-                  noopener
+                  rel="noreferrer noopener"
                   target="_blank"
                   class="resource-link"
                   >Document: CHRONOS RPL-4000 SERIES</a
@@ -886,12 +921,15 @@
       id="organization-modal"
       class="modal"
       role="dialog"
+      aria-modal="true"
       aria-labelledby="organization-modal-title"
       aria-hidden="true"
     >
       <div class="modal-overlay" aria-label="Close dialog"></div>
-      <div class="modal-content">
-        <button class="modal-close" aria-label="Close dialog">&times;</button>
+      <div class="modal-content" tabindex="-1">
+        <button class="modal-close" type="button" aria-label="Close dialog">
+          &times;
+        </button>
         <h2 id="organization-modal-title" class="modal-title">
           Organization Structure
         </h2>
@@ -1027,8 +1065,9 @@
                   >
                 </div>
                 <div class="security-tag">
-                  Only person authorized to hit Emergency Stop for data
-                  integrity issues
+                  Verifies the biological "kill step" solely by reviewing
+                  digital logs generated by the LSI Historian. No manual
+                  thermometer spot-checks are performed during the night shift.
                 </div>
               </div>
             </div>
@@ -1279,7 +1318,11 @@
         </div>
 
         <div class="flex gap-lg mt-2xl">
-          <button id="organization-close-btn" class="btn btn-primary btn-small">
+          <button
+            id="organization-close-btn"
+            type="button"
+            class="btn btn-primary btn-small"
+          >
             Close
           </button>
         </div>
@@ -1291,12 +1334,15 @@
       id="vendor-modal"
       class="modal"
       role="dialog"
+      aria-modal="true"
       aria-labelledby="vendor-modal-title"
       aria-hidden="true"
     >
       <div class="modal-overlay" aria-label="Close dialog"></div>
-      <div class="modal-content">
-        <button class="modal-close" aria-label="Close dialog">&times;</button>
+      <div class="modal-content" tabindex="-1">
+        <button class="modal-close" type="button" aria-label="Close dialog">
+          &times;
+        </button>
         <h2 id="vendor-modal-title" class="modal-title">
           Vendor & External Partners
         </h2>
@@ -1538,7 +1584,11 @@
         </div>
 
         <div class="flex gap-lg mt-2xl">
-          <button id="vendor-close-btn" class="btn btn-primary btn-small">
+          <button
+            id="vendor-close-btn"
+            type="button"
+            class="btn btn-primary btn-small"
+          >
             Close
           </button>
         </div>
@@ -1550,12 +1600,15 @@
       id="network-modal"
       class="modal"
       role="dialog"
+      aria-modal="true"
       aria-labelledby="network-modal-title"
       aria-hidden="true"
     >
       <div class="modal-overlay" aria-label="Close dialog"></div>
-      <div class="modal-content">
-        <button class="modal-close" aria-label="Close dialog">&times;</button>
+      <div class="modal-content" tabindex="-1">
+        <button class="modal-close" type="button" aria-label="Close dialog">
+          &times;
+        </button>
         <h2 id="network-modal-title" class="modal-title">
           Network Architecture & Topology
         </h2>
@@ -1805,7 +1858,11 @@
         </div>
 
         <div class="flex gap-lg mt-2xl">
-          <button id="network-close-btn" class="btn btn-primary btn-small">
+          <button
+            id="network-close-btn"
+            type="button"
+            class="btn btn-primary btn-small"
+          >
             Close
           </button>
         </div>
@@ -1817,12 +1874,15 @@
       id="ot-network-modal"
       class="modal"
       role="dialog"
+      aria-modal="true"
       aria-labelledby="ot-network-modal-title"
       aria-hidden="true"
     >
       <div class="modal-overlay" aria-label="Close dialog"></div>
-      <div class="modal-content">
-        <button class="modal-close" aria-label="Close dialog">&times;</button>
+      <div class="modal-content" tabindex="-1">
+        <button class="modal-close" type="button" aria-label="Close dialog">
+          &times;
+        </button>
         <h2 id="ot-network-modal-title" class="modal-title">
           OT Network Details
         </h2>
@@ -2184,10 +2244,11 @@
             <div class="zone-body">
               <div class="zone-details">
                 <div class="zone-detail-row">
-                  <span class="zone-detail-label">Purpose</span>
-                  <span class="zone-detail-value"
-                    >Reduce licensing costs vs. Siemens/Allen-Bradley</span
-                  >
+                  <span class="zone-detail-label">Implementation</span>
+                  <span class="zone-detail-value">
+                    Legacy OEM controllers are bridged to the network via
+                    Raspberry Pi-based OpenPLC gateways.
+                  </span>
                 </div>
                 <div class="zone-detail-row">
                   <span class="zone-detail-label">Code Management</span>
@@ -2196,10 +2257,11 @@
                   >
                 </div>
                 <div class="zone-detail-row">
-                  <span class="zone-detail-label">Code Access</span>
-                  <span class="zone-detail-value"
-                    >Warranty restrictions prevent internal modifications</span
-                  >
+                  <span class="zone-detail-label">Vulnerability</span>
+                  <span class="zone-detail-value">
+                    Gateways are unhardened consumer hardware translating
+                    proprietary protocols to Modbus TCP.
+                  </span>
                 </div>
                 <div class="zone-detail-row">
                   <span class="zone-detail-label">Deliverables</span>
@@ -2214,7 +2276,11 @@
         </div>
 
         <div class="flex gap-lg mt-2xl">
-          <button id="ot-network-close-btn" class="btn btn-primary btn-small">
+          <button
+            id="ot-network-close-btn"
+            type="button"
+            class="btn btn-primary btn-small"
+          >
             Close
           </button>
         </div>
@@ -2237,7 +2303,6 @@
     <div
       id="topology-modal"
       class="topology-modal"
-      onclick="closeTopologyModal()"
       role="dialog"
       aria-modal="true"
       aria-label="Enlarged network topology diagram"
@@ -2252,12 +2317,10 @@
     <!-- Full screen image modal -->
     <div
       id="carousel-image-modal"
-      class="topology-modal"
-      onclick="closeCarouselImageModal()"
+      class="topology-modal z-10001"
       role="dialog"
       aria-modal="true"
       aria-label="Full screen state diagram"
-      class="z-10001"
     >
       <img
         id="carousel-image-fullscreen"

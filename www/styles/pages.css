@@ -54,11 +54,7 @@
   margin-top: var(--spacing-2xl);
 }
 
-.instruction-list {
-  list-style: disc;
-  padding-left: var(--spacing-lg);
-  line-height: 1.8;
-}
+.instruction-list { /* Duplicate definition removed; single source in components.css */ }
 
 /* Resources page */
 .resources-title-center {
@@ -318,9 +314,6 @@ details summary:focus-visible {
 }
 
 /* Ensure sufficient color contrast */
-.text-muted {
-  color: var(--color-text-secondary);
-}
 
 /* Icon sizing */
 .icon-sm {
@@ -459,23 +452,16 @@ details summary:focus-visible {
   outline-offset: 2px;
 }
 
-/* Positioning - standard size arrows */
+/* Positioning - all arrow variants */
 .carousel-arrow-left,
+.carousel-arrow-left-main,
 .image-carousel-arrow-left {
   left: var(--spacing-lg);
 }
 
 .carousel-arrow-right,
+.carousel-arrow-right-main,
 .image-carousel-arrow-right {
-  right: var(--spacing-lg);
-}
-
-/* Positioning - main page larger arrows */
-.carousel-arrow-left-main {
-  left: var(--spacing-lg);
-}
-
-.carousel-arrow-right-main {
   right: var(--spacing-lg);
 }
 
@@ -507,38 +493,7 @@ details summary:focus-visible {
   color: var(--color-text-primary);
 }
 
-.description-content {
-  color: var(--color-text-primary);
-  line-height: 1.6;
-}
-
-.description-content h4 {
-  margin-top: var(--spacing-md);
-  margin-bottom: var(--spacing-sm);
-  color: var(--color-accent-blue);
-  font-size: var(--font-size-lg);
-}
-
-.description-content h5 {
-  margin: var(--spacing-md) 0 var(--spacing-sm) 0;
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-md);
-}
-
-.description-content p {
-  margin-bottom: var(--spacing-md);
-}
-
-.description-content ul {
-  margin: var(--spacing-md) 0;
-  padding-left: var(--spacing-lg);
-}
-
-.description-content li {
-  margin-bottom: var(--spacing-sm);
-  line-height: 1.6;
-}
+/* Duplicate description-content block removed; styles defined later in file */
 
 /* Responsive Design */
 @media (max-width: 1024px) {
@@ -590,11 +545,15 @@ details summary:focus-visible {
     font-size: 18px;
   }
 
-  .carousel-arrow-left {
+  .carousel-arrow-left,
+  .carousel-arrow-left-main,
+  .image-carousel-arrow-left {
     left: var(--spacing-sm);
   }
 
-  .carousel-arrow-right {
+  .carousel-arrow-right,
+  .carousel-arrow-right-main,
+  .image-carousel-arrow-right {
     right: var(--spacing-sm);
   }
 
@@ -671,38 +630,7 @@ details summary:focus-visible {
   color: var(--color-text-primary);
 }
 
-.description-content {
-  color: var(--color-text-primary);
-  line-height: 1.6;
-}
-
-.description-content h4 {
-  margin-top: var(--spacing-md);
-  margin-bottom: var(--spacing-sm);
-  color: var(--color-accent-blue);
-  font-size: var(--font-size-lg);
-}
-
-.description-content h5 {
-  margin: var(--spacing-md) 0 var(--spacing-sm) 0;
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-md);
-}
-
-.description-content p {
-  margin-bottom: var(--spacing-md);
-}
-
-.description-content ul {
-  margin: var(--spacing-md) 0;
-  padding-left: var(--spacing-lg);
-}
-
-.description-content li {
-  margin-bottom: var(--spacing-sm);
-  line-height: 1.6;
-}
+/* Duplicate description-content block removed; keep single source of truth above */
 
 /* Responsive Design for Main Page Carousel */
 @media (max-width: 1024px) {
@@ -726,13 +654,6 @@ details summary:focus-visible {
     font-size: 22px;
   }
 
-  .carousel-arrow-left-main {
-    left: var(--spacing-sm);
-  }
-
-  .carousel-arrow-right-main {
-    right: var(--spacing-sm);
-  }
 
   .description-section-main {
     max-height: 350px;
@@ -749,13 +670,6 @@ details summary:focus-visible {
     font-size: 18px;
   }
 
-  .image-carousel-arrow-left {
-    left: var(--spacing-sm);
-  }
-
-  .image-carousel-arrow-right {
-    right: var(--spacing-sm);
-  }
 }
 
 /* ========================================
@@ -1196,6 +1110,7 @@ details summary:focus-visible {
   background-color: color-mix(in srgb, var(--color-text-primary) 3%, transparent);
   border-radius: var(--radius-md);
   border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+  border-left: 4px solid var(--color-text-primary);
 }
 
 .priorities-heading {

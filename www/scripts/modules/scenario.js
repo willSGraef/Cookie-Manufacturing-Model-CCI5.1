@@ -5,6 +5,7 @@
 
 import { isPagesDirectory } from './utils.js';
 import { openModal, closeModal } from './ui.js';
+import { safeSetInnerHTML } from './sanitizer.js';
 
 // Control Logic Diagrams - loaded from external JSON
 let controlLogicDiagrams = [];
@@ -26,8 +27,7 @@ async function loadDiagramData() {
         const carouselSection = document.querySelector('.carousel-section');
         if (carouselSection && controlLogicDiagrams.length === 0) {
             const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'diagram-loading';
-            loadingDiv.style.cssText = 'text-align: center; padding: var(--spacing-xl); color: var(--color-text-muted);';
+            loadingDiv.className = 'diagram-loading component-loading text-center';
             loadingDiv.innerHTML = '<p>Loading diagrams...</p>';
             carouselSection.appendChild(loadingDiv);
         }
@@ -90,7 +90,8 @@ function updateControlLogicDisplay() {
         controlLogicCounterMain.textContent = `(${currentControlLogicIndex + 1} of ${controlLogicDiagrams.length})`;
     }
     if (descriptionAreaMain) {
-        descriptionAreaMain.innerHTML = diagram.description;
+        // Safely insert HTML description (prevents XSS)
+        safeSetInnerHTML(descriptionAreaMain, diagram.description);
     }
 
     // Update modal carousel if it exists
@@ -110,7 +111,8 @@ function updateControlLogicDisplay() {
         controlLogicCounter.textContent = `(${currentControlLogicIndex + 1} of ${controlLogicDiagrams.length})`;
     }
     if (descriptionArea) {
-        descriptionArea.innerHTML = diagram.description;
+        // Safely insert HTML description (prevents XSS)
+        safeSetInnerHTML(descriptionArea, diagram.description);
     }
 }
 
@@ -328,6 +330,48 @@ export async function initializeScenario() {
         });
     }
 
+    // Company info links: open Organization and Vendor modals
+    const orgOpenBtn = document.querySelector('[data-action="open-organization"]');
+    if (orgOpenBtn) {
+        orgOpenBtn.setAttribute('aria-controls', 'organization-modal');
+        orgOpenBtn.setAttribute('aria-expanded', 'false');
+        orgOpenBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openOrganizationModal();
+        });
+    }
+
+    const vendorOpenBtn = document.querySelector('[data-action="open-vendor"]');
+    if (vendorOpenBtn) {
+        vendorOpenBtn.setAttribute('aria-controls', 'vendor-modal');
+        vendorOpenBtn.setAttribute('aria-expanded', 'false');
+        vendorOpenBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openVendorModal();
+        });
+    }
+
+    // Resource links: open Network and OT Network modals
+    const networkLink = document.querySelector('[data-action="open-network"]');
+    if (networkLink) {
+        networkLink.setAttribute('aria-controls', 'network-modal');
+        networkLink.setAttribute('aria-expanded', 'false');
+        networkLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            openNetworkModal();
+        });
+    }
+
+    const otNetworkLink = document.querySelector('[data-action="open-ot-network"]');
+    if (otNetworkLink) {
+        otNetworkLink.setAttribute('aria-controls', 'ot-network-modal');
+        otNetworkLink.setAttribute('aria-expanded', 'false');
+        otNetworkLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            openOTNetworkModal();
+        });
+    }
+
     // Topology modal close handlers
     const topologyModal = document.getElementById("topology-modal");
     if (topologyModal) {
@@ -366,6 +410,13 @@ export async function initializeScenario() {
                 openControlLogicImageModal();
             }
         });
+    }
+
+    // Show/hide carousel arrows on hover for main carousel wrapper
+    const carouselWrapperMain = document.getElementById('carousel-wrapper-main');
+    if (carouselWrapperMain) {
+        carouselWrapperMain.addEventListener('mouseenter', showCarouselArrows);
+        carouselWrapperMain.addEventListener('mouseleave', hideCarouselArrows);
     }
 
     // Control Logic image keyboard support - Modal
@@ -444,19 +495,5 @@ export async function initializeScenario() {
         }
     });
 
-    // Expose functions globally for onclick handlers in HTML
-    window.showCarouselArrows = showCarouselArrows;
-    window.hideCarouselArrows = hideCarouselArrows;
-    window.openTopologyModal = openTopologyModal;
-    window.closeTopologyModal = closeTopologyModal;
-    window.openControlLogicImageModal = openControlLogicImageModal;
-    window.closeCarouselImageModal = closeCarouselImageModal;
-    window.openOrganizationModal = openOrganizationModal;
-    window.closeOrganizationModal = closeOrganizationModal;
-    window.openVendorModal = openVendorModal;
-    window.closeVendorModal = closeVendorModal;
-    window.openNetworkModal = openNetworkModal;
-    window.closeNetworkModal = closeNetworkModal;
-    window.openOTNetworkModal = openOTNetworkModal;
-    window.closeOTNetworkModal = closeOTNetworkModal;
+    // No global function exposure needed; all handlers bound via addEventListener
 }

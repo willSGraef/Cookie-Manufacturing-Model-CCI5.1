@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { initializeNavigation, initializeBreadcrumb } from './navigation.js';
+import { initializeNavigation, initializeBreadcrumb } from '../scripts/modules/navigation.js';
 
 describe('Navigation Module', () => {
     let originalLocation;

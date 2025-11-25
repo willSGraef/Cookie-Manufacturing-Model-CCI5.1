@@ -184,6 +184,11 @@ select[aria-invalid="true"] {
     color: var(--color-text-muted);
 }
 
+.component-loading {
+    padding: var(--spacing-lg);
+    text-align: center;
+}
+
 .component-loading p,
 .data-loading p,
 .diagram-loading p {
@@ -341,6 +346,11 @@ img[data-loading] {
     background-color: color-mix(in srgb, var(--color-danger) 10%, transparent);
     border-color: var(--color-danger);
     color: var(--color-text-primary);
+}
+
+/* Component-specific error container spacing */
+.component-error {
+    margin: var(--spacing-lg);
 }
 
 /* Breadcrumb */
@@ -626,6 +636,21 @@ img[data-loading] {
     margin-bottom: var(--spacing-lg);
     font-size: var(--font-size-3xl);
     color: var(--color-text-primary);
+}
+
+/* Respect user reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .modal-content {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .carousel-arrow,
+    .carousel-arrow-main,
+    .image-carousel-arrow,
+    .carousel-image {
+        transition: none !important;
+    }
 }
 
 /* Zone-specific modal styling */
@@ -1961,4 +1986,215 @@ img[data-loading] {
     .capabilities-list li i {
         margin-top: 0;
     }
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+    margin-bottom: var(--spacing-xl);
+    border-radius: var(--radius-md);
+    border: 1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+}
+
+.table th,
+.table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+}
+
+.table th {
+    background-color: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table tr:hover td {
+    background-color: color-mix(in srgb, var(--color-text-primary) 2%, transparent);
+}
+
+/* Compact Instruction List - Reduced spacing for cleaner look */
+.instruction-list-compact {
+    list-style: decimal;
+    padding-left: var(--spacing-2xl);
+    line-height: 1.6;
+}
+
+.instruction-list-compact li {
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-primary);
+}
+
+.instruction-list-compact li ul {
+    margin-top: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+}
+
+.instruction-list-compact li ul li {
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Example Section - Clean, modern design */
+.example-section {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-xl);
+    background: linear-gradient(135deg,
+            color-mix(in srgb, var(--color-accent-blue) 5%, var(--color-bg-primary)) 0%,
+            color-mix(in srgb, var(--color-accent-blue) 2%, var(--color-bg-primary)) 100%);
+    border: 1px solid color-mix(in srgb, var(--color-accent-blue) 20%, transparent);
+    border-radius: var(--radius-lg);
+}
+
+.example-section h4 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-accent-blue);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+}
+
+.example-note {
+    margin: 0 0 var(--spacing-lg) 0;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.example-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+    background: var(--color-bg-primary);
+    border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.example-table th,
+.example-table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+}
+
+.example-table th {
+    background-color: color-mix(in srgb, var(--color-accent-blue) 12%, transparent);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+}
+
+.example-table td {
+    color: var(--color-text-primary);
+}
+
+.example-placeholder {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-style: italic;
+    padding: var(--spacing-2xl) var(--spacing-md) !important;
+}
+
+/* Example Content - Narrative format for non-table examples */
+.example-content {
+    background: var(--color-bg-primary);
+    border: 1px solid color-mix(in srgb, var(--color-accent-blue) 15%, transparent);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.example-item {
+    font-size: var(--font-size-sm);
+    line-height: 1.8;
+    color: var(--color-text-primary);
+}
+
+.example-item strong {
+    color: var(--color-accent-blue);
+    font-weight: var(--font-weight-semibold);
+}
+
+.example-item br+em.example-placeholder {
+    display: block;
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+}
+
+/* Deliverables List - Clean formatting for requirements */
+.deliverables-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.deliverables-list li {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    background: color-mix(in srgb, var(--color-accent-blue) 5%, transparent);
+    border-left: 3px solid var(--color-accent-blue);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    font-size: var(--font-size-sm);
+}
+
+.deliverables-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* Deliverables Panel - Unified section for report requirements */
+.deliverables-panel {
+    background: color-mix(in srgb, var(--color-accent-blue) 5%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-accent-blue) 20%, transparent);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+}
+
+.deliverables-content {
+    color: var(--color-text-primary);
+    line-height: 1.8;
+}
+
+.deliverables-content p {
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-sm);
+}
+
+.deliverables-content p:last-child {
+    margin-bottom: 0;
+}
+
+.deliverables-content strong {
+    color: var(--color-accent-blue);
+    font-weight: var(--font-weight-semibold);
+}
+
+.deliverables-sublist {
+    list-style: none;
+    padding-left: var(--spacing-lg);
+    margin: var(--spacing-sm) 0 var(--spacing-md) 0;
+}
+
+.deliverables-sublist li {
+    padding: var(--spacing-xs) 0;
+    margin-bottom: var(--spacing-xs);
+    background: none;
+    border: none;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
 }

@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { validateEmail, validateRequired, validateForm, initializeFormHandlers } from './forms.js';
+import { validateEmail, validateRequired, validateForm, initializeFormHandlers } from '../scripts/modules/forms.js';
 
 describe('Form Validation Module', () => {
     let mockForm;

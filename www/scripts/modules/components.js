@@ -9,7 +9,7 @@ import { adjustPaths, isPagesDirectory } from "./utils.js";
 function showLoadingState(placeholder) {
   if (!placeholder) return;
   placeholder.innerHTML = `
-    <div class="component-loading" style="padding: var(--spacing-lg); text-align: center; color: var(--color-text-muted);">
+    <div class="component-loading">
       <p>Loading...</p>
     </div>
   `;
@@ -29,11 +29,11 @@ function showErrorState(placeholder, componentName, retryFn) {
   const errorDiv = document.createElement('div');
   errorDiv.className = 'component-error alert alert-danger';
   errorDiv.setAttribute('role', 'alert');
-  errorDiv.style.margin = 'var(--spacing-lg)';
+  
 
   errorDiv.innerHTML = `
     <p><strong>Error:</strong> Failed to load ${componentName}.</p>
-    <button class="btn btn-small retry-btn" style="margin-top: var(--spacing-sm);">
+    <button class="btn btn-small retry-btn mt-sm">
       Retry
     </button>
   `;
