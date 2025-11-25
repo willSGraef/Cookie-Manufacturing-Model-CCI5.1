@@ -59,6 +59,10 @@
 
     <title>Scenario - Engineering Assessment</title>
 
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
     <link rel="stylesheet" href="../styles/main.css" />
   </head>
 
@@ -83,11 +87,120 @@
       <section class="section">
         <div class="container">
           <h2>Scenario Overview</h2>
+          <div class="alert alert-info">
+            <h3 class="card-title">Corporate Identity</h3>
 
-          <div class="alert alert-info mb-2xl">
-            <strong>Placeholder Content:</strong> This section contains the
-            scenario framework. Replace with your specific project requirements
-            and scenario details.
+            <!-- Company Header -->
+            <div class="company-header mb-lg">
+              <div class="company-name-block">
+                <h4 class="company-legal-name">
+                  Southern Sweets & Savories, LLC
+                </h4>
+                <p class="company-tagline">High-Volume Cookie Manufacturing</p>
+              </div>
+            </div>
+
+            <!-- Key Facts Grid -->
+            <div class="company-facts-grid mb-lg">
+              <div class="company-fact">
+                <span class="fact-label">Industry</span>
+                <span class="fact-value">Food Manufacturing</span>
+                <a
+                  href="https://www.census.gov/naics/?input=311821&year=2022&details=311821"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="naics-code"
+                  title="North American Industry Classification System - Click to view official classification"
+                  >NAICS 311821</a
+                >
+              </div>
+              <div class="company-fact">
+                <span class="fact-label">Headquarters</span>
+                <span class="fact-value">Little Rock, Arkansas</span>
+              </div>
+              <div class="company-fact">
+                <span class="fact-label">Production Model</span>
+                <span class="fact-value"
+                  >Continuous "Resource to Finished Goods" Flow</span
+                >
+              </div>
+              <div class="company-fact">
+                <span class="fact-label">Operations</span>
+                <span class="fact-value">24/7 Multi-Shift Manufacturing</span>
+              </div>
+            </div>
+
+            <!-- Operational Context -->
+            <div class="company-context mb-lg">
+              <h5 class="context-heading">
+                <i class="bi bi-info-circle" aria-hidden="true"></i>
+                Operational Context
+              </h5>
+              <p class="context-text">
+                The facility recently underwent a major Industry 4.0 retrofit,
+                integrating modern data collection and automation systems while
+                retaining legacy operational hardware. This hybrid approach was
+                driven by executive leadership seeking to reduce headcount and
+                operational costs. The integration presents unique challenges as
+                modern networking connects previously isolated industrial
+                equipment.
+              </p>
+            </div>
+
+            <!-- Business Priorities -->
+            <div class="company-priorities mb-lg">
+              <h5 class="priorities-heading">
+                <i class="bi bi-bullseye" aria-hidden="true"></i>
+                Business Priorities
+              </h5>
+              <ul class="priorities-list">
+                <li>
+                  <strong>Uptime:</strong> Production stoppages directly impact
+                  customer fulfillment and revenue
+                </li>
+                <li>
+                  <strong>Throughput:</strong> Measured in lbs/hour; targets set
+                  by operations leadership
+                </li>
+                <li>
+                  <strong>Just-In-Time:</strong> Minimal inventory; system
+                  downtime causes truck delays and lost customers
+                </li>
+                <li>
+                  <strong>Food Safety:</strong> FDA/USDA compliance mandates
+                  complete temperature logging and traceability
+                </li>
+              </ul>
+            </div>
+
+            <!-- Compliance Note -->
+            <div class="company-compliance mb-xl">
+              <p class="compliance-note">
+                <i class="bi bi-shield-check" aria-hidden="true"></i>
+                <strong>Regulatory Environment:</strong> SSS follows strict FDA
+                and USDA guidelines, giving Quality Assurance the authority to
+                halt production if data integrity falters. Since even a
+                one-minute gap in temperature logs requires the company to
+                condemn a batch, accuracy remains critical.
+              </p>
+            </div>
+
+            <div class="company-info-links">
+              <button
+                class="btn btn-primary btn-small"
+                onclick="openOrganizationModal()"
+                aria-label="View organization structure and personnel"
+              >
+                Organization
+              </button>
+              <button
+                class="btn btn-primary btn-small"
+                onclick="openVendorModal()"
+                aria-label="View vendor and external partner information"
+              >
+                Vendor Information
+              </button>
+            </div>
           </div>
 
           <div class="card mb-2xl">
@@ -126,43 +239,41 @@
                     <a
                       href="../assets/documents/Cookie_Factory_PLC_Program.zip"
                       download="Cookie_Factory_PLC_Program.zip"
-                      class="resource-link download-link-with-icon"
+                      class="resource-link"
                       aria-label="Download OpenPLC project files as ZIP archive"
                     >
-                      <svg
-                        class="icon-sm"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
-                        ></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                      </svg>
+                      <i class="bi bi-download icon-sm"></i>
                       OpenPLC Project Files
+                    </a>
+                  </li>
+                  <li class="resources-list-item">
+                    <a
+                      href="#network-modal"
+                      class="resource-link"
+                      onclick="openNetworkModal(); return false;"
+                      aria-label="View network architecture and topology details"
+                    >
+                      <i class="bi bi-diagram-3 icon-sm" aria-hidden="true"></i>
+                      Network Information
+                    </a>
+                  </li>
+                  <li class="resources-list-item">
+                    <a
+                      href="#ot-network-modal"
+                      class="resource-link"
+                      onclick="openOTNetworkModal(); return false;"
+                      aria-label="View operational technology network details"
+                    >
+                      <i
+                        class="bi bi-hdd-network icon-sm"
+                        aria-hidden="true"
+                      ></i>
+                      OT Network Details
                     </a>
                   </li>
                   <li class="resources-list-item">
                     <span class="resource-link disabled"
                       >Security Protocols
-                      <span class="badge badge-info">Coming Soon</span></span
-                    >
-                  </li>
-                  <li class="resources-list-item">
-                    <span class="resource-link disabled"
-                      >System Configuration Guide
-                      <span class="badge badge-info">Coming Soon</span></span
-                    >
-                  </li>
-                  <li class="resources-list-item">
-                    <span class="resource-link disabled"
-                      >Troubleshooting Guide
                       <span class="badge badge-info">Coming Soon</span></span
                     >
                   </li>
@@ -247,7 +358,7 @@
 
           <div class="production-flow">
             <button
-              class="card flow-item clickable-card"
+              class="card flow-item clickable-card zone-a"
               data-modal="resource-modal"
               aria-label="Open Resource Allocation details"
             >
@@ -262,7 +373,7 @@
             </button>
 
             <button
-              class="card flow-item clickable-card"
+              class="card flow-item clickable-card zone-b"
               data-modal="production-modal"
               aria-label="Open Production Area details"
             >
@@ -276,7 +387,7 @@
             </button>
 
             <button
-              class="card flow-item clickable-card"
+              class="card flow-item clickable-card zone-c"
               data-modal="finished-modal"
               aria-label="Open Finished Goods details"
             >
@@ -289,45 +400,11 @@
               </p>
             </button>
           </div>
-
-          <h2 class="mt-3xl">Key Requirements</h2>
-
-          <div class="grid grid-2">
-            <div class="card">
-              <h3 class="card-title">Hardware Requirements</h3>
-              <p class="card-text">
-                Details about the physical components and hardware
-                specifications needed for the project.
-              </p>
-            </div>
-
-            <div class="card">
-              <h3 class="card-title">Software Requirements</h3>
-              <p class="card-text">
-                Software tools, programming languages, and development
-                environments required.
-              </p>
-            </div>
-
-            <div class="card">
-              <h3 class="card-title">Communication Protocols</h3>
-              <p class="card-text">
-                Specification of protocols and communication standards (Modbus,
-                MQTT, etc.).
-              </p>
-            </div>
-
-            <div class="card">
-              <h3 class="card-title">Performance Metrics</h3>
-              <p class="card-text">
-                Key performance indicators and benchmarks for system evaluation.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
     </main>
 
+    <!-- Modals -->
     <!-- Control Logic Modal - Carousel with Text Descriptions -->
     <div
       class="modal"
@@ -403,7 +480,7 @@
         <div class="flex gap-lg mt-2xl">
           <button
             id="control-logic-close-btn"
-            class="btn btn-outline btn-large"
+            class="btn btn-primary btn-small"
           >
             Close
           </button>
@@ -414,7 +491,7 @@
     <!-- Resource Allocation Modal -->
     <div
       id="resource-modal"
-      class="modal"
+      class="modal zone-a-modal"
       role="dialog"
       aria-labelledby="resource-modal-title"
       aria-hidden="true"
@@ -422,7 +499,7 @@
       <div class="modal-overlay" aria-label="Close dialog"></div>
       <div class="modal-content">
         <button class="modal-close" aria-label="Close dialog">&times;</button>
-        <h2 id="resource-modal-title" class="modal-title">
+        <h2 id="resource-modal-title" class="modal-title zone-a-title">
           Resource Allocation
         </h2>
 
@@ -525,7 +602,7 @@
     <!-- Production Area Modal -->
     <div
       id="production-modal"
-      class="modal"
+      class="modal zone-b-modal"
       role="dialog"
       aria-labelledby="production-modal-title"
       aria-hidden="true"
@@ -533,7 +610,9 @@
       <div class="modal-overlay" aria-label="Close dialog"></div>
       <div class="modal-content">
         <button class="modal-close" aria-label="Close dialog">&times;</button>
-        <h2 id="production-modal-title" class="modal-title">Production Area</h2>
+        <h2 id="production-modal-title" class="modal-title zone-b-title">
+          Production Area
+        </h2>
 
         <div class="modal-section">
           <h3>Forming, Cutting & Freezing</h3>
@@ -659,7 +738,7 @@
     <!-- Finished Goods Modal -->
     <div
       id="finished-modal"
-      class="modal"
+      class="modal zone-c-modal"
       role="dialog"
       aria-labelledby="finished-modal-title"
       aria-hidden="true"
@@ -667,7 +746,9 @@
       <div class="modal-overlay" aria-label="Close dialog"></div>
       <div class="modal-content">
         <button class="modal-close" aria-label="Close dialog">&times;</button>
-        <h2 id="finished-modal-title" class="modal-title">Finished Goods</h2>
+        <h2 id="finished-modal-title" class="modal-title zone-c-title">
+          Finished Goods
+        </h2>
 
         <div class="modal-section">
           <h3>Packaging & Distribution</h3>
@@ -796,6 +877,1346 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Organization Modal -->
+    <div
+      id="organization-modal"
+      class="modal"
+      role="dialog"
+      aria-labelledby="organization-modal-title"
+      aria-hidden="true"
+    >
+      <div class="modal-overlay" aria-label="Close dialog"></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close dialog">&times;</button>
+        <h2 id="organization-modal-title" class="modal-title">
+          Organization Structure
+        </h2>
+
+        <div class="modal-section">
+          <p class="mb-lg">
+            Here you will find the key personnel involved in the operation and
+            management of Southern Sweets & Savories, LLC, along with their
+            roles, focus areas, and relevant security considerations.
+          </p>
+
+          <!-- Executive Leadership -->
+          <div class="modal-section-header">
+            <span class="section-icon"
+              ><i class="bi bi-briefcase" aria-hidden="true"></i
+            ></span>
+            <h4>Executive Leadership</h4>
+          </div>
+          <div class="personnel-grid">
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-person" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">Marcus Thorne</h5>
+                  <p class="card-subtitle">Chief Executive Officer (CEO)</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Focus:</span>
+                  <span class="info-value"
+                    >Profitability, Market Share, Liability Reduction</span
+                  >
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Background:</span>
+                  <span class="info-value"
+                    >Private equity background, not baking. Pushed for "Smart
+                    Factory" upgrade to reduce headcount.</span
+                  >
+                </div>
+                <div class="security-tag">
+                  Demands security exceptions (wants production data on personal
+                  iPad without VPN)
+                </div>
+              </div>
+            </div>
+
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-currency-dollar" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">Elena Rostova</h5>
+                  <p class="card-subtitle">Chief Financial Officer (CFO)</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Focus:</span>
+                  <span class="info-value">Financial Risk Management</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Profile:</span>
+                  <span class="info-value"
+                    >Risk-averse financially but ignorant of technical
+                    risk.</span
+                  >
+                </div>
+                <div class="security-tag">
+                  Denied budget for secondary firewall; requires 3 quotes for
+                  purchases over $500
+                </div>
+              </div>
+            </div>
+
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-bar-chart" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">Linda Garet</h5>
+                  <p class="card-subtitle">VP of Operations</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Focus:</span>
+                  <span class="info-value"
+                    >Lean Six Sigma, Just-In-Time Manufacturing</span
+                  >
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Profile:</span>
+                  <span class="info-value"
+                    >Bridge between Board and Factory. Obsessed with
+                    efficiency.</span
+                  >
+                </div>
+                <div class="security-tag">
+                  Pressures Plant Manager to delay maintenance windows for
+                  quotas
+                </div>
+              </div>
+            </div>
+
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-search" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">Dr. Arthur Pence</h5>
+                  <p class="card-subtitle">Director of Quality Assurance</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Focus:</span>
+                  <span class="info-value"
+                    >Food Safety Compliance (FDA/USDA)</span
+                  >
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Profile:</span>
+                  <span class="info-value"
+                    >Food scientist. His word is law regarding food
+                    safety.</span
+                  >
+                </div>
+                <div class="security-tag">
+                  Only person authorized to hit Emergency Stop for data
+                  integrity issues
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- IT & Engineering -->
+          <div class="modal-section-header">
+            <span class="section-icon"
+              ><i class="bi bi-pc-display" aria-hidden="true"></i
+            ></span>
+            <h4>Information Technology & Engineering</h4>
+          </div>
+          <div class="personnel-grid">
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-display" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">Sameer Gupta</h5>
+                  <p class="card-subtitle">IT Director</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Background:</span>
+                  <span class="info-value"
+                    >Corporate enterprise IT (Exchange, SQL, Web). Recently
+                    inherited OT network.</span
+                  >
+                </div>
+                <div class="security-tag">
+                  Applies standard IT policies to industrial equipment, causing
+                  production stoppages
+                </div>
+              </div>
+            </div>
+
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-plug" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">Kevin "Kev" McCoy</h5>
+                  <p class="card-subtitle">Senior Network Administrator</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Profile:</span>
+                  <span class="info-value"
+                    >Sole "hands-on" network tech. Overworked and
+                    underpaid.</span
+                  >
+                </div>
+                <div class="security-tag">
+                  Creates "temporary" Allow Any/Any firewall rules and forgets
+                  to remove them
+                </div>
+              </div>
+            </div>
+
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-gear" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">Amanda Lee</h5>
+                  <p class="card-subtitle">Lead Control Systems Engineer</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Profile:</span>
+                  <span class="info-value"
+                    >Only person who truly understands the OT network. Programs
+                    PLCs and HMIs.</span
+                  >
+                </div>
+                <div class="security-tag">
+                  Keeps "Shadow IT" notebook with hardcoded vendor passwords
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plant Operations -->
+          <div class="modal-section-header">
+            <span class="section-icon"
+              ><i class="bi bi-building-gear" aria-hidden="true"></i
+            ></span>
+            <h4>Plant Operations</h4>
+          </div>
+          <div class="personnel-grid">
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-person-badge" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">David "Buck" Miller</h5>
+                  <p class="card-subtitle">Plant Manager</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Profile:</span>
+                  <span class="info-value"
+                    >Old-school factory man. Resents the new "digital"
+                    focus.</span
+                  >
+                </div>
+                <div class="security-tag">
+                  Authorized direct vendor VPN link to bypass IT delays
+                </div>
+              </div>
+            </div>
+
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-wrench" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">Sarah Jenkins</h5>
+                  <p class="card-subtitle">Maintenance Lead</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Profile:</span>
+                  <span class="info-value"
+                    >Expert mechanic. Can fix a gearbox in 10 minutes.</span
+                  >
+                </div>
+                <div class="security-tag">
+                  Taped HMI password (1234) to monitors for team access
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shift Supervision -->
+          <div class="modal-section-header">
+            <span class="section-icon"
+              ><i class="bi bi-people" aria-hidden="true"></i
+            ></span>
+            <h4>Shift Supervision & Operators</h4>
+          </div>
+          <div class="personnel-grid">
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-award" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">Hank "Sarge" Wilson</h5>
+                  <p class="card-subtitle">Day Shift Supervisor</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Profile:</span>
+                  <span class="info-value"
+                    >Ex-Military. Rigid adherence to schedule and
+                    protocol.</span
+                  >
+                </div>
+                <div class="security-tag security-positive">
+                  Follows protocol perfectly; stops line and logs any errors
+                </div>
+              </div>
+            </div>
+
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-speedometer2" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">Ricky "Fast Track" DeMarco</h5>
+                  <p class="card-subtitle">Night Shift Supervisor</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Profile:</span>
+                  <span class="info-value"
+                    >Ambitious young supervisor trying to beat Day Shift's
+                    numbers.</span
+                  >
+                </div>
+                <div class="security-tag">
+                  Unplugs "glitchy" safety sensors; shares badge with temp
+                  workers
+                </div>
+              </div>
+            </div>
+
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-circle" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">Maria Gonzales</h5>
+                  <p class="card-subtitle">Mixer Operator (Zone A)</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Experience:</span>
+                  <span class="info-value"
+                    >Has run mixing room for 15 years.</span
+                  >
+                </div>
+                <div class="security-tag">
+                  Uses hidden vendor menu to bypass clean cycle lockouts
+                </div>
+              </div>
+            </div>
+
+            <div class="personnel-card">
+              <div class="card-header">
+                <div class="role-icon">
+                  <i class="bi bi-box" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h5 class="card-title">Tom Baker</h5>
+                  <p class="card-subtitle">Packaging Operator (Zone C)</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Role:</span>
+                  <span class="info-value"
+                    >Operates Pearson packaging robots.</span
+                  >
+                </div>
+                <div class="security-tag">
+                  Plugs personal phone into HMI USB to charge (malware vector)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-lg mt-2xl">
+          <button id="organization-close-btn" class="btn btn-primary btn-small">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vendor Information Modal -->
+    <div
+      id="vendor-modal"
+      class="modal"
+      role="dialog"
+      aria-labelledby="vendor-modal-title"
+      aria-hidden="true"
+    >
+      <div class="modal-overlay" aria-label="Close dialog"></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close dialog">&times;</button>
+        <h2 id="vendor-modal-title" class="modal-title">
+          Vendor & External Partners
+        </h2>
+
+        <div class="modal-section">
+          <p class="mb-lg">
+            The facility relies on external vendors for systems integration,
+            maintenance, and equipment support. Below are the key vendors, their
+            roles, and associated security considerations.
+          </p>
+
+          <!-- Primary Integrator - High Risk -->
+          <div class="modal-section-header">
+            <span class="section-icon"
+              ><i class="bi bi-link-45deg" aria-hidden="true"></i
+            ></span>
+            <h4>Primary Systems Integrator</h4>
+          </div>
+
+          <div class="vendor-card mb-xl">
+            <div class="vendor-header">
+              <h5 class="vendor-name">Logical Systems Inc. (LSI)</h5>
+            </div>
+            <div class="vendor-details">
+              <div class="detail-item">
+                <span class="detail-label">Role</span>
+                <span class="detail-value"
+                  >Lead integrator who built and maintains the OpenPLC
+                  implementation</span
+                >
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Key Personnel</span>
+                <span class="detail-value"
+                  >Greg Staton (Senior Integrator)</span
+                >
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Access Type</span>
+                <span class="detail-value"
+                  >24/7 unmonitored remote access via TeamViewer and VPN</span
+                >
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Access Point</span>
+                <span class="detail-value"
+                  >VPN tunnel <strong>directly</strong> to Resource Allocation
+                  LAN (199.207.0.x)</span
+                >
+              </div>
+            </div>
+            <div class="alert alert-info mt-lg mb-0">
+              <p>
+                Often logs in from various locations including coffee shops and
+                hotels. Maintains ladder logic on PLCs and manages code updates
+                (warranty protection applies to internal modifications).
+              </p>
+            </div>
+          </div>
+
+          <!-- Equipment Vendors -->
+          <div class="modal-section-header">
+            <span class="section-icon"
+              ><i class="bi bi-building-gear" aria-hidden="true"></i
+            ></span>
+            <h4>Equipment Vendors</h4>
+          </div>
+
+          <div class="personnel-grid">
+            <div class="vendor-card zone-a-card">
+              <div class="vendor-header">
+                <h5 class="vendor-name">Golden Bake</h5>
+                <span class="vendor-zone zone-a">Zone A</span>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Equipment</span>
+                  <span class="detail-value"
+                    >Mixing System, 650 Multi-speed Horizontal Dough Mixer</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Function</span>
+                  <span class="detail-value"
+                    >Bulk ingredient handling with Loss-in-Weight
+                    precision</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Cycle Time</span>
+                  <span class="detail-value">120 seconds per batch</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Support</span>
+                  <span class="detail-value"
+                    >24/7 on-call technical support</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="vendor-card zone-b-card">
+              <div class="vendor-header">
+                <h5 class="vendor-name">Baker Perkins</h5>
+                <span class="vendor-zone zone-b">Zone B</span>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Equipment</span>
+                  <span class="detail-value"
+                    >TruClean™ Wirecut Dough Forming & Cutting Machine</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Capacity</span>
+                  <span class="detail-value"
+                    >200 rows/min, sizes 1.5" to 4.8"</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Function</span>
+                  <span class="detail-value"
+                    >Extrudes, forms, and cuts dough</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Support</span>
+                  <span class="detail-value"
+                    >Technical manuals and video docs</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="vendor-card zone-b-card">
+              <div class="vendor-header">
+                <h5 class="vendor-name">Linde</h5>
+                <span class="vendor-zone zone-b">Zone B</span>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Equipment</span>
+                  <span class="detail-value">Cryovantage Tunnel Freezer</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Function</span>
+                  <span class="detail-value"
+                    >Flash-freezes using Liquid Nitrogen (LN2)</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Controls</span>
+                  <span class="detail-value">GV 1 (Gas Valve), Fan 1/2/3</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Support</span>
+                  <span class="detail-value">Gas supply and documentation</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="vendor-card zone-c-card">
+              <div class="vendor-header">
+                <h5 class="vendor-name">Signode/Little David</h5>
+                <span class="vendor-zone zone-c">Zone C</span>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Equipment</span>
+                  <span class="detail-value"
+                    >CF-50T Case Former, LD-24 Case Sealer</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Function</span>
+                  <span class="detail-value"
+                    >Forms and seals product boxes</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Support</span>
+                  <span class="detail-value">Website manuals and docs</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="vendor-card zone-c-card">
+              <div class="vendor-header">
+                <h5 class="vendor-name">Pearson Packaging</h5>
+                <span class="vendor-zone zone-c">Zone C</span>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Equipment</span>
+                  <span class="detail-value">BI18 Bag Inserter</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Function</span>
+                  <span class="detail-value"
+                    >Inserts protective bags into boxes</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Support</span>
+                  <span class="detail-value"
+                    >Documentation and technical support</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="vendor-card zone-c-card">
+              <div class="vendor-header">
+                <h5 class="vendor-name">Premier Tech Chronos</h5>
+                <span class="vendor-zone zone-c">Zone C</span>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Equipment</span>
+                  <span class="detail-value"
+                    >RPL-4000 Series Palletizing Robot</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Function</span>
+                  <span class="detail-value"
+                    >Stacks boxes into pallets (40/pallet)</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Dependencies</span>
+                  <span class="detail-value"
+                    >Requires box weight/count data</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-lg mt-2xl">
+          <button id="vendor-close-btn" class="btn btn-primary btn-small">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Network Information Modal -->
+    <div
+      id="network-modal"
+      class="modal"
+      role="dialog"
+      aria-labelledby="network-modal-title"
+      aria-hidden="true"
+    >
+      <div class="modal-overlay" aria-label="Close dialog"></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close dialog">&times;</button>
+        <h2 id="network-modal-title" class="modal-title">
+          Network Architecture & Topology
+        </h2>
+
+        <div class="modal-section">
+          <p class="mb-lg">
+            The facility network is segmented into five distinct zones, each
+            separated by firewalls and routing boundaries. Understanding this
+            architecture is essential for identifying potential attack paths.
+          </p>
+
+          <!-- Network Zones -->
+          <div class="modal-section-header">
+            <span class="section-icon"
+              ><i class="bi bi-globe" aria-hidden="true"></i
+            ></span>
+            <h4>Network Zones</h4>
+          </div>
+
+          <div class="network-zone-card mb-lg">
+            <div class="zone-header">
+              <h5 class="zone-name">DMZ (Public Facing)</h5>
+              <span class="zone-ip">10.1.1.0/29</span>
+            </div>
+            <div class="zone-body">
+              <div class="zone-details">
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Purpose</span>
+                  <span class="zone-detail-value"
+                    >External-facing services accessible from the internet</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Contains</span>
+                  <span class="zone-detail-value"
+                    >Web Server, DNS, Mail Server (MX)</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Security</span>
+                  <span class="zone-detail-value"
+                    >Isolated from internal networks with strict
+                    inbound/outbound rules</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="network-zone-card mb-lg">
+            <div class="zone-header">
+              <h5 class="zone-name">User LAN (Corporate)</h5>
+              <span class="zone-ip">10.1.0.0/16</span>
+            </div>
+            <div class="zone-body">
+              <div class="zone-details">
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Purpose</span>
+                  <span class="zone-detail-value"
+                    >Corporate office and administrative services</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Contains</span>
+                  <span class="zone-detail-value"
+                    >Office workstations, Wi-Fi clients, administrative staff
+                    computers</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Security</span>
+                  <span class="zone-detail-value"
+                    >Standard corporate IT policies apply</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="network-zone-card mb-lg">
+            <div class="zone-header">
+              <h5 class="zone-name">Server LAN (Business Systems)</h5>
+              <span class="zone-ip">192.168.1.0/24</span>
+            </div>
+            <div class="zone-body">
+              <div class="zone-details">
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Purpose</span>
+                  <span class="zone-detail-value"
+                    >Core business infrastructure and data storage</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Contains</span>
+                  <span class="zone-detail-value"
+                    >Business Servers, File Server, Database, Corporate
+                    Historian (Replicated)</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Management</span>
+                  <span class="zone-detail-value"
+                    >IT Director Sameer Gupta assumes firewall protection from
+                    OT</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Note</span>
+                  <span class="zone-detail-value"
+                    >Limited visibility into OT network separation</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="network-zone-card mb-lg">
+            <div class="zone-header">
+              <h5 class="zone-name">DMZ OT (Industrial DMZ)</h5>
+              <span class="zone-ip">199.207.1.0/16</span>
+            </div>
+            <div class="zone-body">
+              <div class="zone-details">
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Purpose</span>
+                  <span class="zone-detail-value"
+                    >Buffer zone between business network and plant floor</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Contains</span>
+                  <span class="zone-detail-value"
+                    >Application Server, Database Server, IO Server, OT
+                    Historian, SCADA Host</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Remote Access</span>
+                  <span class="zone-detail-value"
+                    >Remote Engineers VPN terminates here (requires jump to
+                    reach PLCs)</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="network-zone-card mb-lg">
+            <div class="zone-header">
+              <h5 class="zone-name">OT Network (Plant Floor)</h5>
+              <span class="zone-ip">199.207.0.0/16</span>
+            </div>
+            <div class="zone-body">
+              <div class="zone-details">
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Purpose</span>
+                  <span class="zone-detail-value"
+                    >Critical control layer connecting all operational
+                    systems</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Protocol</span>
+                  <span class="zone-detail-value"
+                    >Modbus TCP (port 502) - primary PLC-to-Sensor
+                    communication</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Structure</span>
+                  <span class="zone-detail-value"
+                    >Backbone connecting 3 operational LANs (see OT Network
+                    Details)</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Note</span>
+                  <span class="zone-detail-value"
+                    >Modbus TCP lacks encryption/authentication</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Remote Access -->
+          <div class="modal-section-header">
+            <span class="section-icon"
+              ><i class="bi bi-key" aria-hidden="true"></i
+            ></span>
+            <h4>Remote Access Pathways</h4>
+          </div>
+
+          <div class="personnel-grid">
+            <div class="vendor-card">
+              <div class="vendor-header">
+                <h5 class="vendor-name">Remote Engineering Access</h5>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Personnel</span>
+                  <span class="detail-value"
+                    >External Remote Engineers supporting SSS</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Connection</span>
+                  <span class="detail-value">VPN</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Termination</span>
+                  <span class="detail-value">DMZ OT (199.207.1.0/16)</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Access Level</span>
+                  <span class="detail-value"
+                    >SCADA/Historians only; requires jump to reach PLCs</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="vendor-card">
+              <div class="vendor-header">
+                <h5 class="vendor-name">Vendor/Integrator Access</h5>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Personnel</span>
+                  <span class="detail-value"
+                    >LSI engineers and equipment vendors</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Connection</span>
+                  <span class="detail-value">Dedicated VPN tunnel</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Termination</span>
+                  <span class="detail-value"
+                    >Directly into Resource Allocation LAN</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-lg mt-2xl">
+          <button id="network-close-btn" class="btn btn-primary btn-small">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- OT Network Details Modal -->
+    <div
+      id="ot-network-modal"
+      class="modal"
+      role="dialog"
+      aria-labelledby="ot-network-modal-title"
+      aria-hidden="true"
+    >
+      <div class="modal-overlay" aria-label="Close dialog"></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close dialog">&times;</button>
+        <h2 id="ot-network-modal-title" class="modal-title">
+          OT Network Details
+        </h2>
+
+        <div class="modal-section">
+          <p class="mb-lg">
+            The OT Network backbone (199.207.0.0/16) connects three distinct
+            operational LANs, each controlling a critical phase of cookie
+            manufacturing.
+          </p>
+
+          <!-- Zone A: Resource Allocation -->
+          <div class="ot-zone-card zone-a mb-xl">
+            <div class="ot-zone-header">
+              <div class="ot-zone-title">
+                <span class="ot-zone-letter">A</span>
+                <h4>Resource Allocation LAN</h4>
+              </div>
+            </div>
+            <div class="ot-zone-body">
+              <div class="ot-zone-meta">
+                <div class="ot-zone-meta-item">
+                  <span class="ot-zone-meta-label">Function</span>
+                  <span class="ot-zone-meta-value"
+                    >Bulk ingredient handling and dough mixing</span
+                  >
+                </div>
+                <div class="ot-zone-meta-item">
+                  <span class="ot-zone-meta-label">Primary Vendor</span>
+                  <span class="ot-zone-meta-value">Golden Bake</span>
+                </div>
+              </div>
+
+              <div class="modal-section-header">
+                <span class="section-icon"
+                  ><i class="bi bi-gear" aria-hidden="true"></i
+                ></span>
+                <h5>Key Equipment</h5>
+              </div>
+              <div class="equipment-grid">
+                <div class="equipment-item">
+                  <div class="equipment-name">Golden Bake Mixing System</div>
+                  <div class="equipment-details">
+                    <span>High-level Material Receiving Station</span>
+                    <span>Loss-in-Weight precision technology</span>
+                    <span>Accurate gravimetric metering</span>
+                  </div>
+                </div>
+                <div class="equipment-item">
+                  <div class="equipment-name">
+                    650 Multi-speed Horizontal Dough Mixer
+                  </div>
+                  <div class="equipment-details">
+                    <span>Cycle Time: 120 seconds/batch</span>
+                    <span>95%+ ingredient distribution accuracy</span>
+                    <span>HMI-managed dosing (flour, sugar, water)</span>
+                    <span>PLC via Modbus TCP</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-section-header">
+                <span class="section-icon"
+                  ><i class="bi bi-crosshair" aria-hidden="true"></i
+                ></span>
+                <h5>Critical Control Points</h5>
+              </div>
+              <ul class="control-points-list">
+                <li>Ingredient proportioning sensors (flour, sugar, water)</li>
+                <li>Mixer motor control and timing</li>
+                <li>Batch release and conveyor advancement</li>
+                <li>Quality parameters (mixing speed, duration)</li>
+              </ul>
+
+              <div class="alert alert-info mt-lg mb-0">
+                <p>
+                  Vendor VPN terminates directly on this LAN. Recipe data and
+                  ingredient parameters are managed via this connection.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zone B: Production -->
+          <div class="ot-zone-card zone-b mb-xl">
+            <div class="ot-zone-header">
+              <div class="ot-zone-title">
+                <span class="ot-zone-letter">B</span>
+                <h4>Production LAN</h4>
+              </div>
+            </div>
+            <div class="ot-zone-body">
+              <div class="ot-zone-meta">
+                <div class="ot-zone-meta-item">
+                  <span class="ot-zone-meta-label">Function</span>
+                  <span class="ot-zone-meta-value"
+                    >Forming, cutting, and freezing (the "Kill Step")</span
+                  >
+                </div>
+                <div class="ot-zone-meta-item">
+                  <span class="ot-zone-meta-label">Primary Vendors</span>
+                  <span class="ot-zone-meta-value">Baker Perkins, Linde</span>
+                </div>
+              </div>
+
+              <div class="modal-section-header">
+                <span class="section-icon"
+                  ><i class="bi bi-gear" aria-hidden="true"></i
+                ></span>
+                <h5>Key Equipment</h5>
+              </div>
+              <div class="equipment-grid">
+                <div class="equipment-item">
+                  <div class="equipment-name">
+                    Baker Perkins TruClean™ Wirecut
+                  </div>
+                  <div class="equipment-details">
+                    <span>Capacity: 200 rows/minute</span>
+                    <span>Cookie sizes: 1.5" to 4.8"</span>
+                    <span>Servo-driven paper cutter</span>
+                    <span>Handles soft, sticky, or chunky doughs</span>
+                  </div>
+                </div>
+                <div class="equipment-item">
+                  <div class="equipment-name">
+                    Linde Cryovantage Tunnel Freezer
+                  </div>
+                  <div class="equipment-details">
+                    <span>Liquid Nitrogen (LN2) flash-freezing</span>
+                    <span
+                      ><strong>GV 1:</strong> Main gas valve (nitrogen
+                      flow)</span
+                    >
+                    <span
+                      ><strong>Fan 1-3:</strong> Air circulation control</span
+                    >
+                    <span>Telemetry via Production LAN</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-section-header">
+                <span class="section-icon"
+                  ><i class="bi bi-crosshair" aria-hidden="true"></i
+                ></span>
+                <h5>Critical Control Points</h5>
+              </div>
+              <ul class="control-points-list">
+                <li>Dough forming speed and pattern parameters</li>
+                <li>Nitrogen flow rate and temperature monitoring</li>
+                <li>Fan speed control and temperature feedback loops</li>
+                <li>Conveyor timing and product advancement</li>
+                <li>Safety interlocks for cryogenic systems</li>
+              </ul>
+
+              <div class="alert alert-info mt-lg mb-0">
+                <p>
+                  Freezing is the "kill step" for food safety. Temperature
+                  controls are essential for product quality and regulatory
+                  compliance.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zone C: Finished Goods -->
+          <div class="ot-zone-card zone-c mb-xl">
+            <div class="ot-zone-header">
+              <div class="ot-zone-title">
+                <span class="ot-zone-letter">C</span>
+                <h4>Finished Goods LAN</h4>
+              </div>
+            </div>
+            <div class="ot-zone-body">
+              <div class="ot-zone-meta">
+                <div class="ot-zone-meta-item">
+                  <span class="ot-zone-meta-label">Function</span>
+                  <span class="ot-zone-meta-value"
+                    >Packaging, sealing, palletizing, shipping prep</span
+                  >
+                </div>
+                <div class="ot-zone-meta-item">
+                  <span class="ot-zone-meta-label">Primary Vendors</span>
+                  <span class="ot-zone-meta-value"
+                    >Little David (Signode), Pearson, Premier Tech
+                    (Chronos)</span
+                  >
+                </div>
+              </div>
+
+              <div class="modal-section-header">
+                <span class="section-icon"
+                  ><i class="bi bi-gear" aria-hidden="true"></i
+                ></span>
+                <h5>Key Equipment</h5>
+              </div>
+              <div class="equipment-grid">
+                <div class="equipment-item">
+                  <div class="equipment-name">
+                    Little David CF-50T Case Former
+                  </div>
+                  <div class="equipment-details">
+                    <span>Auto-forms boxes from flat stock</span>
+                    <span>Downstream equipment integration</span>
+                  </div>
+                </div>
+                <div class="equipment-item">
+                  <div class="equipment-name">Pearson BI18 Bag Inserter</div>
+                  <div class="equipment-details">
+                    <span>Protective bag insertion</span>
+                    <span>Freshness/contamination protection</span>
+                  </div>
+                </div>
+                <div class="equipment-item">
+                  <div class="equipment-name">
+                    Little David LD-24 Case Sealer
+                  </div>
+                  <div class="equipment-details">
+                    <span>Tape and seal verification</span>
+                    <span>Seal integrity checks</span>
+                  </div>
+                </div>
+                <div class="equipment-item">
+                  <div class="equipment-name">
+                    CHRONOS RPL-4000 Palletizing Robot
+                  </div>
+                  <div class="equipment-details">
+                    <span>Target: 40 boxes/pallet</span>
+                    <span>Weight/count data for stability</span>
+                    <span>Network-connected telemetry</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-section-header">
+                <span class="section-icon"
+                  ><i class="bi bi-crosshair" aria-hidden="true"></i
+                ></span>
+                <h5>Critical Control Points</h5>
+              </div>
+              <ul class="control-points-list">
+                <li>Box forming speed and accuracy</li>
+                <li>Bag insertion timing and verification</li>
+                <li>Seal quality verification</li>
+                <li>Palletizer position and grab timing</li>
+                <li>Pallet stacking patterns and stability</li>
+                <li>Data integrity for weight and count tracking</li>
+              </ul>
+
+              <div class="alert alert-info mt-lg mb-0">
+                <p>
+                  This area manages inventory tracking and shipment integrity.
+                  Weight and count data is critical for accurate shipping.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Communication Protocol -->
+          <div class="modal-section-header">
+            <span class="section-icon"
+              ><i class="bi bi-broadcast" aria-hidden="true"></i
+            ></span>
+            <h4>Communication Protocol</h4>
+          </div>
+          <div class="network-zone-card protocol-card mb-lg">
+            <div class="zone-header">
+              <h5 class="zone-name">Modbus TCP</h5>
+              <span class="zone-ip">Port 502</span>
+            </div>
+            <div class="zone-body">
+              <!-- Protocol Overview -->
+              <div class="protocol-overview">
+                <p class="protocol-description">
+                  Primary communication protocol for all PLC-to-Sensor
+                  interactions across Zones A, B, and C.
+                </p>
+              </div>
+
+              <!-- Protocol Characteristics Grid -->
+              <div
+                class="protocol-info-grid"
+                role="list"
+                aria-label="Protocol characteristics"
+              >
+                <div class="protocol-info-item" role="listitem">
+                  <div class="info-header">
+                    <i class="bi bi-shield-lock" aria-hidden="true"></i>
+                    <span class="info-label">Encryption</span>
+                  </div>
+                  <span class="info-value">None</span>
+                </div>
+                <div class="protocol-info-item" role="listitem">
+                  <div class="info-header">
+                    <i class="bi bi-person-check" aria-hidden="true"></i>
+                    <span class="info-label">Authentication</span>
+                  </div>
+                  <span class="info-value">None</span>
+                </div>
+                <div class="protocol-info-item" role="listitem">
+                  <div class="info-header">
+                    <i class="bi bi-eye" aria-hidden="true"></i>
+                    <span class="info-label">Traffic Monitoring</span>
+                  </div>
+                  <span class="info-value">None</span>
+                </div>
+              </div>
+
+              <!-- Protocol Capabilities -->
+              <div class="protocol-capabilities-section">
+                <h6 class="capabilities-heading">
+                  <i class="bi bi-info-circle" aria-hidden="true"></i>
+                  Protocol Capabilities
+                </h6>
+                <p class="capabilities-intro">
+                  Devices on the OT Network <code>199.207.0.0/16</code> can
+                  perform the following operations:
+                </p>
+                <ul class="capabilities-list" role="list">
+                  <li role="listitem">
+                    <i class="bi bi-arrow-bar-down" aria-hidden="true"></i>
+                    <span
+                      ><strong>Read Registers</strong> &mdash; Access current
+                      sensor data, state information, and process values</span
+                    >
+                  </li>
+                  <li role="listitem">
+                    <i class="bi bi-arrow-bar-up" aria-hidden="true"></i>
+                    <span
+                      ><strong>Write Registers</strong> &mdash; Modify
+                      setpoints, control commands, and operational
+                      parameters</span
+                    >
+                  </li>
+                  <li role="listitem">
+                    <i class="bi bi-terminal" aria-hidden="true"></i>
+                    <span
+                      ><strong>Send Commands</strong> &mdash; Issue instructions
+                      directly to PLCs</span
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Software Architecture -->
+          <div class="modal-section-header">
+            <span class="section-icon"
+              ><i class="bi bi-code-square" aria-hidden="true"></i
+            ></span>
+            <h4>Software Architecture</h4>
+          </div>
+          <div class="network-zone-card">
+            <div class="zone-header">
+              <h5 class="zone-name">OpenPLC Platform</h5>
+              <span class="zone-ip">All Zones</span>
+            </div>
+            <div class="zone-body">
+              <div class="zone-details">
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Purpose</span>
+                  <span class="zone-detail-value"
+                    >Reduce licensing costs vs. Siemens/Allen-Bradley</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Code Management</span>
+                  <span class="zone-detail-value"
+                    >Ladder logic maintained by LSI (Logical Systems Inc.)</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Code Access</span>
+                  <span class="zone-detail-value"
+                    >Warranty restrictions prevent internal modifications</span
+                  >
+                </div>
+                <div class="zone-detail-row">
+                  <span class="zone-detail-label">Deliverables</span>
+                  <span class="zone-detail-value"
+                    >Cookie_Factory_PLC_Program.zip (full ladder logic
+                    source)</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-lg mt-2xl">
+          <button id="ot-network-close-btn" class="btn btn-primary btn-small">
+            Close
+          </button>
         </div>
       </div>
     </div>

@@ -629,7 +629,7 @@ details summary:focus-visible {
   height: auto;
   background-color: var(--color-bg-secondary);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -755,5 +755,583 @@ details summary:focus-visible {
 
   .image-carousel-arrow-right {
     right: var(--spacing-sm);
+  }
+}
+
+/* ========================================
+   Scenario Page - Company & Personnel Styles
+   ======================================== */
+
+/* Company Profile Card */
+.company-profile-card {
+  background: linear-gradient(135deg,
+      color-mix(in srgb, var(--color-accent-blue) 8%, transparent) 0%,
+      color-mix(in srgb, var(--color-text-primary) 3%, transparent) 100%);
+  border-left: 4px solid var(--color-accent-blue);
+}
+
+.company-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.company-identity .card-title {
+  margin-bottom: var(--spacing-xs);
+}
+
+.company-tagline {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  margin: 0;
+}
+
+.company-meta {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.company-description {
+  color: var(--color-text-primary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Network Infrastructure Zones */
+.network-zones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.network-zone {
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 12%, transparent);
+  background-color: color-mix(in srgb, var(--color-text-primary) 3%, transparent);
+  transition: all var(--transition-base);
+}
+
+.network-zone:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.zone-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.zone-icon {
+  font-size: var(--font-size-xl);
+}
+
+.zone-header h4 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg);
+}
+
+.zone-subnet {
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.zone-subnet code {
+  background-color: color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+}
+
+.zone-assets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.zone-assets li {
+  padding: var(--spacing-xs) 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text-primary) 6%, transparent);
+}
+
+.zone-assets li:last-child {
+  border-bottom: none;
+}
+
+.zone-assets li::before {
+  content: "•";
+  color: var(--color-accent-blue);
+  margin-right: var(--spacing-sm);
+}
+
+.zone-note {
+  margin: var(--spacing-md) 0 0 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* Zone color variants */
+.zone-dmz {
+  border-left: 3px solid var(--color-accent-teal);
+}
+
+.zone-corporate {
+  border-left: 3px solid var(--color-accent-blue);
+}
+
+.zone-servers {
+  border-left: 3px solid #8B5CF6;
+}
+
+.zone-dmz-ot {
+  border-left: 3px solid var(--color-warning);
+}
+
+.zone-ot {
+  border-left: 3px solid var(--color-accent-red);
+}
+
+/* Control System Info */
+.control-system-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.control-system-detail {
+  padding: var(--spacing-lg);
+  background-color: color-mix(in srgb, var(--color-text-primary) 3%, transparent);
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+}
+
+.control-system-detail h4 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-accent-blue);
+  font-size: var(--font-size-base);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.control-system-detail p {
+  margin: 0;
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+.control-system-detail.alert-box {
+  background-color: color-mix(in srgb, var(--color-warning) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-warning) 30%, transparent);
+}
+
+.control-system-detail.alert-box h4 {
+  color: var(--color-warning);
+}
+
+/* Personnel Section Styles */
+.personnel-section {
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+}
+
+.section-focus {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+}
+
+.personnel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.personnel-card {
+  background-color: color-mix(in srgb, var(--color-text-primary) 3%, transparent);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+  transition: all var(--transition-base);
+}
+
+.personnel-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: color-mix(in srgb, var(--color-accent-blue) 30%, transparent);
+}
+
+.personnel-header {
+  margin-bottom: var(--spacing-md);
+}
+
+.personnel-header h4 {
+  margin: 0 0 var(--spacing-xs) 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg);
+}
+
+.personnel-title {
+  display: inline-block;
+  color: var(--color-accent-blue);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.personnel-profile {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+}
+
+.personnel-quote {
+  color: var(--color-text-secondary);
+  font-style: italic;
+  font-size: var(--font-size-sm);
+  padding-left: var(--spacing-md);
+  border-left: 3px solid color-mix(in srgb, var(--color-text-primary) 15%, transparent);
+  margin-bottom: var(--spacing-md);
+}
+
+.personnel-quote::before {
+  content: '"';
+}
+
+.personnel-quote::after {
+  content: '"';
+}
+
+.security-relevance {
+  background-color: color-mix(in srgb, var(--color-accent-red) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent-red) 20%, transparent);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-top: auto;
+}
+
+.security-relevance.security-positive {
+  background-color: color-mix(in srgb, var(--color-accent-green) 8%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent-green) 20%, transparent);
+}
+
+.security-relevance.security-positive .relevance-label {
+  color: var(--color-accent-green);
+}
+
+.relevance-label {
+  display: block;
+  color: var(--color-accent-red);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-xs);
+}
+
+.security-relevance p {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.security-relevance code {
+  background-color: color-mix(in srgb, var(--color-accent-red) 15%, transparent);
+  padding: 0.1em 0.4em;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+}
+
+/* External Partner Card */
+.personnel-card.external-partner {
+  background-color: color-mix(in srgb, var(--color-warning) 5%, transparent);
+  border-color: color-mix(in srgb, var(--color-warning) 20%, transparent);
+}
+
+.personnel-card.external-partner:hover {
+  border-color: color-mix(in srgb, var(--color-warning) 40%, transparent);
+}
+
+/* ========================================
+   Corporate Identity Card Styles
+   ======================================== */
+
+/* Company Header Block */
+.company-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.company-name-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.company-legal-name {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.company-tagline {
+  margin: 0;
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Company Facts Grid */
+.company-facts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0;
+  padding: var(--spacing-lg);
+  background-color: color-mix(in srgb, var(--color-text-primary) 3%, transparent);
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+}
+
+.company-fact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: 0 var(--spacing-lg);
+  border-right: 1px solid color-mix(in srgb, var(--color-text-primary) 15%, transparent);
+}
+
+.company-fact:first-child {
+  padding-left: 0;
+}
+
+.company-fact:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.fact-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.fact-value {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* NAICS Code Badge */
+.naics-code {
+  align-self: flex-start;
+  width: fit-content;
+  padding: 0.15em 0.5em;
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  background-color: transparent;
+  border: 1.5px solid var(--color-text-primary);
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.naics-code:hover {
+  background-color: color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+}
+
+/* Operational Context Section */
+.company-context {
+  padding: var(--spacing-lg);
+  background-color: color-mix(in srgb, var(--color-warning) 8%, transparent);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--color-warning);
+}
+
+.context-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.context-heading i {
+  color: var(--color-warning);
+}
+
+.context-text {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  line-height: 1.7;
+}
+
+/* Business Priorities Section */
+.company-priorities {
+  padding: var(--spacing-lg);
+  background-color: color-mix(in srgb, var(--color-text-primary) 3%, transparent);
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+}
+
+.priorities-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.priorities-heading i {
+  color: var(--color-accent-blue);
+}
+
+.priorities-list {
+  margin: 0;
+  padding-left: var(--spacing-lg);
+  list-style-type: none;
+}
+
+.priorities-list li {
+  position: relative;
+  padding: var(--spacing-xs) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  line-height: .5em;
+}
+
+.priorities-list li strong {
+  color: var(--color-text-primary);
+}
+
+/* Compliance Note */
+.company-compliance {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: color-mix(in srgb, var(--color-accent-green) 8%, transparent);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--color-accent-green);
+}
+
+.compliance-note {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.compliance-note i {
+  color: var(--color-accent-green);
+  flex-shrink: 0;
+  margin-top: 0.15em;
+}
+
+/* Company Info Links */
+.company-info-links {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .company-header {
+    flex-direction: column;
+  }
+
+  .company-facts-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .company-fact {
+    padding: 0;
+    border-right: none;
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text-primary) 15%, transparent);
+  }
+
+  .company-fact:nth-child(even) {
+    padding-left: var(--spacing-lg);
+    border-left: 1px solid color-mix(in srgb, var(--color-text-primary) 15%, transparent);
+  }
+
+  .company-fact:nth-last-child(-n+2) {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .network-zones-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .personnel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .control-system-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .company-facts-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .company-fact {
+    padding: 0 0 var(--spacing-md) 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text-primary) 15%, transparent);
+  }
+
+  .company-fact:nth-child(even) {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .company-fact:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .company-info-links {
+    flex-direction: column;
+  }
+
+  .company-info-links .btn {
+    width: 100%;
+    text-align: center;
   }
 }

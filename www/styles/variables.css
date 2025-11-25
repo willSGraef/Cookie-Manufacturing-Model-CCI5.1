@@ -7,6 +7,17 @@
     --color-accent-green: #00b34b;
     --color-accent-teal: #00997a;
 
+    /* Functional Area Zone Colors */
+    --color-zone-a: #8EBCDC;
+    --color-zone-a-dark: #4a8ab8;
+    /* Resource Allocation LAN - Blue */
+    --color-zone-b: #F1F3F6;
+    --color-zone-b-dark: #6b6b71;
+    /* Production LAN - Light Gray */
+    --color-zone-c: #FFE4A5;
+    --color-zone-c-dark: #cc7500;
+    /* Finished Goods LAN - Yellow/Orange */
+
     /* Neutral Colors - Premium grays */
     --color-white: #ffffff;
     --color-black: #000000;
@@ -25,10 +36,12 @@
     --color-warning: #cc7500;
     --color-danger: var(--color-accent-red);
     --color-info: var(--color-accent-blue);
+    --color-error: var(--color-accent-red);
 
     /* Light Mode Colors (Default) */
     --color-bg-primary: #ffffff;
     --color-bg-secondary: #ffffff;
+    --color-surface: #ffffff;
     --color-text-primary: rgb(29, 29, 31);
     --color-text-secondary: #6b6b71;
     --color-border: #e5e5e7;

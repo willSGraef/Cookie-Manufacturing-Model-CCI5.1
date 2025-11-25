@@ -226,6 +226,78 @@ function closeTopologyModal() {
 }
 
 /**
+ * Open organization modal
+ * Opens the organization structure and personnel modal
+ * @returns {void}
+ */
+function openOrganizationModal() {
+    openModal('organization-modal');
+}
+
+/**
+ * Close organization modal
+ * Closes the organization modal
+ * @returns {void}
+ */
+function closeOrganizationModal() {
+    closeModal('organization-modal');
+}
+
+/**
+ * Open vendor information modal
+ * Opens the vendor and external partners modal
+ * @returns {void}
+ */
+function openVendorModal() {
+    openModal('vendor-modal');
+}
+
+/**
+ * Close vendor modal
+ * Closes the vendor modal
+ * @returns {void}
+ */
+function closeVendorModal() {
+    closeModal('vendor-modal');
+}
+
+/**
+ * Open network information modal
+ * Opens the network architecture and topology modal
+ * @returns {void}
+ */
+function openNetworkModal() {
+    openModal('network-modal');
+}
+
+/**
+ * Close network modal
+ * Closes the network modal
+ * @returns {void}
+ */
+function closeNetworkModal() {
+    closeModal('network-modal');
+}
+
+/**
+ * Open OT network details modal
+ * Opens the operational technology network details modal
+ * @returns {void}
+ */
+function openOTNetworkModal() {
+    openModal('ot-network-modal');
+}
+
+/**
+ * Close OT network modal
+ * Closes the OT network modal
+ * @returns {void}
+ */
+function closeOTNetworkModal() {
+    closeModal('ot-network-modal');
+}
+
+/**
  * Initialize scenario page functionality
  * Sets up all modals, carousels, keyboard navigation, and interactive elements.
  * Loads diagram data and attaches event listeners for topology and control logic interactions.
@@ -314,6 +386,30 @@ export async function initializeScenario() {
         controlLogicCloseBtn.addEventListener("click", closeControlLogicModal);
     }
 
+    // Organization modal close button
+    const organizationCloseBtn = document.getElementById("organization-close-btn");
+    if (organizationCloseBtn) {
+        organizationCloseBtn.addEventListener("click", closeOrganizationModal);
+    }
+
+    // Vendor modal close button
+    const vendorCloseBtn = document.getElementById("vendor-close-btn");
+    if (vendorCloseBtn) {
+        vendorCloseBtn.addEventListener("click", closeVendorModal);
+    }
+
+    // Network modal close button
+    const networkCloseBtn = document.getElementById("network-close-btn");
+    if (networkCloseBtn) {
+        networkCloseBtn.addEventListener("click", closeNetworkModal);
+    }
+
+    // OT Network modal close button
+    const otNetworkCloseBtn = document.getElementById("ot-network-close-btn");
+    if (otNetworkCloseBtn) {
+        otNetworkCloseBtn.addEventListener("click", closeOTNetworkModal);
+    }
+
     // Carousel image modal close
     const carouselImageModal = document.getElementById("carousel-image-modal");
     if (carouselImageModal) {
@@ -355,4 +451,12 @@ export async function initializeScenario() {
     window.closeTopologyModal = closeTopologyModal;
     window.openControlLogicImageModal = openControlLogicImageModal;
     window.closeCarouselImageModal = closeCarouselImageModal;
+    window.openOrganizationModal = openOrganizationModal;
+    window.closeOrganizationModal = closeOrganizationModal;
+    window.openVendorModal = openVendorModal;
+    window.closeVendorModal = closeVendorModal;
+    window.openNetworkModal = openNetworkModal;
+    window.closeNetworkModal = closeNetworkModal;
+    window.openOTNetworkModal = openOTNetworkModal;
+    window.closeOTNetworkModal = closeOTNetworkModal;
 }

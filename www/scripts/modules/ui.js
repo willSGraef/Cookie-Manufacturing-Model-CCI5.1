@@ -52,23 +52,26 @@ export function closeModal(modalId, returnFocus = null) {
  * @returns {void}
  */
 export function initializeModals() {
-    const clickableCards = document.querySelectorAll(".clickable-card");
+    // Select both clickable cards and any element with data-modal attribute
+    const modalTriggers = document.querySelectorAll("[data-modal], .clickable-card");
     const modals = document.querySelectorAll(".modal");
 
-    // Open modal when card is clicked
-    clickableCards.forEach((card) => {
-        card.addEventListener("click", function () {
+    // Open modal when trigger is clicked
+    modalTriggers.forEach((trigger) => {
+        trigger.addEventListener("click", function () {
             const modalId = this.getAttribute("data-modal");
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add("active");
-                modal.setAttribute("aria-hidden", "false");
-                document.body.style.overflow = "hidden";
+            if (modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.add("active");
+                    modal.setAttribute("aria-hidden", "false");
+                    document.body.style.overflow = "hidden";
+                }
             }
         });
 
         // Allow keyboard interaction
-        card.addEventListener("keypress", function (e) {
+        trigger.addEventListener("keypress", function (e) {
             if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
                 this.click();
@@ -81,19 +84,19 @@ export function initializeModals() {
         const closeBtn = modal.querySelector(".modal-close");
         const overlay = modal.querySelector(".modal-overlay");
 
-        const closeModal = () => {
+        const closeModalFn = () => {
             modal.classList.remove("active");
             modal.setAttribute("aria-hidden", "true");
             document.body.style.overflow = "";
         };
 
-        if (closeBtn) closeBtn.addEventListener("click", closeModal);
-        if (overlay) overlay.addEventListener("click", closeModal);
+        if (closeBtn) closeBtn.addEventListener("click", closeModalFn);
+        if (overlay) overlay.addEventListener("click", closeModalFn);
 
         // Close modal with Escape key
         document.addEventListener("keydown", function (e) {
             if (e.key === "Escape" && modal.classList.contains("active")) {
-                closeModal();
+                closeModalFn();
             }
         });
     });

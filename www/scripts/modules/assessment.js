@@ -88,7 +88,7 @@ export async function initializeAssessment() {
     const deliverablesCloseBtn = document.getElementById("deliverables-close-btn");
 
     if (!taskModal || !deliverablesModal) {
-        console.warn("Assessment modals not found on this page");
+        // Silently return - assessment modals only exist on assessment page
         return;
     }
 
