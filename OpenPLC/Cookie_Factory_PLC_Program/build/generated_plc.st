@@ -410,6 +410,7 @@ PROGRAM tag_display
     roe_2 AT %QX94.1 : BOOL := false;
     roe_3 AT %QX94.2 : BOOL := false;
     add_ingredients AT %QX94.3 : BOOL := false;
+    worker_present AT %QX94.4 : BOOL := false;
   END_VAR
   VAR
     _TMP_ADD37_OUT : REAL;
@@ -763,6 +764,21 @@ PROGRAM tag_display
   _TMP_MOVE273_OUT := MOVE(EN := NOT(ps_6) AND wrapper AND _TMP_AND353_OUT, IN := 0, ENO => _TMP_MOVE273_ENO);
   IF _TMP_MOVE273_ENO THEN
       box_count := _TMP_MOVE273_OUT;
+  END_IF;
+  IF NOT(conveyor_1) THEN
+    conveying_1 := FALSE; (*reset*)
+  END_IF;
+  IF NOT(conveyor_2) THEN
+    conveying_2 := FALSE; (*reset*)
+  END_IF;
+  IF NOT(conveyor_3) THEN
+    conveying_3 := FALSE; (*reset*)
+  END_IF;
+  IF NOT(conveyor_4) THEN
+    conveying_4 := FALSE; (*reset*)
+  END_IF;
+  IF NOT(conveyor_5) THEN
+    conveying_5 := FALSE; (*reset*)
   END_IF;
 END_PROGRAM
 

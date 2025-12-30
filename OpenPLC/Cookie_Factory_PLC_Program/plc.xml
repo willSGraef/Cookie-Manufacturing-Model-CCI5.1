@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2025-02-05T12:34:47"/>
-  <contentHeader name="CookiePLC" modificationDateTime="2025-11-16T22:54:03">
+  <contentHeader name="CookiePLC" modificationDateTime="2025-12-30T10:44:25">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -1628,6 +1628,17 @@ END_IF;]]></xhtml:p>
               </initialValue>
               <documentation>
                 <xhtml:p><![CDATA[Coil for adding additional non-bulk ingredients]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="worker_present" address="%QX94.4">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="false"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[Coil for worker being present at finished good]]></xhtml:p>
               </documentation>
             </variable>
           </localVars>
@@ -7526,6 +7537,233 @@ END_IF;]]></xhtml:p>
               </connectionPointIn>
               <expression>box_count</expression>
             </outVariable>
+            <comment localId="373" height="40" width="540">
+              <position x="20" y="2600"/>
+              <content>
+                <xhtml:p><![CDATA[Set conveying to false if conveyor isnt on
+]]></xhtml:p>
+              </content>
+            </comment>
+            <leftPowerRail localId="374" width="10" height="40">
+              <position x="20" y="2660"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="375" negated="true" width="21" height="20">
+              <position x="118" y="2670"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="374">
+                  <position x="118" y="2680"/>
+                  <position x="30" y="2680"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveyor_1</variable>
+            </contact>
+            <coil localId="376" negated="false" width="21" height="20" storage="reset">
+              <position x="358" y="2670"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="375">
+                  <position x="358" y="2680"/>
+                  <position x="139" y="2680"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveying_1</variable>
+            </coil>
+            <rightPowerRail localId="377" width="10" height="40">
+              <position x="600" y="2660"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="376">
+                  <position x="600" y="2680"/>
+                  <position x="378" y="2680"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <leftPowerRail localId="297" width="10" height="40" executionOrderId="0">
+              <position x="20" y="2700"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="305" negated="true" width="21" height="20" executionOrderId="0">
+              <position x="118" y="2710"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="297">
+                  <position x="118" y="2720"/>
+                  <position x="30" y="2720"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveyor_2</variable>
+            </contact>
+            <coil localId="308" negated="false" width="21" height="20" storage="reset" executionOrderId="0">
+              <position x="358" y="2710"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="305">
+                  <position x="358" y="2720"/>
+                  <position x="139" y="2720"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveying_2</variable>
+            </coil>
+            <rightPowerRail localId="327" width="10" height="40" executionOrderId="0">
+              <position x="600" y="2700"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="308">
+                  <position x="600" y="2720"/>
+                  <position x="379" y="2720"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <leftPowerRail localId="370" width="10" height="40" executionOrderId="0">
+              <position x="20" y="2740"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="378" negated="true" width="21" height="20" executionOrderId="0">
+              <position x="118" y="2750"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="370">
+                  <position x="118" y="2760"/>
+                  <position x="30" y="2760"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveyor_3</variable>
+            </contact>
+            <coil localId="379" negated="false" width="21" height="20" storage="reset" executionOrderId="0">
+              <position x="358" y="2750"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="378">
+                  <position x="358" y="2760"/>
+                  <position x="139" y="2760"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveying_3</variable>
+            </coil>
+            <rightPowerRail localId="380" width="10" height="40" executionOrderId="0">
+              <position x="600" y="2740"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="379">
+                  <position x="600" y="2760"/>
+                  <position x="379" y="2760"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <leftPowerRail localId="381" width="10" height="40" executionOrderId="0">
+              <position x="20" y="2780"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="382" negated="true" width="21" height="20" executionOrderId="0">
+              <position x="118" y="2790"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="381">
+                  <position x="118" y="2800"/>
+                  <position x="30" y="2800"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveyor_4</variable>
+            </contact>
+            <coil localId="383" negated="false" width="21" height="20" storage="reset" executionOrderId="0">
+              <position x="358" y="2790"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="382">
+                  <position x="358" y="2800"/>
+                  <position x="139" y="2800"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveying_4</variable>
+            </coil>
+            <rightPowerRail localId="384" width="10" height="40" executionOrderId="0">
+              <position x="600" y="2780"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="383">
+                  <position x="600" y="2800"/>
+                  <position x="379" y="2800"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <leftPowerRail localId="385" width="10" height="40" executionOrderId="0">
+              <position x="20" y="2820"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="386" negated="true" width="21" height="20" executionOrderId="0">
+              <position x="118" y="2830"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="385">
+                  <position x="118" y="2840"/>
+                  <position x="30" y="2840"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveyor_5</variable>
+            </contact>
+            <coil localId="387" negated="false" width="21" height="20" storage="reset" executionOrderId="0">
+              <position x="358" y="2830"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="386">
+                  <position x="358" y="2840"/>
+                  <position x="139" y="2840"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>conveying_5</variable>
+            </coil>
+            <rightPowerRail localId="388" width="10" height="40" executionOrderId="0">
+              <position x="600" y="2820"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="387">
+                  <position x="600" y="2840"/>
+                  <position x="379" y="2840"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
           </LD>
         </body>
       </pou>

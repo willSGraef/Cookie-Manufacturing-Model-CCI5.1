@@ -14,6 +14,8 @@ class SimulationEngine:
         self.hopper = 0
         self.mixer = 0
         self.trough = 0
+        self.row_count = 0 # 5 rows in a sheet
+        self.sheet_count = 0
         self.nitrogen_tank = TANK_CAPACITY
         self.temperature = AMBIENT_TUNNEL_TEMP
         self.counters = [0,0,0]
@@ -142,7 +144,14 @@ class SimulationEngine:
 
         if signals.trough_weight.get_value() > 0 and signals.wirecutter.get_value():
             rate = ((signals.wirecut_cpm.get_value() * COOKIE_COUNT * COOKIE_WEIGHT)/16.0)/SECONDS_PER_MIN
-            trough -= rate
+            if signals.trough_weight.get_value() - rate < 0: # Prevent negative number in trough
+                trough = 0
+            else :
+                trough -= rate
+            self.row_count += 1
+            if self.row_count >= 5: 
+                self.row_count = 0
+                self.sheet_count += 1 # Increase sheet count when 5 rows have been cut & reset row count
         elif signals.trough_weight.get_value() < 0:
             trough = 0
 
@@ -184,9 +193,9 @@ class SimulationEngine:
 
     def boxing_machine(self):
         counter = self.counters[0]
-        if signals.conveying_2.get_value() and signals.ps_1.get_value():
+        if signals.conveying_2.get_value() and signals.ps_1.get_value() and signals.conveyor_2.get_value():
                 self.set_signal(signals.ps_1, False)
-        if signals.conveying_2.get_value():
+        if signals.conveying_2.get_value() and signals.conveyor_2.get_value():
             if counter >= 2:
                 counter = 0
                 self.set_signal(signals.ps_2, True)
@@ -198,7 +207,7 @@ class SimulationEngine:
                 self.set_signal(signals.bagging, False)
             else:
                 counter += 1
-        elif signals.conveying_1.get_value():
+        elif signals.conveying_1.get_value() and signals.conveyor_1.get_value():
             if counter >= 2:
                 counter = 0
                 self.set_signal(signals.ps_1, True)
@@ -214,7 +223,7 @@ class SimulationEngine:
 
     def taping_machine(self):
         counter = self.counters[1]
-        if signals.ps_2.get_value() and signals.conveyor.get_value() and self.packing == False:
+        if signals.ps_2.get_value() and (self.sheet_count >= 4) and self.packing == False and signals.worker_present.get_value():
                 self.packing = True
                 self.set_signal(signals.ps_2, False)
 
@@ -246,6 +255,7 @@ class SimulationEngine:
             if counter >= 8:
                 counter = 0
                 self.packing = False
+                self.sheet_count -= 4 # Pack a box full of 4 cookie sheets
                 self.set_signal(signals.ps_3, True)
             else:
                 counter += 1

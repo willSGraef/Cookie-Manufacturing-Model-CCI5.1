@@ -1165,6 +1165,8 @@ void TAG_DISPLAY_init__(TAG_DISPLAY *data__, BOOL retain) {
   __INIT_LOCATED_VALUE(data__->ROE_3,__BOOL_LITERAL(FALSE))
   __INIT_LOCATED(BOOL,__QX94_3,data__->ADD_INGREDIENTS,retain)
   __INIT_LOCATED_VALUE(data__->ADD_INGREDIENTS,__BOOL_LITERAL(FALSE))
+  __INIT_LOCATED(BOOL,__QX94_4,data__->WORKER_PRESENT,retain)
+  __INIT_LOCATED_VALUE(data__->WORKER_PRESENT,__BOOL_LITERAL(FALSE))
   __INIT_VAR(data__->_TMP_ADD37_OUT,0,retain)
   __INIT_VAR(data__->_TMP_ADD38_OUT,0,retain)
   __INIT_VAR(data__->_TMP_ADD41_OUT,0,retain)
@@ -1799,6 +1801,21 @@ void TAG_DISPLAY_body__(TAG_DISPLAY *data__) {
     data__));
   if (__GET_VAR(data__->_TMP_MOVE273_ENO,)) {
     __SET_LOCATED(data__->,BOX_COUNT,,__GET_VAR(data__->_TMP_MOVE273_OUT,));
+  };
+  if (!(__GET_LOCATED(data__->CONVEYOR_1,))) {
+    __SET_LOCATED(data__->,CONVEYING_1,,__BOOL_LITERAL(FALSE));
+  };
+  if (!(__GET_LOCATED(data__->CONVEYOR_2,))) {
+    __SET_LOCATED(data__->,CONVEYING_2,,__BOOL_LITERAL(FALSE));
+  };
+  if (!(__GET_LOCATED(data__->CONVEYOR_3,))) {
+    __SET_LOCATED(data__->,CONVEYING_3,,__BOOL_LITERAL(FALSE));
+  };
+  if (!(__GET_LOCATED(data__->CONVEYOR_4,))) {
+    __SET_LOCATED(data__->,CONVEYING_4,,__BOOL_LITERAL(FALSE));
+  };
+  if (!(__GET_LOCATED(data__->CONVEYOR_5,))) {
+    __SET_LOCATED(data__->,CONVEYING_5,,__BOOL_LITERAL(FALSE));
   };
 
   goto __end;

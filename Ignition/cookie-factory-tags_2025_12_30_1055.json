@@ -1,0 +1,8 @@
+{
+  "valueSource": "opc",
+  "opcItemPath": "ns\u003d1;s\u003d[Cookie_PLC]QX756",
+  "dataType": "Boolean",
+  "name": "worker_present",
+  "tagType": "AtomicTag",
+  "opcServer": "Ignition OPC UA Server"
+}

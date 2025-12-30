@@ -324,6 +324,8 @@ IEC_BOOL var111;
 IEC_BOOL *__QX94_2 = &var111;
 IEC_BOOL var112;
 IEC_BOOL *__QX94_3 = &var112;
+IEC_BOOL var113;
+IEC_BOOL *__QX94_4 = &var113;
 /**
  * Linux specific code
  **/
