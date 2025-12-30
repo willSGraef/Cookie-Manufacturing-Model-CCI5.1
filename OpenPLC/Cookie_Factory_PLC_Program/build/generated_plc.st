@@ -225,12 +225,17 @@ FUNCTION_BLOCK conveyor_fpm_function
     wirecut_cpm : WORD;
     cookie_margin : REAL;
     cookie_diameter : REAL;
+    conveyor : BOOL;
   END_VAR
   VAR_OUTPUT
     conveyor_fpm : REAL;
   END_VAR
 
-  conveyor_fpm := (WORD_TO_REAL(wirecut_cpm) * (cookie_margin+cookie_diameter)) / 12.0;
+  IF conveyor THEN
+    conveyor_fpm := (WORD_TO_REAL(wirecut_cpm) * (cookie_margin+cookie_diameter)) / 12.0;
+  ELSE
+    conveyor_fpm := 0.0;
+  END_IF;
 END_FUNCTION_BLOCK
 
 FUNCTION_BLOCK wirecut_cpm_function
@@ -239,9 +244,11 @@ FUNCTION_BLOCK wirecut_cpm_function
   END_VAR
   VAR_INPUT
     wirecutter : BOOL;
+    conveyor : BOOL;
+    trough_weight : REAL;
   END_VAR
 
-  IF wirecutter THEN
+  IF wirecutter AND conveyor AND (trough_weight > 0.0) THEN
     wirecut_cpm := 200;
   ELSE
     wirecut_cpm := 0;
@@ -315,7 +322,7 @@ PROGRAM tag_display
     vacuum_manual AT %QX88.6 : BOOL := false;
     wirecutter AT %QX88.7 : BOOL := false;
     trough_transfer AT %QX89.1 : BOOL := false;
-    conveyor AT %QX89.4 : BOOL := true;
+    conveyor AT %QX89.4 : BOOL := false;
     paper_cutter AT %QX89.5 : BOOL := false;
     gv_1 AT %QX89.6 : BOOL := false;
     fan_1 AT %QX89.7 : BOOL := false;
@@ -410,7 +417,7 @@ PROGRAM tag_display
     roe_2 AT %QX94.1 : BOOL := false;
     roe_3 AT %QX94.2 : BOOL := false;
     add_ingredients AT %QX94.3 : BOOL := false;
-    worker_present AT %QX94.4 : BOOL := false;
+    worker_present AT %QX94.4 : BOOL := true;
   END_VAR
   VAR
     _TMP_ADD37_OUT : REAL;
@@ -552,12 +559,12 @@ PROGRAM tag_display
   lcm := words_to_real10.Result;
   papercutter_cpm_function0(paper_cutter := paper_cutter, cookie_diameter := cookie_diameter, cookie_margin := cookie_margin, conveyor_fpm := conveyor_fpm);
   papercut_cpm := papercutter_cpm_function0.papercut_cpm;
-  conveyor_fpm_function0(wirecut_cpm := wirecut_cpm, cookie_margin := cookie_margin, cookie_diameter := cookie_diameter);
+  conveyor_fpm_function0(wirecut_cpm := wirecut_cpm, cookie_margin := cookie_margin, cookie_diameter := cookie_diameter, conveyor := conveyor);
   conveyor_fpm := conveyor_fpm_function0.conveyor_fpm;
   real_to_words2(Input := conveyor_fpm);
   conveyor_fpm_high := real_to_words2.High;
   conveyor_fpm_low := real_to_words2.Low;
-  wirecut_cpm_function0(wirecut_cpm := wirecut_cpm, wirecutter := wirecutter);
+  wirecut_cpm_function0(wirecut_cpm := wirecut_cpm, wirecutter := wirecutter, conveyor := conveyor, trough_weight := trough_weight);
   wirecut_cpm := wirecut_cpm_function0.wirecut_cpm;
   words_to_real11(High := nitrogen_volume_high, Low := nitrogen_volume_low);
   nitrogen_volume := words_to_real11.Result;

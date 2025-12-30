@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2025-02-05T12:34:47"/>
-  <contentHeader name="CookiePLC" modificationDateTime="2025-12-30T10:44:25">
+  <contentHeader name="CookiePLC" modificationDateTime="2025-12-30T11:51:37">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -823,7 +823,7 @@ END_IF;]]></xhtml:p>
                 <BOOL/>
               </type>
               <initialValue>
-                <simpleValue value="true"/>
+                <simpleValue value="false"/>
               </initialValue>
               <documentation>
                 <xhtml:p><![CDATA[Conveyor on state]]></xhtml:p>
@@ -1635,7 +1635,7 @@ END_IF;]]></xhtml:p>
                 <BOOL/>
               </type>
               <initialValue>
-                <simpleValue value="false"/>
+                <simpleValue value="true"/>
               </initialValue>
               <documentation>
                 <xhtml:p><![CDATA[Coil for worker being present at finished good]]></xhtml:p>
@@ -3036,29 +3036,36 @@ END_IF;]]></xhtml:p>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="81">
                       <position x="1120" y="900"/>
-                      <position x="1090" y="900"/>
-                      <position x="1090" y="880"/>
-                      <position x="1060" y="880"/>
+                      <position x="1050" y="900"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="cookie_margin">
                   <connectionPointIn>
-                    <relPosition x="0" y="60"/>
+                    <relPosition x="0" y="50"/>
                     <connection refLocalId="84">
-                      <position x="1120" y="930"/>
-                      <position x="1030" y="930"/>
-                      <position x="1030" y="920"/>
+                      <position x="1120" y="920"/>
                       <position x="940" y="920"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="cookie_diameter">
                   <connectionPointIn>
-                    <relPosition x="0" y="90"/>
+                    <relPosition x="0" y="70"/>
                     <connection refLocalId="83">
+                      <position x="1120" y="940"/>
+                      <position x="1080" y="940"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="conveyor">
+                  <connectionPointIn>
+                    <relPosition x="0" y="90"/>
+                    <connection refLocalId="389">
                       <position x="1120" y="960"/>
-                      <position x="1000" y="960"/>
+                      <position x="1100" y="960"/>
+                      <position x="1100" y="990"/>
+                      <position x="1090" y="990"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -3073,7 +3080,7 @@ END_IF;]]></xhtml:p>
               </outputVariables>
             </block>
             <inVariable localId="81" width="100" height="30" negated="false" executionOrderId="0">
-              <position x="960" y="870"/>
+              <position x="950" y="890"/>
               <connectionPointOut>
                 <relPosition x="100" y="10"/>
               </connectionPointOut>
@@ -3087,7 +3094,7 @@ END_IF;]]></xhtml:p>
               <expression>cookie_diameter</expression>
             </inVariable>
             <inVariable localId="83" width="130" height="30" negated="false" executionOrderId="0">
-              <position x="870" y="950"/>
+              <position x="950" y="930"/>
               <connectionPointOut>
                 <relPosition x="130" y="10"/>
               </connectionPointOut>
@@ -3310,17 +3317,17 @@ END_IF;]]></xhtml:p>
               </connectionPointIn>
               <expression>conveyor_fpm_low</expression>
             </outVariable>
-            <block localId="99" typeName="wirecut_cpm_function" instanceName="wirecut_cpm_function0" width="200" height="60">
-              <position x="1640" y="370"/>
+            <block localId="99" typeName="wirecut_cpm_function" instanceName="wirecut_cpm_function0" width="207" height="100">
+              <position x="1740" y="370"/>
               <inputVariables>
                 <variable formalParameter="wirecut_cpm">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="100">
-                      <position x="1640" y="400"/>
-                      <position x="1610" y="400"/>
-                      <position x="1610" y="380"/>
-                      <position x="1580" y="380"/>
+                      <position x="1740" y="400"/>
+                      <position x="1720" y="400"/>
+                      <position x="1720" y="380"/>
+                      <position x="1710" y="380"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -3328,8 +3335,30 @@ END_IF;]]></xhtml:p>
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="101">
-                      <position x="1640" y="420"/>
-                      <position x="1570" y="420"/>
+                      <position x="1740" y="420"/>
+                      <position x="1680" y="420"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="conveyor">
+                  <connectionPointIn>
+                    <relPosition x="0" y="70"/>
+                    <connection refLocalId="390">
+                      <position x="1740" y="440"/>
+                      <position x="1680" y="440"/>
+                      <position x="1680" y="460"/>
+                      <position x="1670" y="460"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="trough_weight">
+                  <connectionPointIn>
+                    <relPosition x="0" y="90"/>
+                    <connection refLocalId="391">
+                      <position x="1740" y="460"/>
+                      <position x="1730" y="460"/>
+                      <position x="1730" y="500"/>
+                      <position x="1720" y="500"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -3338,32 +3367,32 @@ END_IF;]]></xhtml:p>
               <outputVariables>
                 <variable formalParameter="wirecut_cpm">
                   <connectionPointOut>
-                    <relPosition x="200" y="30"/>
+                    <relPosition x="207" y="30"/>
                   </connectionPointOut>
                 </variable>
               </outputVariables>
             </block>
             <inVariable localId="100" width="100" height="30" negated="false">
-              <position x="1480" y="360"/>
+              <position x="1610" y="360"/>
               <connectionPointOut>
                 <relPosition x="100" y="20"/>
               </connectionPointOut>
               <expression>wirecut_cpm</expression>
             </inVariable>
             <inVariable localId="101" width="90" height="30" negated="false">
-              <position x="1480" y="400"/>
+              <position x="1590" y="400"/>
               <connectionPointOut>
                 <relPosition x="90" y="20"/>
               </connectionPointOut>
               <expression>wirecutter</expression>
             </inVariable>
             <outVariable localId="102" width="100" height="30" negated="false">
-              <position x="1890" y="380"/>
+              <position x="1980" y="380"/>
               <connectionPointIn>
                 <relPosition x="0" y="20"/>
                 <connection refLocalId="99" formalParameter="wirecut_cpm">
-                  <position x="1890" y="400"/>
-                  <position x="1840" y="400"/>
+                  <position x="1980" y="400"/>
+                  <position x="1947" y="400"/>
                 </connection>
               </connectionPointIn>
               <expression>wirecut_cpm</expression>
@@ -7764,8 +7793,32 @@ END_IF;]]></xhtml:p>
                 </connection>
               </connectionPointIn>
             </rightPowerRail>
+            <inVariable localId="389" width="80" height="30" negated="false">
+              <position x="1010" y="970"/>
+              <connectionPointOut>
+                <relPosition x="80" y="20"/>
+              </connectionPointOut>
+              <expression>conveyor</expression>
+            </inVariable>
+            <inVariable localId="390" width="80" height="30" negated="false">
+              <position x="1590" y="440"/>
+              <connectionPointOut>
+                <relPosition x="80" y="20"/>
+              </connectionPointOut>
+              <expression>conveyor</expression>
+            </inVariable>
+            <inVariable localId="391" width="120" height="30" negated="false">
+              <position x="1600" y="480"/>
+              <connectionPointOut>
+                <relPosition x="120" y="20"/>
+              </connectionPointOut>
+              <expression>trough_weight</expression>
+            </inVariable>
           </LD>
         </body>
+        <documentation>
+          <xhtml:p><![CDATA[]]></xhtml:p>
+        </documentation>
       </pou>
       <pou name="flour_alarm_check" pouType="functionBlock">
         <interface>
@@ -8025,6 +8078,11 @@ END_IF;]]></xhtml:p>
                 <REAL/>
               </type>
             </variable>
+            <variable name="conveyor">
+              <type>
+                <BOOL/>
+              </type>
+            </variable>
           </inputVars>
           <outputVars>
             <variable name="conveyor_fpm">
@@ -8036,7 +8094,11 @@ END_IF;]]></xhtml:p>
         </interface>
         <body>
           <ST>
-            <xhtml:p><![CDATA[conveyor_fpm := (WORD_TO_REAL(wirecut_cpm) * (cookie_margin+cookie_diameter)) / 12.0;]]></xhtml:p>
+            <xhtml:p><![CDATA[IF conveyor THEN
+  conveyor_fpm := (WORD_TO_REAL(wirecut_cpm) * (cookie_margin+cookie_diameter)) / 12.0;
+ELSE
+  conveyor_fpm := 0.0;
+END_IF;]]></xhtml:p>
           </ST>
         </body>
       </pou>
@@ -8055,11 +8117,21 @@ END_IF;]]></xhtml:p>
                 <BOOL/>
               </type>
             </variable>
+            <variable name="conveyor">
+              <type>
+                <BOOL/>
+              </type>
+            </variable>
+            <variable name="trough_weight">
+              <type>
+                <REAL/>
+              </type>
+            </variable>
           </inputVars>
         </interface>
         <body>
           <ST>
-            <xhtml:p><![CDATA[IF wirecutter THEN
+            <xhtml:p><![CDATA[IF wirecutter AND conveyor AND (trough_weight > 0.0) THEN
   wirecut_cpm := 200;
 ELSE
   wirecut_cpm := 0;

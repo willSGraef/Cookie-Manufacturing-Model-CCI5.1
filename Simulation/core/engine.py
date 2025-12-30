@@ -144,8 +144,8 @@ class SimulationEngine:
 
         if signals.trough_weight.get_value() > 0 and signals.wirecutter.get_value():
             rate = ((signals.wirecut_cpm.get_value() * COOKIE_COUNT * COOKIE_WEIGHT)/16.0)/SECONDS_PER_MIN
-            if signals.trough_weight.get_value() - rate < 0: # Prevent negative number in trough
-                trough = 0
+            if (signals.trough_weight.get_value() - rate) < 0.0: # Prevent negative number in trough
+                trough = 0.0
             else :
                 trough -= rate
             self.row_count += 1
@@ -153,7 +153,7 @@ class SimulationEngine:
                 self.row_count = 0
                 self.sheet_count += 1 # Increase sheet count when 5 rows have been cut & reset row count
         elif signals.trough_weight.get_value() < 0:
-            trough = 0
+            trough = 0.0
 
         if signals.gv_1.get_value():
             temp_noise = random.uniform(0.0, 1.0)

@@ -201,6 +201,7 @@ typedef struct {
   __DECLARE_VAR(WORD,WIRECUT_CPM)
   __DECLARE_VAR(REAL,COOKIE_MARGIN)
   __DECLARE_VAR(REAL,COOKIE_DIAMETER)
+  __DECLARE_VAR(BOOL,CONVEYOR)
   __DECLARE_VAR(REAL,CONVEYOR_FPM)
 
   // FB private variables - TEMP, private and located variables
@@ -218,6 +219,8 @@ typedef struct {
   __DECLARE_VAR(BOOL,ENO)
   __DECLARE_VAR(WORD,WIRECUT_CPM)
   __DECLARE_VAR(BOOL,WIRECUTTER)
+  __DECLARE_VAR(BOOL,CONVEYOR)
+  __DECLARE_VAR(REAL,TROUGH_WEIGHT)
 
   // FB private variables - TEMP, private and located variables
 
