@@ -79,7 +79,7 @@ roe_1 = Signal("roe_1", 752, False)
 roe_2 = Signal("roe_2", 753, False)
 roe_3 = Signal("roe_3", 754, False)
 add_ingredients = Signal("add_ingredients", 755, False)
-worker_present = Signal("worker_present", 756, False)
+worker_present = Signal("worker_present", 756, True)
 reset = Signal("reset", 1000, False)
 
 # Integer signals

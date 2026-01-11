@@ -39,6 +39,8 @@ class SimulationEngine:
         self.hopper = 0
         self.mixer = 0
         self.trough = 0
+        self.row_count = 0 # 5 rows in a sheet
+        self.sheet_count = 0
         self.nitrogen_tank = TANK_CAPACITY
         self.temperature = AMBIENT_TUNNEL_TEMP
         self.counters = [0,0,0]
@@ -146,12 +148,12 @@ class SimulationEngine:
             rate = ((signals.wirecut_cpm.get_value() * COOKIE_COUNT * COOKIE_WEIGHT)/16.0)/SECONDS_PER_MIN
             if (signals.trough_weight.get_value() - rate) < 0.0: # Prevent negative number in trough
                 trough = 0.0
-            else :
+            else:
                 trough -= rate
-            self.row_count += 1
+            self.row_count += signals.wirecut_cpm.get_value()/SECONDS_PER_MIN # How many rows are cut per second
             if self.row_count >= 5: 
-                self.row_count = 0
-                self.sheet_count += 1 # Increase sheet count when 5 rows have been cut & reset row count
+                self.row_count -= 5
+                self.sheet_count += 1 # Increase sheet count when 5 rows have been cut & reset row count leaving room for excess
         elif signals.trough_weight.get_value() < 0:
             trough = 0.0
 
