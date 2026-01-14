@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2025-02-05T12:34:47"/>
-  <contentHeader name="CookiePLC" modificationDateTime="2025-12-30T11:51:37">
+  <contentHeader name="CookiePLC" modificationDateTime="2026-01-12T20:18:22">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -3317,7 +3317,7 @@ END_IF;]]></xhtml:p>
               </connectionPointIn>
               <expression>conveyor_fpm_low</expression>
             </outVariable>
-            <block localId="99" typeName="wirecut_cpm_function" instanceName="wirecut_cpm_function0" width="207" height="100">
+            <block localId="99" typeName="wirecut_cpm_function" instanceName="wirecut_cpm_function0" width="210" height="100">
               <position x="1740" y="370"/>
               <inputVariables>
                 <variable formalParameter="wirecut_cpm">
@@ -3367,7 +3367,7 @@ END_IF;]]></xhtml:p>
               <outputVariables>
                 <variable formalParameter="wirecut_cpm">
                   <connectionPointOut>
-                    <relPosition x="207" y="30"/>
+                    <relPosition x="210" y="30"/>
                   </connectionPointOut>
                 </variable>
               </outputVariables>
