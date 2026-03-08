@@ -1,0 +1,68 @@
+Cookie factory component list:
+
+Resource Allocation:
+Flour Silo; flour_weight
+	- Need to account for the transfer of flour from the silo to the hopper, only if: vacuum is on, flour_weight > 0, hopper_weight + new material < 40, dv = flour, rv_1 = 	open
+Flour Silo Rotary Valve; rv_1
+	- Needs to be open or closed to facilitate the transfer of flour from the silo to the hopper
+Sugar Silo; sugar_weight
+	- Need to account for the transfer of sugar from the silo to the hopper, only if: vacuum is on, sugar_weight > 0, hopper_weight + new material < 40, dv = sugar, rv_2 = 	open
+Sugar Silo Rotary Valve; rv_2
+	- Needs to be open or closed to facilitate the transfer of sugar from the silo to the hopper
+Diverter Valve; dv
+	- Needs to be set to flour or sugar for the transfer of raw materials from respective silos to the hopper
+Vacuum; vacuum, vacuum_rpm, vacuum_manual
+	- If the vacuum isn't on; no material is transferred, the rate of transfer is dependent on the vacuum_rpm, and the vacuum manual determines whether the operator has 	control over the rpm of the vacuum
+Hopper; hopper_weight
+	- Has a max load of 40 pounds; must account for the transfer of ingredients from the hopper to the mixer, only if: hopper_weight > 0, mixer + new material < 60, rv_3 = 	open
+Hopper Rotary Valve; rv_3
+	- Is either open or closed to facilitate the transfer of ingredients from the hopper to the mixer
+Mixer; mixer, mixer_rpm, mixer_weight
+	- Has a max load of 60 pounds; must account for the addition of non-bulk raw ingredients: if add_ingredients is true; add non-bulk ingredients to total weight
+	- Must account for the transfer of dough to the wirecutter trough; if trough_transfer is true; move dough from mixer to the wirecutter trough
+	
+Simulation (Physical/Human Interaction); add_ingredients, trough_transfer
+	- Just manage simulation variables for the mixer container
+
+Production Area:
+Wirecutter; wirecutter, trough_weight, wirecut_cpm
+	- Account for the decrease of trough_weight while the wirecutter is cutting; wirecut_cpm determines how fast the wirecutter cuts through the dough in the trough
+	- For the trough_weight to decrease: wirecutter must be true, wirecut_cpm > 0, trough_weight - cut dough > 0
+Paper cutter; papercut_cpm, paper_cutter, papercut_cpm
+	- 
+Conveyor; conveyor, conveyor_fpm
+Nitrogen Tank; nitrogen_volume
+Nitrogen Gas Valve; gv_1
+Nitrogen Tunnel; fan_1, fan_2, fan_3, exhaust_fan, tunnel_temp
+
+Finished Good:
+Box Maker; box_maker, boxing
+Conveyor 1; conveying_1, conveyor_1
+Bag Inserter; bagger
+Bag Inserter Light Sensor; ps_1
+Conveyor 2; conveying_2, conveyor_2
+Ready Packing Light Sensor; ps_2
+Done Packing Light Sensor; ps_3
+Conveyor 3; conveying_3, conveyor_3
+Box Taper; taper
+Box Taper Light Sensor; ps_4
+Conveyor 4; conveying_4, conveyor_4
+Palletizer Light Sensor; ps_5
+Palletizer; palletizer, roe_1, roe_2, roe_3, palletizer_grabbing, palletizer_moving, palletizer_rotation
+Wrapper; wrapper, box_count, wrapper_wrapping, wrapper_conveying
+Conveyor 5; conveying_5, conveyor_5
+Pallet Light Sensor; ps_6
+
+Execution pattern:
+	- Pull all owned signals from OpenPLC
+	- Pull all relevant signals from redis server
+	- Perform relative operations based on shared values
+	- Push all owned signals to OpenPLC
+	- Push all signals to redis server
+
+Step 1: Develop/Run redis signal bus which has all shared signals
+Step 2: Update resource area to have logic separated into 10 different programs, with 10 different modbus servers for OpenPLC to poll from
+Step 3: Repeat Step 2 for Production and Finished Good areas
+Step 4: Develop docker compose file to generate containers for each program
+	- Each container runs it's specific program from a shared folder which all containers have access to
+	
