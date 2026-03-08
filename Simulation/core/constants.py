@@ -28,9 +28,3 @@ COOKIE_COUNT = 8.0
 COOKIE_WEIGHT = 1.04 # oz
 # Non bulk ingredient weight based on ingredients in recipe
 NON_BULK_INGREDIENT_WEIGHT = 33.64
-
-# MQTT
-TOKEN_TIMOUT = 60 # seconds
-USERNAME = "cyberarena"
-BROKER = "ualr-core-f8adc79d.a02.usw2.aws.hivemq.cloud"
-PORT = 8883
