@@ -28,3 +28,12 @@ COOKIE_COUNT = 8.0
 COOKIE_WEIGHT = 1.04 # oz
 # Non bulk ingredient weight based on ingredients in recipe
 NON_BULK_INGREDIENT_WEIGHT = 33.64
+
+# Modbus 
+OPENPLC_HOST = "localhost"
+OPENPLC_PORT = 502
+
+# Redis
+REDIS_HOST = "redis"
+REDIS_PORT = 6379
+

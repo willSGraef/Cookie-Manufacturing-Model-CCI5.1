@@ -1,11 +1,8 @@
 import redis
 from core.signals import SIGNALS
-
-REDIS_HOST = "redis"
-REDIS_PORT = 6379
+from core.constants import *
 
 r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
-
 
 def initialize_signals():
 
@@ -28,6 +25,4 @@ def initialize_signals():
 
     print(f"Loaded {len(SIGNALS)} signals into Redis")
 
-
-if __name__ == "__main__":
-    initialize_signals()
+initialize_signals()

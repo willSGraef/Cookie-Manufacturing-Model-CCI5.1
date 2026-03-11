@@ -1,0 +1,418 @@
+version: "3.9"
+
+services:
+
+  openplc:
+    image: thiagoralves/openplc_v3
+    container_name: openplc
+    restart: always
+    ports:
+      - "8080:8080"
+      - "502:502"
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.5
+
+  attacker:
+    build: ..
+    container_name: attacker
+    command: tail -f /dev/null
+    volumes:
+      - ../attacker/:/attacker
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.250
+
+  bagger:
+    build: ..
+    command: /simulation/core/bagger.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.10
+
+  boxer:
+    build: ..
+    command: /simulation/core/boxer.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.11
+
+  conveyor_1:
+    build: ..
+    command: /simulation/core/conveyor_1.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.12
+
+  conveyor_2:
+    build: ..
+    command: /simulation/core/conveyor_2.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.13
+
+  conveyor_3:
+    build: ..
+    command: /simulation/core/conveyor_3.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.14
+
+  conveyor_4:
+    build: ..
+    command: /simulation/core/conveyor_4.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.15
+
+  conveyor_5:
+    build: ..
+    command: /simulation/core/conveyor_5.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.16
+
+  conveyor:
+    build: ..
+    command: /simulation/core/conveyor.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.17
+
+  diverter_valve:
+    build: ..
+    command: /simulation/core/diverter_valve.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.18
+
+  exhaust_fan:
+    build: ..
+    command: /simulation/core/exhaust_fan.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.19
+
+  fan_1:
+    build: ..
+    command: /simulation/core/fan_1.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.20
+
+  fan_2:
+    build: ..
+    command: /simulation/core/fan_2.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.21
+
+  fan_3:
+    build: ..
+    command: /simulation/core/fan_3.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.22
+
+  flour_silo:
+    build: ..
+    command: /simulation/core/flour_silo.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.23
+
+  flour_valve:
+    build: ..
+    command: /simulation/core/flour_valve.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.24
+
+  hopper_valve:
+    build: ..
+    command: /simulation/core/hopper_valve.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.25
+
+  hopper:
+    build: ..
+    command: /simulation/core/hopper.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.26
+
+  mixer:
+    build: ..
+    command: /simulation/core/mixer.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.27
+
+  nitrogen_tank:
+    build: ..
+    command: /simulation/core/nitrogen_tank.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.28
+
+  nitrogen_valve:
+    build: ..
+    command: /simulation/core/nitrogen_valve.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.29
+
+  palletizer:
+    build: ..
+    command: /simulation/core/palletizer.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.30
+
+  papercutter:
+    build: ..
+    command: /simulation/core/papercutter.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.31
+
+  ps_1:
+    build: ..
+    command: /simulation/core/ps_1.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.33
+
+  ps_2:
+    build: ..
+    command: /simulation/core/ps_2.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.34
+
+  ps_3:
+    build: ..
+    command: /simulation/core/ps_3.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.35
+
+  ps_4:
+    build: ..
+    command: /simulation/core/ps_4.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.36
+
+  ps_5:
+    build: ..
+    command: /simulation/core/ps_5.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.37
+
+  ps_6:
+    build: ..
+    command: /simulation/core/ps_6.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.38
+
+  simulated:
+    build: ..
+    command: /simulation/core/simulated.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.39
+
+  sugar_silo:
+    build: ..
+    command: /simulation/core/sugar_silo.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.40
+
+  sugar_valve:
+    build: ..
+    command: /simulation/core/sugar_valve.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.41
+
+  taper:
+    build: ..
+    command: /simulation/core/taper.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.42
+
+  temp_sensor:
+    build: ..
+    command: /simulation/core/temp_sensor.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.43
+
+  trough:
+    build: ..
+    command: /simulation/core/trough.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.44
+
+  vacuum:
+    build: ..
+    command: /simulation/core/vacuum.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.45
+
+  wirecutter:
+    build: ..
+    command: /simulation/core/wirecutter.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.46
+
+  wrapper:
+    build: ..
+    command: /simulation/core/wrapper.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.47
+
+  redis_server:
+    build: ..
+    command: /simulation/utils/redis_server.py
+    volumes:
+      - ../:/simulation
+    restart: always
+    networks:
+      infra_net:
+        ipv4_address: 172.30.1.10
+
+networks:
+  factory_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+
+  infra_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.1.0/24

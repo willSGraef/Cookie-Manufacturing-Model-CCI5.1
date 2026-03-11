@@ -92,14 +92,14 @@ palletizer_target_rotation = Signal("palletizer_target_rotation", 1012, 180)
 box_count = Signal("box_count", 1013, 0)
 
 # Float signals
-lcs_1 = Signal("lcs_1", 100, 0.0)
-lcs_2 = Signal("lcs_2", 102, 0.0)
-lcs_3 = Signal("lcs_3", 104, 0.0)
-lcs_4 = Signal("lcs_4", 106, 0.0)
-lcf_1 = Signal("lcf_1", 108, 0.0)
-lcf_2 = Signal("lcf_2", 110, 0.0)
-lcf_3 = Signal("lcf_3", 112, 0.0)
-lcf_4 = Signal("lcf_4", 114, 0.0)
+lcs_1 = Signal("lcs_1", 100, 250.0)
+lcs_2 = Signal("lcs_2", 102, 250.0)
+lcs_3 = Signal("lcs_3", 104, 250.0)
+lcs_4 = Signal("lcs_4", 106, 250.0)
+lcf_1 = Signal("lcf_1", 108, 250.0)
+lcf_2 = Signal("lcf_2", 110, 250.0)
+lcf_3 = Signal("lcf_3", 112, 250.0)
+lcf_4 = Signal("lcf_4", 114, 250.0)
 lch = Signal("lch", 98, 0.0)
 lcm = Signal("lcm", 96, 0.0)
 trough_weight = Signal("trough_weight", 94, 0.0)
@@ -107,6 +107,13 @@ flour_weight = Signal("flour_weight", 116, 0.0)
 sugar_weight = Signal("sugar_weight", 218, 0.0)
 tunnel_temp = Signal("tunnel_temp", 302, 0.0)
 nitrogen_volume = Signal("nitrogen_volume", 300, 0.0)
+
+# Signals with address of 0 as they are not connected to OpenPLC and only used for redis communication
+packing = Signal("packing", 0, False)
+sheet_count = Signal("sheet_count", 0, 0)
+row_count = Signal("row_count", 0, 0)
+palletizer_rotation = Signal("palletizer_rotation", 0, 0)
+shutdown = Signal("shutdown", 0, False)
 
 # Signal list
 
@@ -186,4 +193,10 @@ SIGNALS = [
     flour_weight,
     sugar_weight,
     tunnel_temp,
+    nitrogen_volume,
+    packing,
+    sheet_count,
+    row_count,
+    palletizer_rotation,
+    shutdown
 ]
