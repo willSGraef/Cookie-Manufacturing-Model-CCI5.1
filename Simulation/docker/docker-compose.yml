@@ -1,23 +1,21 @@
 version: "3.9"
 
+networks:
+  factory_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
+  infra_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.1.0/16
+
 services:
-
-  attacker:
-    build: ..
-    container_name: attacker
-    command: tail -f /dev/null
-    volumes:
-      - ../attacker/:/attacker
-    restart: always
-    networks:
-      factory_net:
-        ipv4_address: 172.30.0.250
-
   bagger:
     build: ..
-    command: /simulation/core/bagger.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/bagger.py
     restart: always
     networks:
       factory_net:
@@ -25,9 +23,7 @@ services:
 
   boxer:
     build: ..
-    command: /simulation/core/boxer.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/boxer.py
     restart: always
     networks:
       factory_net:
@@ -35,9 +31,7 @@ services:
 
   conveyor_1:
     build: ..
-    command: /simulation/core/conveyor_1.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/conveyor_1.py
     restart: always
     networks:
       factory_net:
@@ -45,9 +39,7 @@ services:
 
   conveyor_2:
     build: ..
-    command: /simulation/core/conveyor_2.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/conveyor_2.py
     restart: always
     networks:
       factory_net:
@@ -55,9 +47,7 @@ services:
 
   conveyor_3:
     build: ..
-    command: /simulation/core/conveyor_3.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/conveyor_3.py
     restart: always
     networks:
       factory_net:
@@ -65,9 +55,7 @@ services:
 
   conveyor_4:
     build: ..
-    command: /simulation/core/conveyor_4.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/conveyor_4.py
     restart: always
     networks:
       factory_net:
@@ -75,9 +63,7 @@ services:
 
   conveyor_5:
     build: ..
-    command: /simulation/core/conveyor_5.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/conveyor_5.py
     restart: always
     networks:
       factory_net:
@@ -85,9 +71,7 @@ services:
 
   conveyor:
     build: ..
-    command: /simulation/core/conveyor.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/conveyor.py
     restart: always
     networks:
       factory_net:
@@ -95,9 +79,7 @@ services:
 
   diverter_valve:
     build: ..
-    command: /simulation/core/diverter_valve.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/diverter_valve.py
     restart: always
     networks:
       factory_net:
@@ -105,9 +87,7 @@ services:
 
   exhaust_fan:
     build: ..
-    command: /simulation/core/exhaust_fan.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/exhaust_fan.py
     restart: always
     networks:
       factory_net:
@@ -115,9 +95,7 @@ services:
 
   fan_1:
     build: ..
-    command: /simulation/core/fan_1.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/fan_1.py
     restart: always
     networks:
       factory_net:
@@ -125,9 +103,7 @@ services:
 
   fan_2:
     build: ..
-    command: /simulation/core/fan_2.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/fan_2.py
     restart: always
     networks:
       factory_net:
@@ -135,9 +111,7 @@ services:
 
   fan_3:
     build: ..
-    command: /simulation/core/fan_3.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/fan_3.py
     restart: always
     networks:
       factory_net:
@@ -145,9 +119,7 @@ services:
 
   flour_silo:
     build: ..
-    command: /simulation/core/flour_silo.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/flour_silo.py
     restart: always
     networks:
       factory_net:
@@ -155,9 +127,7 @@ services:
 
   flour_valve:
     build: ..
-    command: /simulation/core/flour_valve.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/flour_valve.py
     restart: always
     networks:
       factory_net:
@@ -165,9 +135,7 @@ services:
 
   hopper_valve:
     build: ..
-    command: /simulation/core/hopper_valve.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/hopper_valve.py
     restart: always
     networks:
       factory_net:
@@ -175,9 +143,7 @@ services:
 
   hopper:
     build: ..
-    command: /simulation/core/hopper.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/hopper.py
     restart: always
     networks:
       factory_net:
@@ -185,9 +151,7 @@ services:
 
   mixer:
     build: ..
-    command: /simulation/core/mixer.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/mixer.py
     restart: always
     networks:
       factory_net:
@@ -195,9 +159,7 @@ services:
 
   nitrogen_tank:
     build: ..
-    command: /simulation/core/nitrogen_tank.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/nitrogen_tank.py
     restart: always
     networks:
       factory_net:
@@ -205,9 +167,7 @@ services:
 
   nitrogen_valve:
     build: ..
-    command: /simulation/core/nitrogen_valve.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/nitrogen_valve.py
     restart: always
     networks:
       factory_net:
@@ -215,9 +175,7 @@ services:
 
   palletizer:
     build: ..
-    command: /simulation/core/palletizer.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/palletizer.py
     restart: always
     networks:
       factory_net:
@@ -225,9 +183,7 @@ services:
 
   papercutter:
     build: ..
-    command: /simulation/core/papercutter.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/papercutter.py
     restart: always
     networks:
       factory_net:
@@ -235,173 +191,136 @@ services:
 
   ps_1:
     build: ..
-    command: /simulation/core/ps_1.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/ps_1.py
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.32
+
+  ps_2:
+    build: ..
+    command: python /app/core/ps_2.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.33
 
-  ps_2:
+  ps_3:
     build: ..
-    command: /simulation/core/ps_2.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/ps_3.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.34
 
-  ps_3:
+  ps_4:
     build: ..
-    command: /simulation/core/ps_3.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/ps_4.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.35
 
-  ps_4:
+  ps_5:
     build: ..
-    command: /simulation/core/ps_4.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/ps_5.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.36
 
-  ps_5:
+  ps_6:
     build: ..
-    command: /simulation/core/ps_5.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/ps_6.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.37
 
-  ps_6:
+  simulated:
     build: ..
-    command: /simulation/core/ps_6.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/simulated.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.38
 
-  simulated:
+  sugar_silo:
     build: ..
-    command: /simulation/core/simulated.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/sugar_silo.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.39
 
-  sugar_silo:
+  sugar_valve:
     build: ..
-    command: /simulation/core/sugar_silo.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/sugar_valve.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.40
 
-  sugar_valve:
+  taper:
     build: ..
-    command: /simulation/core/sugar_valve.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/taper.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.41
 
-  taper:
+  temp_sensor:
     build: ..
-    command: /simulation/core/taper.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/temp_sensor.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.42
 
-  temp_sensor:
+  trough:
     build: ..
-    command: /simulation/core/temp_sensor.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/trough.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.43
 
-  trough:
+  vacuum:
     build: ..
-    command: /simulation/core/trough.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/vacuum.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.44
 
-  vacuum:
+  wirecutter:
     build: ..
-    command: /simulation/core/vacuum.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/wirecutter.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.45
 
-  wirecutter:
+  wrapper:
     build: ..
-    command: /simulation/core/wirecutter.py
-    volumes:
-      - ../:/simulation
+    command: python /app/core/wrapper.py
     restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.46
 
-  wrapper:
-    build: ..
-    command: /simulation/core/wrapper.py
-    volumes:
-      - ../:/simulation
-    restart: always
-    networks:
-      factory_net:
-        ipv4_address: 172.30.0.47
-
   redis_server:
     build: ..
-    command: /simulation/utils/redis_server.py
-    volumes:
-      - ../:/simulation
+    command: python /app/utils/redis_server.py
     restart: always
     networks:
       infra_net:
         ipv4_address: 172.30.1.10
 
-networks:
-  factory_net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.30.0.0/24
-
-  infra_net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.30.1.0/24
+  attacker:
+    build: ..
+    command: tail -f /dev/null
+    restart: always
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.250
