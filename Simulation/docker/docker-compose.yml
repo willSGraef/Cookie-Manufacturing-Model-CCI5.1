@@ -1,295 +1,326 @@
 version: "3.9"
 
-x-factory-service: &factory-service
-  image: factory_sim
-  restart: unless-stopped
-  networks:
-    factory_net: {}
-
 networks:
   factory_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.30.0.0/24
-
+        - subnet: 172.30.0.0/32
   infra_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.30.1.0/24
+        - subnet: 172.30.1.0/32
 
 services:
-
   bagger:
-    <<: *factory-service
+    build: ..
     command: python /app/core/bagger.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.10
 
   boxer:
-    <<: *factory-service
+    build: ..
     command: python /app/core/boxer.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.11
 
   conveyor_1:
-    <<: *factory-service
+    build: ..
     command: python /app/core/conveyor_1.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.12
 
   conveyor_2:
-    <<: *factory-service
+    build: ..
     command: python /app/core/conveyor_2.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.13
 
   conveyor_3:
-    <<: *factory-service
+    build: ..
     command: python /app/core/conveyor_3.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.14
 
   conveyor_4:
-    <<: *factory-service
+    build: ..
     command: python /app/core/conveyor_4.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.15
 
   conveyor_5:
-    <<: *factory-service
+    build: ..
     command: python /app/core/conveyor_5.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.16
 
   conveyor:
-    <<: *factory-service
+    build: ..
     command: python /app/core/conveyor.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.17
 
   diverter_valve:
-    <<: *factory-service
+    build: ..
     command: python /app/core/diverter_valve.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.18
 
   exhaust_fan:
-    <<: *factory-service
+    build: ..
     command: python /app/core/exhaust_fan.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.19
 
   fan_1:
-    <<: *factory-service
+    build: ..
     command: python /app/core/fan_1.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.20
 
   fan_2:
-    <<: *factory-service
+    build: ..
     command: python /app/core/fan_2.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.21
 
   fan_3:
-    <<: *factory-service
+    build: ..
     command: python /app/core/fan_3.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.22
 
   flour_silo:
-    <<: *factory-service
+    build: ..
     command: python /app/core/flour_silo.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.23
 
   flour_valve:
-    <<: *factory-service
+    build: ..
     command: python /app/core/flour_valve.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.24
 
   hopper_valve:
-    <<: *factory-service
+    build: ..
     command: python /app/core/hopper_valve.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.25
 
   hopper:
-    <<: *factory-service
+    build: ..
     command: python /app/core/hopper.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.26
 
   mixer:
-    <<: *factory-service
+    build: ..
     command: python /app/core/mixer.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.27
 
   nitrogen_tank:
-    <<: *factory-service
+    build: ..
     command: python /app/core/nitrogen_tank.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.28
 
   nitrogen_valve:
-    <<: *factory-service
+    build: ..
     command: python /app/core/nitrogen_valve.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.29
 
   palletizer:
-    <<: *factory-service
+    build: ..
     command: python /app/core/palletizer.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.30
 
   papercutter:
-    <<: *factory-service
+    build: ..
     command: python /app/core/papercutter.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.31
 
   ps_1:
-    <<: *factory-service
+    build: ..
     command: python /app/core/ps_1.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.32
 
   ps_2:
-    <<: *factory-service
+    build: ..
     command: python /app/core/ps_2.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.33
 
   ps_3:
-    <<: *factory-service
+    build: ..
     command: python /app/core/ps_3.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.34
 
   ps_4:
-    <<: *factory-service
+    build: ..
     command: python /app/core/ps_4.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.35
 
   ps_5:
-    <<: *factory-service
+    build: ..
     command: python /app/core/ps_5.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.36
 
   ps_6:
-    <<: *factory-service
+    build: ..
     command: python /app/core/ps_6.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.37
 
   simulated:
-    <<: *factory-service
+    build: ..
     command: python /app/core/simulated.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.38
 
   sugar_silo:
-    <<: *factory-service
+    build: ..
     command: python /app/core/sugar_silo.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.39
 
   sugar_valve:
-    <<: *factory-service
+    build: ..
     command: python /app/core/sugar_valve.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.40
 
   taper:
-    <<: *factory-service
+    build: ..
     command: python /app/core/taper.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.41
 
   temp_sensor:
-    <<: *factory-service
+    build: ..
     command: python /app/core/temp_sensor.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.42
 
   trough:
-    <<: *factory-service
+    build: ..
     command: python /app/core/trough.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.43
 
   vacuum:
-    <<: *factory-service
+    build: ..
     command: python /app/core/vacuum.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.44
 
   wirecutter:
-    <<: *factory-service
+    build: ..
     command: python /app/core/wirecutter.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.45
 
   wrapper:
-    <<: *factory-service
+    build: ..
     command: python /app/core/wrapper.py
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.46
 
   redis_server:
-    image: redis:7
-    restart: unless-stopped
+    build: ..
+    command: python /app/utils/redis_server.py
+    restart: always
     networks:
       infra_net:
         ipv4_address: 172.30.1.10
 
   attacker:
-    <<: *factory-service
+    build: ..
     command: tail -f /dev/null
+    restart: always
     networks:
       factory_net:
         ipv4_address: 172.30.0.250
