@@ -5,12 +5,12 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.30.0.0/32
+        - subnet: 172.30.0.0/24
   infra_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.30.1.0/32
+        - subnet: 172.30.1.0/24
 
 services:
   bagger:
