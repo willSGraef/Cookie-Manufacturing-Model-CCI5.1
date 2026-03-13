@@ -3,7 +3,6 @@ from core.signals import SIGNALS
 from core.constants import *
 
 r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
-
 def initialize_signals():
 
     for signal in SIGNALS:

@@ -1,9 +1,10 @@
 import redis
 from core.signals import Signal
+from core.constants import *
 
 class SignalClient:
 
-    def __init__(self, host="redis", port=6379):
+    def __init__(self, host=REDIS_HOST, port=REDIS_PORT):
 
         self.r = redis.Redis(host=host, port=port, decode_responses=True)
 
