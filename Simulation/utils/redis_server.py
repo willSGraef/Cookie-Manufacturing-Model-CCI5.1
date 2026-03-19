@@ -1,8 +1,23 @@
 import redis
 from core.signals import SIGNALS
 from core.constants import *
+import subprocess
+import time
 
+# Start the actual Redis server process
+subprocess.Popen(['redis-server'])
+
+# Wait for Redis to be ready
 r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
+while True:
+    try:
+        r.ping()
+        print("Redis server is ready.")
+        break
+    except redis.exceptions.ConnectionError:
+        print("Waiting for Redis server to start...")
+        time.sleep(0.5)
+
 def initialize_signals():
 
     for signal in SIGNALS:
