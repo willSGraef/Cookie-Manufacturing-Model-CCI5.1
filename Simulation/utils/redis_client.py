@@ -46,3 +46,6 @@ class SignalClient:
 
         reset_value = self.r.hget(f"signal:{name}", "reset_value")
         self.set(name, reset_value)
+    
+    def close(self):
+        self.r.close()

@@ -2,6 +2,18 @@ from core.constants import *
 from utils.modbus_utils import FloatModbusClient
 from utils.redis_client import SignalClient
 import time
+import signal
+import sys
+
+def handle_shutdown(signum, frame):
+    if modbus_client:
+        modbus_client.close()
+    if redis_client:
+        redis_client.close()
+    sys.exit(0)
+
+signal.signal(signal.SIGTERM, handle_shutdown)
+signal.signal(signal.SIGINT, handle_shutdown)
 
 # Establish modbus client connection
 print("Connecting to OpenPLC...")
@@ -38,8 +50,6 @@ while not shutdown:
     bagger = redis_client.get("bagger")
     bagging_signal = redis_client.get("bagging")
     bagging_value = redis_client.get_value("bagging")
-    conveying_2 = redis_client.get_value("conveying_2")
-    conveyor_2 = redis_client.get_value("conveyor_2")
     reset = redis_client.get_value("reset")
 
     if reset:

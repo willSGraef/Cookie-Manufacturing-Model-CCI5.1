@@ -2,6 +2,18 @@ from core.constants import *
 from utils.modbus_utils import FloatModbusClient
 from utils.redis_client import SignalClient
 import time
+import signal
+import sys
+
+def handle_shutdown(signum, frame):
+    if modbus_client:
+        modbus_client.close()
+    if redis_client:
+        redis_client.close()
+    sys.exit(0)
+
+signal.signal(signal.SIGTERM, handle_shutdown)
+signal.signal(signal.SIGINT, handle_shutdown)
 
 # Establish modbus client connection
 print("Connecting to OpenPLC...")
