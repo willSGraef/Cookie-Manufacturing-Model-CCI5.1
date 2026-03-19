@@ -1,6 +1,7 @@
 # Base image
 FROM python:3.11-slim AS base
 WORKDIR /app
+ENV PYTHONPATH=/app
 RUN pip install --no-cache-dir pyModbusTCP redis
 COPY core /app/core
 COPY utils /app/utils
