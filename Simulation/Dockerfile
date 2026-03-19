@@ -1,18 +1,15 @@
-FROM python:3.11-slim
-
+# Base image
+FROM python:3.11-slim AS base
 WORKDIR /app
-
-# Install redis-server for containers that need it
-RUN apt-get update && \
-    apt-get install -y redis-server && \
-    rm -rf /var/lib/apt/lists/*
-
-# Install Python dependencies
 RUN pip install --no-cache-dir pyModbusTCP redis
-
-# Copy all simulation scripts into the image
 COPY core /app/core
 COPY utils /app/utils
 
-# Default command (can be overridden per container in Compose)
-CMD ["python"]
+# Factory devices
+FROM base AS factory
+
+# Redis server, install redis dependencies
+FROM base AS redis
+RUN apt-get update && \
+    apt-get install -y redis-server && \
+    rm -rf /var/lib/apt/lists/*
