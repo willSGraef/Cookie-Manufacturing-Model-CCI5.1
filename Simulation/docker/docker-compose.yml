@@ -3,6 +3,8 @@ x-factory-service: &factory-service
     context: ..
     target: factory
   restart: always
+  environment:
+    - PYTHONUNBUFFERED=1
   networks:
     factory_net: {}
 
@@ -19,6 +21,8 @@ services:
       context: ..
       target: redis
     restart: always
+    environment:
+    - PYTHONUNBUFFERED=1
     command: python /app/utils/redis_server.py
     networks:
       factory_net:
