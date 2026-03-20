@@ -18,7 +18,7 @@ while True:
         print("Waiting for Redis server to start...")
         time.sleep(0.5)
 
-def initialize_signals():
+def initialize_signals(r):
 
     for signal in SIGNALS:
 
@@ -41,7 +41,7 @@ def initialize_signals():
 
     print(f"Loaded {len(SIGNALS)} signals into Redis")
 
-initialize_signals()
+initialize_signals(r)
 
 # Keep alive so container doesn't restart
 while True:

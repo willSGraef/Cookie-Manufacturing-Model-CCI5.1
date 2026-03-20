@@ -1,7 +1,7 @@
 from core.constants import *
 from utils.modbus_utils import FloatModbusClient
-from utils.engine_utils import transfer_material
 from utils.redis_client import SignalClient
+from utils.redis_server import initialize_signals
 from core.signals import SIGNALS
 import time
 import signal
@@ -91,8 +91,7 @@ while not shutdown:
 
     # If reset is true, reset all signals to their default values
     if reset.get_value():
-        for signal in SIGNALS:
-            redis_client.set_value(signal.name, signal.reset_value())
+        initialize_signals(redis_client.r)
         reset.set_value(False)
 
     # Push simulated values to OpenPLC
