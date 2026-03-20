@@ -23,14 +23,16 @@ def initialize_signals():
     for signal in SIGNALS:
 
         key = f"signal:{signal.name}"
+        reset_value = str(signal.reset_value)
+        value = str(signal.value)
 
         r.hset(
             key,
             mapping={
                 "name": signal.name,
                 "address": signal.address,
-                "value": signal.value,
-                "reset_value": signal.reset_value,
+                "value": value,
+                "reset_value": reset_value,
             },
         )
 
