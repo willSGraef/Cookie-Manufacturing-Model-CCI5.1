@@ -8,6 +8,8 @@ class SignalClient:
         self.r = redis.Redis(host=host, port=port, decode_responses=True)
 
     def _parse_value(self, value):
+        if value is None:
+            return None
         if value in ["True", "False"]:
             return True if value == "True" else False
         try:
@@ -28,19 +30,23 @@ class SignalClient:
         return Signal(name, address, value, reset_value)
  
     def set_value(self, name, value):
-        self.r.hset(f"signal:{name}", "value", value)
+        self.r.hset(f"signal:{name}", "value", str(value))
 
     def get_by_address(self, address):
         name = self.r.get(f"address:{address}")
+        if name is None:
+            raise KeyError(f"No signal registered at address {address}")
         return self.get(name)
 
-    def set_by_address(self, address, value):
+    def get_by_address(self, address):
         name = self.r.get(f"address:{address}")
-        self.set_value(name, value)
+        if name is None:
+            raise KeyError(f"No signal registered at address {address}")
+        return self.get(name)
 
     def reset(self, name):
         reset_value = self.r.hget(f"signal:{name}", "reset_value")
         self.set_value(name, reset_value)
     
     def close(self):
-        self.r.close()
+        self.r.connection_pool.disconnect()
