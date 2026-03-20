@@ -34,6 +34,6 @@ OPENPLC_HOST = "host.docker.internal"
 OPENPLC_PORT = 502
 
 # Redis
-REDIS_HOST = "172.30.1.10"
+REDIS_HOST = "172.30.0.100"
 REDIS_PORT = 6379
 
