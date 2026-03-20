@@ -47,7 +47,7 @@ while not shutdown:
     shutdown = redis_client.get_value("shutdown")
     
     # Pull relevant signal from redis server
-    boxer = redis_client.get("boxer")
+    box_maker = redis_client.get("box_maker")
     boxing_signal = redis_client.get("boxing")
     boxing_value = redis_client.get_value("boxing")
     conveying_2 = redis_client.get_value("conveying_2")
@@ -58,14 +58,14 @@ while not shutdown:
         counter = 0
 
     # Compare redis value to OpenPLC value and update if necessary
-    if boxer.get_value() != modbus_client.read_signal(boxer):
-        boxer.set_value(modbus_client.read_signal(boxer))
-        redis_client.set_value("boxer", boxer.get_value())
+    if box_maker.get_value() != modbus_client.read_signal(box_maker):
+        box_maker.set_value(modbus_client.read_signal(box_maker))
+        redis_client.set_value("box_maker", box_maker.get_value())
     if boxing_value != modbus_client.read_signal(boxing_signal):
         boxing_signal.set_value(modbus_client.read_signal(boxing_signal))
         redis_client.set_value("boxing", boxing_value)
 
-    # If the boxer is boxing increment the counter, if the counter has reached 3, reset the counter and set boxing to false
+    # If the box_maker is boxing increment the counter, if the counter has reached 3, reset the counter and set boxing to false
     if boxing_value:
         if counter >= 3:
             counter = 0
@@ -76,10 +76,10 @@ while not shutdown:
     # Write updated value back to OpenPLC
     boxing_signal.set_value(boxing_value)
     modbus_client.write_signal(boxing_value)
-    modbus_client.write_signal(boxer)
+    modbus_client.write_signal(box_maker)
 
     # Update redis server with new values
     redis_client.set_value("boxing", boxing_value)
-    redis_client.set_value("boxer", boxer.get_value())
+    redis_client.set_value("box_maker", box_maker.get_value())
 
     time.sleep(1)

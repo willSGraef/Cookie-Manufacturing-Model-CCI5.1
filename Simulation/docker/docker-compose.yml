@@ -44,9 +44,9 @@ services:
       factory_net:
         ipv4_address: 172.30.0.10
 
-  boxer:
+  box_maker:
     <<: *factory-service
-    command: python /app/core/boxer.py
+    command: python /app/core/box_maker.py
     networks:
       factory_net:
         ipv4_address: 172.30.0.11
@@ -295,3 +295,31 @@ services:
     networks:
       factory_net:
         ipv4_address: 172.30.0.46
+  
+  roe_1:
+    <<: *factory-service
+    command: python /app/core/roe_1.py
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.47
+  
+  roe_2:
+    <<: *factory-service
+    command: python /app/core/roe_2.py
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.48
+  
+  roe_3:
+    <<: *factory-service
+    command: python /app/core/roe_3.py
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.49
+  
+  worker_present:
+    <<: *factory-service
+    command: python /app/core/worker_present.py
+    networks:
+      factory_net:
+        ipv4_address: 172.30.0.50
