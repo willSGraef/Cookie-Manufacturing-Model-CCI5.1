@@ -8,7 +8,7 @@ import time
 subprocess.Popen(['redis-server', '--bind', '0.0.0.0', '--maxclients', '100'])
 
 # Wait for Redis to be ready
-r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
+r = redis.Redis(host='127.0.0.1', port=REDIS_PORT, decode_responses=True)
 while True:
     try:
         r.ping()
