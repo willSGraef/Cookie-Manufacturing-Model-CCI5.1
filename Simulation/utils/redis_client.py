@@ -11,14 +11,13 @@ class SignalClient:
     def get_value(self, name):
         value = self.r.hget(f"signal:{name}", "value")
         if value in ["True", "False"]:
-            value = True if value == "True" else False
+            return True if value == "True" else False
         try:
             if "." in value:
-                value = float(value)
-            value = int(value)
+                return float(value)
+            return int(value)
         except:
-            value = value
-        return value
+            return value
 
     def get(self, name):
 
