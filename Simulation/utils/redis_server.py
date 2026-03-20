@@ -4,6 +4,9 @@ from core.constants import *
 import subprocess
 import time
 
+# Start redis server as a subprocess
+subprocess.Popen(['redis-server', '--bind', '0.0.0.0', '--maxclients', '100'])
+
 # Wait for Redis to be ready
 r = redis.Redis(host='127.0.0.1', port=REDIS_PORT, decode_responses=True)
 while True:
@@ -39,3 +42,7 @@ def initialize_signals():
     print(f"Loaded {len(SIGNALS)} signals into Redis")
 
 initialize_signals()
+
+# Keep alive so container doesn't restart
+while True:
+    time.sleep(60)

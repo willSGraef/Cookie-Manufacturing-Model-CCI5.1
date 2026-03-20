@@ -25,7 +25,7 @@ services:
     restart: always
     environment:
     - PYTHONUNBUFFERED=1
-    command: sh -c "redis-server --bind 0.0.0.0 --maxclients 100 & python /app/utils/redis_server.py && wait"
+    command: python /app/utils/redis_server.py
     networks:
       factory_net:
         ipv4_address: 172.30.0.100
