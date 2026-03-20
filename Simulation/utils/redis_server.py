@@ -4,9 +4,6 @@ from core.constants import *
 import subprocess
 import time
 
-# Start the actual Redis server process
-subprocess.Popen(['redis-server', '--bind', '0.0.0.0', '--maxclients', '100'])
-
 # Wait for Redis to be ready
 r = redis.Redis(host='127.0.0.1', port=REDIS_PORT, decode_responses=True)
 while True:

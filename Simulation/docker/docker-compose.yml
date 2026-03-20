@@ -5,6 +5,8 @@ x-factory-service: &factory-service
   restart: always
   environment:
     - PYTHONUNBUFFERED=1
+  depends_on:
+    - redis_server
   networks:
     factory_net: {}
 
@@ -23,7 +25,7 @@ services:
     restart: always
     environment:
     - PYTHONUNBUFFERED=1
-    command: python /app/utils/redis_server.py
+    command: sh -c "redis-server --bind 0.0.0.0 --maxclients 100 & python /app/utils/redis_server.py && wait"
     networks:
       factory_net:
         ipv4_address: 172.30.0.100
