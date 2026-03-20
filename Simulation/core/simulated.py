@@ -91,7 +91,7 @@ while not shutdown:
 
     # If reset is true, reset all signals to their default values
     if reset.get_value():
-        initialize_signals(redis_client.r)
+        redis_client.reset_all()
         reset.set_value(False)
 
     # Push simulated values to OpenPLC

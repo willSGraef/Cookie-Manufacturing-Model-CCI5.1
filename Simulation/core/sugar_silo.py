@@ -64,7 +64,7 @@ while not shutdown:
     lcs_2 = redis_client.get("lcs_2")
     lcs_3 = redis_client.get("lcs_3")
     lcs_4 = redis_client.get("lcs_4")
-    sugar_silo = sum(lcs_1.get_value(), lcs_2.get_value(), lcs_3.get_value(), lcs_4.get_value())
+    sugar_silo = lcs_1.get_value() + lcs_2.get_value() + lcs_3.get_value() + lcs_4.get_value()
     hopper = redis_client.get_value("lch")
 
     # Transfer material from silo to hopper

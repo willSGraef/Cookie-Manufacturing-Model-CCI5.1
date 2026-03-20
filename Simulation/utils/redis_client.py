@@ -1,5 +1,6 @@
 import redis
 from core.signals import Signal
+from core.signals import SIGNALS
 from core.constants import *
 
 class SignalClient:
@@ -47,6 +48,10 @@ class SignalClient:
     def reset(self, name):
         reset_value = self.r.hget(f"signal:{name}", "reset_value")
         self.set_value(name, reset_value)
+    
+    def reset_all(self):
+        for signal in SIGNALS:
+            self.reset(signal.name)
     
     def close(self):
         self.r.connection_pool.disconnect()

@@ -85,7 +85,7 @@ while not shutdown:
 
     # Write updated value back to OpenPLC
     boxing_signal.set_value(boxing_value)
-    modbus_client.write_signal(boxing_value)
+    modbus_client.write_signal(boxing_signal)
     modbus_client.write_signal(box_maker)
 
     # Update redis server with new values

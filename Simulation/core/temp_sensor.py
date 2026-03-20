@@ -64,7 +64,7 @@ while not shutdown:
     fan_3 = redis_client.get_value("fan_3")
 
     # Transfer material from silo to hopper
-    if gv_1():
+    if gv_1:
         temp_noise = random.uniform(0.0, 1.0)
         if exhaust_fan:
             if temperature_value > -10.0:
@@ -76,7 +76,7 @@ while not shutdown:
                 temperature_value -= FREEZING_RATE + temp_noise
             else:
                 temperature = (-140.0 - temp_noise)
-    elif not gv_1():
+    elif not gv_1:
         temp_noise = random.uniform(0.0, 0.1)
         if temperature_value < 20.0:
             rate = WARMING_RATE
