@@ -5,12 +5,11 @@
 #Contains all the models signals, their values, and addresses
 
 class Signal:
-    def __init__(self, name, address, value = None):
+    def __init__(self, name, address, value = None, reset_value = None):
         self.name = name
         self.address = address
         self.value = value
-        self.latest_published_value = None 
-        self.reset_value = value
+        self.reset_value = reset_value if reset_value is not None else value
 
     def set_value(self, new_value):
         self.value = new_value

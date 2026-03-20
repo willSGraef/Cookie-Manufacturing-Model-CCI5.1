@@ -5,7 +5,7 @@ import subprocess
 import time
 
 # Start redis server as a subprocess
-subprocess.Popen(['redis-server', '--bind', '0.0.0.0', '--maxclients', '100'])
+subprocess.Popen(['redis-server', '--bind', '0.0.0.0', '--maxclients', '100', '--protected-mode', 'no'])
 
 # Wait for Redis to be ready
 r = redis.Redis(host='127.0.0.1', port=REDIS_PORT, decode_responses=True)
