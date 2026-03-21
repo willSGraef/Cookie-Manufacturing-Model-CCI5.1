@@ -90,6 +90,7 @@ while not shutdown:
 
     # If reset is true, reset all signals to their default values
     if reset.get_value():
+        print("Reset signal detected, resetting all values")
         redis_client.reset_all()
         reset.set_value(False)
 

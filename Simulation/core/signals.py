@@ -99,7 +99,7 @@ lch = Signal("lch", 98, 0.0)
 lcm = Signal("lcm", 96, 0.0)
 trough_weight = Signal("trough_weight", 94, 0.0)
 tunnel_temp = Signal("tunnel_temp", 302, 0.0)
-nitrogen_volume = Signal("nitrogen_volume", 300, 0.0)
+nitrogen_volume = Signal("nitrogen_volume", 300, 500.0)
 
 # Signals with address of 0 as they are not connected to OpenPLC and only used for redis communication
 packing = Signal("packing", 0, False)

@@ -76,9 +76,12 @@ while not shutdown:
         palletizer_grabbing.set_value(modbus_client.read_signal(palletizer_grabbing))
         redis_client.set_value("palletizer_grabbing", palletizer_grabbing.get_value())
 
+    print("Target rotation: ", palletizer_target_rotation)
+    print("Actual rotation: ", palletizer_rotation_value)
 
     if palletizer_moving.get_value():
         if palletizer_target_rotation.get_value() == palletizer_rotation_value:
+            print("Target and actual equal, no longer rotating...")
             if palletizer_rotation_value == 225:
                 redis_client.set_value("roe_1", True)
                 redis_client.set_value("roe_2", False)
@@ -96,6 +99,7 @@ while not shutdown:
                 redis_client.set_value("roe_2", False)
                 redis_client.set_value("roe_3", False)
         else:
+            print("Rotating...")
             if palletizer_rotation_value + ARM_ROTATION_SPEED < palletizer_target_rotation.get_value():
                 palletizer_rotation_value += ARM_ROTATION_SPEED
                 if palletizer_rotation_value > palletizer_target_rotation.get_value():
