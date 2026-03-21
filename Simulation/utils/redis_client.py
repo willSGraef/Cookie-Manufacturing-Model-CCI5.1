@@ -39,12 +39,6 @@ class SignalClient:
             raise KeyError(f"No signal registered at address {address}")
         return self.get(name)
 
-    def get_by_address(self, address):
-        name = self.r.get(f"address:{address}")
-        if name is None:
-            raise KeyError(f"No signal registered at address {address}")
-        return self.get(name)
-
     def reset(self, name):
         reset_value = self.r.hget(f"signal:{name}", "reset_value")
         self.set_value(name, reset_value)

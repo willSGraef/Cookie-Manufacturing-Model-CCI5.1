@@ -46,9 +46,11 @@ while redis_client is None:
 print("Connected to Redis server successfully.")
 
 while not redis_client.get_value("shutdown"):
+    reset = redis_client.get_value("reset")
+    if reset:
+        time.sleep(1)
+        continue
+
     roe_2 = redis_client.get("roe_2")
-    if roe_2.get_value() != modbus_client.read_signal(roe_2):
-        roe_2.set_value(modbus_client.read_signal(roe_2))
-        redis_client.set_value("roe_2", roe_2.get_value())
     modbus_client.write_signal(roe_2)
     time.sleep(1 + random.uniform(-0.2, 0.2))

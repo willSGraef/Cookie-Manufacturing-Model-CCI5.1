@@ -53,6 +53,12 @@ counter = 0
 shutdown = redis_client.get_value("shutdown")
 
 while not shutdown:
+    reset = redis_client.get_value("reset")
+    if reset:
+        counter = 0
+        time.sleep(1)
+        continue
+
     # Update shutdown value
     shutdown = redis_client.get_value("shutdown")
     
@@ -60,11 +66,6 @@ while not shutdown:
     ps_6_signal = redis_client.get("ps_6")
     ps_6_value = redis_client.get_value("ps_6")
     conveying_5 = redis_client.get_value("conveying_5")
-    reset = redis_client.get_value("reset")
-
-    if reset:
-        counter = 0
-
     # If ps_6 is true, randomly set it to false to simulate the time it takes for a forklift driver to pick up a finished pallet
     if ps_6_value and random.randint(1,5) == 3:
             ps_6_value = False

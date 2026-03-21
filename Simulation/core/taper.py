@@ -53,6 +53,12 @@ counter = 0
 shutdown = redis_client.get_value("shutdown")
 
 while not shutdown:
+    reset = redis_client.get_value("reset")
+    if reset:
+        counter = 0
+        time.sleep(1)
+        continue
+
     # Update shutdown value
     shutdown = redis_client.get_value("shutdown")
     
@@ -60,11 +66,6 @@ while not shutdown:
     taping_signal = redis_client.get("taping")
     taping_value = redis_client.get_value("taping")
     taper = redis_client.get("taper")
-    reset = redis_client.get_value("reset")
-
-    if reset:
-        counter = 0
-
     # Compare redis value to OpenPLC value and update if necessary
     if taper.get_value() != modbus_client.read_signal(taper):
         taper.set_value(modbus_client.read_signal(taper))

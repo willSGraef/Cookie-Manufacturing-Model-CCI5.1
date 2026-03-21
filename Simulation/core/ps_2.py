@@ -53,6 +53,12 @@ counter = 0
 shutdown = redis_client.get_value("shutdown")
 
 while not shutdown:
+    reset = redis_client.get_value("reset")
+    if reset:
+        counter = 0
+        time.sleep(1)
+        continue
+
     # Update shutdown value
     shutdown = redis_client.get_value("shutdown")
     
@@ -64,11 +70,6 @@ while not shutdown:
     packing = redis_client.get_value("packing")
     sheet_count = redis_client.get_value("sheet_count")
     worker_present = redis_client.get_value("worker_present")
-    reset = redis_client.get_value("reset")
-
-    if reset:
-        counter = 0
-
     # If conveyor 2 is on and running, increment the boxer counter. 
     # If the boxer counter has reached 2, reset it and set ps_2 to true to 
     # simulate a box being present

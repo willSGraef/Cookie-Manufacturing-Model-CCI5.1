@@ -53,6 +53,12 @@ counter = 0
 shutdown = redis_client.get_value("shutdown")
 
 while not shutdown:
+    reset = redis_client.get_value("reset")
+    if reset:
+        counter = 0
+        time.sleep(1)
+        continue
+
     # Update shutdown value
     shutdown = redis_client.get_value("shutdown")
     
@@ -61,11 +67,6 @@ while not shutdown:
     ps_4_value = redis_client.get_value("ps_4")
     conveying_3 = redis_client.get_value("conveying_3")
     conveying_4 = redis_client.get_value("conveying_4")
-    reset = redis_client.get_value("reset")
-
-    if reset:
-        counter = 0
-
     # If conveyor 3 is running, increment the counter for ps_4. Reset counter if it has reached 2 and set ps_4 to true
     if conveying_3:
         if counter >= 2:

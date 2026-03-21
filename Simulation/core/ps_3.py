@@ -53,6 +53,12 @@ counter = 0
 shutdown = redis_client.get_value("shutdown")
 
 while not shutdown:
+    reset = redis_client.get_value("reset")
+    if reset:
+        counter = 0
+        time.sleep(1)
+        continue
+
     # Update shutdown value
     shutdown = redis_client.get_value("shutdown")
     
@@ -62,11 +68,6 @@ while not shutdown:
     conveying_3 = redis_client.get_value("conveying_3")
     packing = redis_client.get_value("packing")
     sheet_count = redis_client.get_value("sheet_count")
-    reset = redis_client.get_value("reset")
-
-    if reset:
-        counter = 0
-
     # If packing is true, increment the packing counter. If the counter has reached 8, reset it, set packing to false, 
     # decrement sheet count by 4, and set ps_3 to true to simulate a box being packed and leaving the station
     if packing:

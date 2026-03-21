@@ -51,6 +51,11 @@ print("Connected to Redis server successfully.")
 shutdown = redis_client.get_value("shutdown")
 
 while not shutdown:
+    reset = redis_client.get_value("reset")
+    if reset:
+        time.sleep(1)
+        continue
+
     # Update shutdown value
     shutdown = redis_client.get_value("shutdown")
     
@@ -76,7 +81,7 @@ while not shutdown:
         palletizer_grabbing.set_value(modbus_client.read_signal(palletizer_grabbing))
         redis_client.set_value("palletizer_grabbing", palletizer_grabbing.get_value())
 
-    print("Target rotation: ", palletizer_target_rotation)
+    print("Target rotation: ", palletizer_target_rotation.get_value())
     print("Actual rotation: ", palletizer_rotation_value)
 
     if palletizer_moving.get_value():

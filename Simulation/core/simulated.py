@@ -91,8 +91,12 @@ while not shutdown:
     # If reset is true, reset all signals to their default values
     if reset.get_value():
         print("Reset signal detected, resetting all values")
+        for sig in SIGNALS:
+            signal_obj = redis_client.get(sig.name)
+            modbus_client.write_signal(signal_obj)
         redis_client.reset_all()
-        reset.set_value(False)
+        time.sleep(1 + random.uniform(-0.2, 0.2))
+        continue
 
     # Push simulated values to OpenPLC
     modbus_client.write_signal(trough_transfer)

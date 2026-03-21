@@ -53,6 +53,12 @@ counter = 0
 shutdown = redis_client.get_value("shutdown")
 
 while not shutdown:
+    reset = redis_client.get_value("reset")
+    if reset:
+        counter = 0
+        time.sleep(1)
+        continue
+
     # Update shutdown value
     shutdown = redis_client.get_value("shutdown")
     
@@ -63,11 +69,6 @@ while not shutdown:
     palletizer_rotation = redis_client.get_value("palletizer_rotation")
     palletizer_grabbing = redis_client.get_value("palletizer_grabbing")
     palletizer_moving = redis_client.get_value("palletizer_moving")
-    reset = redis_client.get_value("reset")
-
-    if reset:
-        counter = 0
-
     # If conveyor 4 is running, increment the counter for ps_5. Reset counter if it has reached 2 and set ps_5 to true
     if conveying_4:
         if counter >= 2:

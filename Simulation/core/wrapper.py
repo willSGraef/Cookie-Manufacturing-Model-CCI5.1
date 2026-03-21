@@ -53,6 +53,12 @@ counter = 0
 shutdown = redis_client.get_value("shutdown")
 
 while not shutdown:
+    reset = redis_client.get_value("reset")
+    if reset:
+        counter = 0
+        time.sleep(1)
+        continue
+
     # Update shutdown value
     shutdown = redis_client.get_value("shutdown")
     
@@ -62,11 +68,6 @@ while not shutdown:
     wrapping_value = redis_client.get_value("wrapper_wrapping")
     wrapper_conveying_signal = redis_client.get("wrapper_conveying")
     wrapper_conveying_value = redis_client.get_value("wrapper_conveying")
-    reset = redis_client.get_value("reset")
-
-    if reset:
-        counter = 0
-
     # Compare redis value to OpenPLC value and update if necessary
     if wrapper.get_value() != modbus_client.read_signal(wrapper):
         wrapper.set_value(modbus_client.read_signal(wrapper))
