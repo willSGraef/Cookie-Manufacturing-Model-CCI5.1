@@ -57,6 +57,7 @@ while not shutdown:
     # Pull relevant signal from redis server
     palletizer = redis_client.get("palletizer")
     palletizer_rotation = redis_client.get("palletizer_rotation")
+    palletizer_rotation_value = palletizer_rotation.get_value()
     palletizer_target_rotation = redis_client.get("palletizer_target_rotation")
     palletizer_moving = redis_client.get("palletizer_moving")
     palletizer_grabbing = redis_client.get("palletizer_grabbing")
@@ -77,16 +78,16 @@ while not shutdown:
 
 
     if palletizer_moving.get_value():
-        if palletizer_target_rotation.get_value() == palletizer_rotation:
-            if palletizer_rotation == 225:
+        if palletizer_target_rotation.get_value() == palletizer_rotation_value:
+            if palletizer_rotation_value == 225:
                 redis_client.set_value("roe_1", True)
                 redis_client.set_value("roe_2", False)
                 redis_client.set_value("roe_3", False)
-            elif palletizer_rotation == 180:
+            elif palletizer_rotation_value == 180:
                 redis_client.set_value("roe_2", True)
                 redis_client.set_value("roe_1", False)
                 redis_client.set_value("roe_3", False)
-            elif palletizer_rotation == 130:
+            elif palletizer_rotation_value == 130:
                 redis_client.set_value("roe_3", True)
                 redis_client.set_value("roe_1", False)
                 redis_client.set_value("roe_2", False)
@@ -95,14 +96,14 @@ while not shutdown:
                 redis_client.set_value("roe_2", False)
                 redis_client.set_value("roe_3", False)
         else:
-            if palletizer_rotation + ARM_ROTATION_SPEED < palletizer_target_rotation.get_value():
-                palletizer_rotation += ARM_ROTATION_SPEED
-                if palletizer_rotation > palletizer_target_rotation.get_value():
-                    palletizer_rotation = palletizer_target_rotation.get_value()
-            elif palletizer_rotation + ARM_ROTATION_SPEED > palletizer_target_rotation.get_value():
-                palletizer_rotation -= ARM_ROTATION_SPEED
-                if palletizer_rotation < palletizer_target_rotation.get_value():
-                    palletizer_rotation = palletizer_target_rotation.get_value()
+            if palletizer_rotation_value + ARM_ROTATION_SPEED < palletizer_target_rotation.get_value():
+                palletizer_rotation_value += ARM_ROTATION_SPEED
+                if palletizer_rotation_value > palletizer_target_rotation.get_value():
+                    palletizer_rotation_value = palletizer_target_rotation.get_value()
+            elif palletizer_rotation_value + ARM_ROTATION_SPEED > palletizer_target_rotation.get_value():
+                palletizer_rotation_value -= ARM_ROTATION_SPEED
+                if palletizer_rotation_value < palletizer_target_rotation.get_value():
+                    palletizer_rotation_value = palletizer_target_rotation.get_value()
 
     # Push mixer weight to OpenPLC
     modbus_client.write_signal(palletizer)
@@ -115,6 +116,6 @@ while not shutdown:
     redis_client.set_value("palletizer_target_rotation", palletizer_target_rotation.get_value())
     redis_client.set_value("palletizer_moving", palletizer_moving.get_value())
     redis_client.set_value("palletizer_grabbing", palletizer_grabbing.get_value())
-    redis_client.set_value("palletizer_rotation", palletizer_rotation)
+    redis_client.set_value("palletizer_rotation", palletizer_rotation_value)
 
     time.sleep(1 + random.uniform(-0.2, 0.2))
