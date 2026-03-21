@@ -86,10 +86,10 @@ while not shutdown:
     modbus_client.write_signal(lcs_4)
 
     # Update redis server with new silo and hopper values
-    redis_client.set_value("lcs_1", lcs_1)
-    redis_client.set_value("lcs_2", lcs_2)
-    redis_client.set_value("lcs_3", lcs_3)
-    redis_client.set_value("lcs_4", lcs_4)
+    redis_client.set_value("lcs_1", lcs_1.get_value())
+    redis_client.set_value("lcs_2", lcs_2.get_value())
+    redis_client.set_value("lcs_3", lcs_3.get_value())
+    redis_client.set_value("lcs_4", lcs_4.get_value())
 
     redis_client.set_value("lch", hopper)
 

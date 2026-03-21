@@ -1,7 +1,6 @@
 from core.constants import *
 from utils.modbus_utils import FloatModbusClient
 from utils.redis_client import SignalClient
-from utils.redis_server import initialize_signals
 from core.signals import SIGNALS
 import time
 import signal

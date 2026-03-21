@@ -81,11 +81,11 @@ while not shutdown:
         if temperature_value < 20.0:
             rate = WARMING_RATE
             #Increase the warming rate based on how many circulating fans are on
-            if fan_1():
+            if fan_1:
                 rate += WARMING_RATE
-            if fan_2():
+            if fan_2:
                 rate += WARMING_RATE
-            if fan_3():
+            if fan_3:
                 rate += WARMING_RATE
             temperature_value += (rate + temp_noise)
         else:
