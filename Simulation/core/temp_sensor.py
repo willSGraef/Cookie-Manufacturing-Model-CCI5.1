@@ -70,12 +70,12 @@ while not shutdown:
             if temperature_value > -10.0:
                 temperature_value -= FREEZING_RATE + temp_noise
             else:
-                temperature = (-10.0 - temp_noise)
+                temperature_value = (-10.0 - temp_noise)
         elif not exhaust_fan:
             if temperature_value > -140.0:
                 temperature_value -= FREEZING_RATE + temp_noise
             else:
-                temperature = (-140.0 - temp_noise)
+                temperature_value = (-140.0 - temp_noise)
     elif not gv_1:
         temp_noise = random.uniform(0.0, 0.1)
         if temperature_value < 20.0:
@@ -89,7 +89,7 @@ while not shutdown:
                 rate += WARMING_RATE
             temperature_value += (rate + temp_noise)
         else:
-            temperature = (20.0 + temp_noise)
+            temperature_value = (20.0 + temp_noise)
 
     # Push sugar weight to OpenPLC
     temperature_signal.set_value(temperature_value)
@@ -97,6 +97,6 @@ while not shutdown:
     modbus_client.write_signal(temperature_signal)
 
     # Update redis server with new silo and hopper values
-    redis_client.set_value("tunnel_temp", temperature_signal)
+    redis_client.set_value("tunnel_temp", temperature_value)
 
     time.sleep(1 + random.uniform(-0.2, 0.2))
