@@ -95,6 +95,8 @@ while not shutdown:
             temperature_value += (rate + temp_noise)
         else:
             temperature_value = (20.0 + temp_noise)
+    
+    print(f"tunnel_temp value: {temperature_value}, type: {type(temperature_value)}")
 
     # Push sugar weight to OpenPLC
     temperature_signal.set_value(temperature_value)
