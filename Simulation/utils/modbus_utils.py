@@ -31,11 +31,11 @@ class FloatModbusClient(ModbusClient):
         value = signal.get_value()
         result = None
         if type(value) == bool:
-            self.write_single_coil(signal.get_address(), value)
+            result = self.write_single_coil(signal.get_address(), value)
         elif isinstance(value, int):
-            self.write_single_register(signal.get_address(), value)
+            result = self.write_single_register(signal.get_address(), value)
         elif isinstance(value, float):
-            self.write_float(signal.get_address(), value)
+            result = self.write_float(signal.get_address(), value)
             print(f"write_signal: {signal.get_name()} = {value} @ address {signal.get_address()} | success: {result}")
 
     # Read signal value from modbus register based on signal type and set signal value
