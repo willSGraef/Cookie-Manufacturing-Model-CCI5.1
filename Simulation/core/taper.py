@@ -63,6 +63,7 @@ while not shutdown:
     shutdown = redis_client.get_value("shutdown")
     
     # Pull relevant signal from redis server
+    ps_4 = redis_client.get_value("ps_4")
     taping_signal = redis_client.get("taping")
     taping_value = redis_client.get_value("taping")
     taper = redis_client.get("taper")
@@ -70,6 +71,10 @@ while not shutdown:
     if taper.get_value() != modbus_client.read_signal(taper):
         taper.set_value(modbus_client.read_signal(taper))
         redis_client.set_value("taper", taper.get_value())
+    
+    # If photoelectric sensor 4 is on, set taping to true
+    if ps_4:
+        taping_value = True
 
     # If taping is on and running, increment the taping counter
     # If the taping counter has reached 1, reset it and set taping to false

@@ -63,6 +63,7 @@ while not shutdown:
     shutdown = redis_client.get_value("shutdown")
     
     # Pull relevant signal from redis server
+    ps_2 = redis_client.get_value("ps_1")
     box_maker = redis_client.get("box_maker")
     boxing_signal = redis_client.get("boxing")
     boxing_value = redis_client.get_value("boxing")
@@ -72,6 +73,10 @@ while not shutdown:
     if box_maker.get_value() != modbus_client.read_signal(box_maker):
         box_maker.set_value(modbus_client.read_signal(box_maker))
         redis_client.set_value("box_maker", box_maker.get_value())
+
+    # If photoelectric sensor 2 is off, set boxing to true
+    if not ps_2:
+        boxing_value = True
 
     # If the box_maker is boxing increment the counter, if the counter has reached 3, reset the counter and set boxing to false
     if boxing_value:

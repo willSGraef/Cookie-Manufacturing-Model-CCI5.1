@@ -63,6 +63,7 @@ while not shutdown:
     shutdown = redis_client.get_value("shutdown")
     
     # Pull relevant signal from redis server
+    ps_1 = redis_client.get_value("ps_1")
     bagger = redis_client.get("bagger")
     bagging_signal = redis_client.get("bagging")
     bagging_value = redis_client.get_value("bagging")
@@ -70,6 +71,10 @@ while not shutdown:
     if bagger.get_value() != modbus_client.read_signal(bagger):
         bagger.set_value(modbus_client.read_signal(bagger))
         redis_client.set_value("bagger", bagger.get_value())
+
+    # If photoelectric sensor 1 is on, set bagging to true
+    if ps_1:
+        bagging_value = True
 
     # If conveyor 2 is on and running, increment the boxer counter. 
     # If the boxer counter has reached 2, reset it and set ps_2 to true to 
