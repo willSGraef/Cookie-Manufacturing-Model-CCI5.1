@@ -77,6 +77,12 @@ add_ingredients = Signal("add_ingredients", 755, False)
 worker_present = Signal("worker_present", 756, True)
 reset = Signal("reset", 1000, False)
 
+# State machine signals
+machine_1 = Signal("machine_1", 500, 0)
+machine_2 = Signal("machine_2", 501, 0)
+machine_3 = Signal("machine_3", 502, 0)
+machine_4 = Signal("machine_4", 503, 0)
+
 # Integer signals
 vacuum_rpm = Signal("vacuum_rpm", 1001, 0)
 mixer_rpm = Signal("mixer_rpm", 1003, 0) 
@@ -185,5 +191,9 @@ SIGNALS = [
     sheet_count,
     row_count,
     palletizer_rotation,
-    shutdown
+    shutdown,
+    machine_1,
+    machine_2,
+    machine_3,
+    machine_4
 ]

@@ -2,6 +2,7 @@ from core.constants import *
 from utils.modbus_utils import FloatModbusClient
 from utils.redis_client import SignalClient
 from core.signals import SIGNALS
+from core.signals import Signal
 import time
 import signal
 import sys
@@ -97,7 +98,7 @@ while not shutdown:
         for sig in SIGNALS:
             signal_obj = redis_client.get(sig.name)
             print(f"{sig.name}: {signal_obj.get_value()}, type: {type(signal_obj.get_value())}, address: {signal_obj.get_address()}")
-            modbus_client.write_signal(signal_obj)
+            modbus_client.write_signal(signal_obj)     
         reset.set_value(False)
         modbus_client.write_signal(reset)
         redis_client.set_value("reset", False)
