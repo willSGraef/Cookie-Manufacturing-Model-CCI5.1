@@ -71,7 +71,7 @@ while not shutdown:
     # If packing is true, increment the packing counter. If the counter has reached 8, reset it, set packing to false, 
     # decrement sheet count by 4, and set ps_3 to true to simulate a box being packed and leaving the station
     if packing:
-        if counter >= 8:
+        if counter >= 8 * COUNTER_TIME_SCALE:
             counter = 0
             packing = False
             sheet_count -= 4 # Pack a box full of 4 cookie sheets

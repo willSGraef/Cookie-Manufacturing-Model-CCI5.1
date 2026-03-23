@@ -78,7 +78,7 @@ while not shutdown:
 
     # If the box_maker is boxing increment the counter, if the counter has reached 3, reset the counter and set boxing to false
     if boxing_value:
-        if counter >= 3:
+        if counter >= 3 * COUNTER_TIME_SCALE:
             counter = 0
             boxing_value = False
         else:

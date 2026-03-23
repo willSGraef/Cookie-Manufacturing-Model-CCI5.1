@@ -71,7 +71,7 @@ while not shutdown:
     palletizer_moving = redis_client.get_value("palletizer_moving")
     # If conveyor 4 is running, increment the counter for ps_5. Reset counter if it has reached 2 and set ps_5 to true
     if conveying_4:
-        if counter >= 2:
+        if counter >= 2 * COUNTER_TIME_SCALE:
             counter = 0
             ps_5_value = True
         else:

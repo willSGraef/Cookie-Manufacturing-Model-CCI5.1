@@ -72,7 +72,7 @@ while not shutdown:
 
     # If conveyor 5 is running, increment the counter for ps_6. Reset counter if it has reached 8 and set ps_6 to true
     if conveying_5:
-        if counter >= 8:
+        if counter >= 8 * COUNTER_TIME_SCALE:
             counter = 0
             ps_6_value = True
         else:

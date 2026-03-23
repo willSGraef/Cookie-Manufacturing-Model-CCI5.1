@@ -78,7 +78,7 @@ while not shutdown:
     # If the boxer counter has reached 2, reset it and set ps_2 to true to 
     # simulate a box being present
     if bagging_value:
-        if counter >= 1:
+        if counter >= 1 * COUNTER_TIME_SCALE:
             counter = 0
             bagging_value = False
         else:

@@ -78,6 +78,6 @@ while not shutdown:
     modbus_client.write_signal(nitrogen_volume_signal)
 
     # Update redis server with new nitrogen volume value
-    redis_client.set_value("nitrogen_volume", nitrogen_volume_signal)
+    redis_client.set_value("nitrogen_volume", nitrogen_volume_value)
 
     time.sleep(1 + random.uniform(-0.2, 0.2))

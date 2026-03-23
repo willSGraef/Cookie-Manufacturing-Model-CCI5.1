@@ -74,7 +74,7 @@ while not shutdown:
     # If the boxer counter has reached 2, reset it and set ps_2 to true to 
     # simulate a box being present
     if conveying_2 and conveyor_2:
-        if counter >= 2:
+        if counter >= 2 * COUNTER_TIME_SCALE:
             counter = 0
             ps_2_value = True
         else:

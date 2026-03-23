@@ -77,7 +77,7 @@ while not shutdown:
     # If taping is on and running, increment the taping counter
     # If the taping counter has reached 1, reset it and set taping to false
     if taping_value:
-        if counter >= 1:
+        if counter >= 1 * COUNTER_TIME_SCALE:
             counter = 0
             taping_value = False
         else:

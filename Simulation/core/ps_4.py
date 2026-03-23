@@ -69,7 +69,7 @@ while not shutdown:
     conveying_4 = redis_client.get_value("conveying_4")
     # If conveyor 3 is running, increment the counter for ps_4. Reset counter if it has reached 2 and set ps_4 to true
     if conveying_3:
-        if counter >= 2:
+        if counter >= 2 * COUNTER_TIME_SCALE:
             counter = 0
             ps_4_value = True
         else:
