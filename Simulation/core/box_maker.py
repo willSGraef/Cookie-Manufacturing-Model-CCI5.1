@@ -76,8 +76,12 @@ while not shutdown:
         redis_client.set_value("box_maker", box_maker.get_value())
 
     # If photoelectric sensor 2 is off, set boxing to true
-    if (not (ps_1 or ps_2 or conveying_1 or conveying_2)) and box_maker:
+    if not (ps_1 or ps_2 or conveying_1 or conveying_2):
         boxing_value = True
+    
+    # If the box maker is off, set the boxing value to false
+    if not box_maker:
+        boxing_value = False
 
     # If the box_maker is boxing increment the counter, if the counter has reached 3, reset the counter and set boxing to false
     if boxing_value:

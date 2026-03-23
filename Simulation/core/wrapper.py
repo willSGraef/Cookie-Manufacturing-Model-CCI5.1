@@ -47,7 +47,8 @@ while redis_client is None:
         time.sleep(1 + random.uniform(-0.2, 0.2))
 print("Connected to Redis server successfully.")
 
-counter = 0
+wrapping_counter = 0
+conveying_counter = 0
 
 # Check shutdown signal from redis server every loop iteration. If shutdown is true, break the loop and end the program.
 shutdown = redis_client.get_value("shutdown")
@@ -55,7 +56,8 @@ shutdown = redis_client.get_value("shutdown")
 while not shutdown:
     reset = redis_client.get_value("reset")
     if reset:
-        counter = 0
+        wrapping_counter = 0
+        conveying_counter = 0
         time.sleep(1)
         continue
 
@@ -72,28 +74,37 @@ while not shutdown:
     if wrapper.get_value() != modbus_client.read_signal(wrapper):
         wrapper.set_value(modbus_client.read_signal(wrapper))
         redis_client.set_value("wrapper", wrapper.get_value())
-    if wrapping_value != modbus_client.read_signal(wrapping_signal):
-        wrapping_signal.set_value(modbus_client.read_signal(wrapping_signal))
-        redis_client.set_value("wrapper_wrapping", wrapping_value)
-    if wrapper_conveying_value != modbus_client.read_signal(wrapper_conveying_signal):
-        wrapper_conveying_signal.set_value(modbus_client.read_signal(wrapper_conveying_signal))
-        redis_client.set_value("wrapper_conveying", wrapper_conveying_value)
 
-    # If wrapper conveying is on and running, increment the wrapper counter. 
-    # If the wrapper counter has reached 1, reset it and set wrapper_conveying to false
-    if wrapper_conveying_value:
-        if counter >= 1:
-            counter = 0
-            wrapper_conveying_value = False
-        else:
-            counter += 1
-    # If wrapper is on and running, increment the wrapper counter. If the wrapper counter has reached 3, reset it and set wrapping to false
+    # Only read from Modbus if not currently timing
+    if not wrapping_value:
+        read = modbus_client.read_signal(wrapping_signal)
+        if read is not None:
+            wrapping_value = read
+            wrapping_signal.set_value(wrapping_value)
+            redis_client.set_value("wrapper_wrapping", wrapping_value)
+
+    if not wrapper_conveying_value:
+        read = modbus_client.read_signal(wrapper_conveying_signal)
+        if read is not None:
+            wrapper_conveying_value = read
+            wrapper_conveying_signal.set_value(wrapper_conveying_value)
+            redis_client.set_value("wrapper_conveying", wrapper_conveying_value)
+
+    # Wrapping timer
     if wrapping_value:
-        if counter >= 3:
-            counter = 0
+        if wrapping_counter >= 3 * COUNTER_TIME_SCALE:
+            wrapping_counter = 0
             wrapping_value = False
         else:
-            counter += 1
+            wrapping_counter += 1
+
+    # Conveying timer
+    if wrapper_conveying_value:
+        if conveying_counter >= 1 * COUNTER_TIME_SCALE:
+            conveying_counter = 0
+            wrapper_conveying_value = False
+        else:
+            conveying_counter += 1
 
     # Write updated value back to OpenPLC
     wrapping_signal.set_value(wrapping_value)
