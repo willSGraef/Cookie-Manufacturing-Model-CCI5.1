@@ -81,14 +81,14 @@ while not shutdown:
 
     # If wrapper conveying is on and running, increment the wrapper counter. 
     # If the wrapper counter has reached 1, reset it and set wrapper_conveying to false
-    if wrapper_conveying_value and not wrapping_value:
+    if wrapper_conveying_value:
         if counter >= 1:
             counter = 0
             wrapper_conveying_value = False
         else:
             counter += 1
     # If wrapper is on and running, increment the wrapper counter. If the wrapper counter has reached 3, reset it and set wrapping to false
-    elif wrapping_value:
+    if wrapping_value:
         if counter >= 3:
             counter = 0
             wrapping_value = False
