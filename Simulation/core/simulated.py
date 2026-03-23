@@ -95,6 +95,9 @@ while not shutdown:
             signal_obj = redis_client.get(sig.name)
             modbus_client.write_signal(signal_obj)
         redis_client.reset_all()
+        reset.set_value(False)
+        modbus_client.write_signal(reset)
+        redis_client.set_value("reset", False)
         time.sleep(1 + random.uniform(-0.2, 0.2))
         continue
 
