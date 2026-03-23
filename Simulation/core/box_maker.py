@@ -72,9 +72,6 @@ while not shutdown:
     if box_maker.get_value() != modbus_client.read_signal(box_maker):
         box_maker.set_value(modbus_client.read_signal(box_maker))
         redis_client.set_value("box_maker", box_maker.get_value())
-    if boxing_value != modbus_client.read_signal(boxing_signal):
-        boxing_signal.set_value(modbus_client.read_signal(boxing_signal))
-        redis_client.set_value("boxing", boxing_value)
 
     # If the box_maker is boxing increment the counter, if the counter has reached 3, reset the counter and set boxing to false
     if boxing_value:

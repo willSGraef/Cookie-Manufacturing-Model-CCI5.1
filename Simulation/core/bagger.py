@@ -70,9 +70,6 @@ while not shutdown:
     if bagger.get_value() != modbus_client.read_signal(bagger):
         bagger.set_value(modbus_client.read_signal(bagger))
         redis_client.set_value("bagger", bagger.get_value())
-    if bagging_value != modbus_client.read_signal(bagging_signal):
-        bagging_signal.set_value(modbus_client.read_signal(bagging_signal))
-        redis_client.set_value("taping", bagging_value)
 
     # If conveyor 2 is on and running, increment the boxer counter. 
     # If the boxer counter has reached 2, reset it and set ps_2 to true to 

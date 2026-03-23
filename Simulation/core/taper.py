@@ -70,9 +70,6 @@ while not shutdown:
     if taper.get_value() != modbus_client.read_signal(taper):
         taper.set_value(modbus_client.read_signal(taper))
         redis_client.set_value("taper", taper.get_value())
-    if taping_value != modbus_client.read_signal(taping_signal):
-        taping_signal.set_value(modbus_client.read_signal(taping_signal))
-        redis_client.set_value("taping", taping_value)
 
     # If taping is on and running, increment the taping counter
     # If the taping counter has reached 1, reset it and set taping to false
