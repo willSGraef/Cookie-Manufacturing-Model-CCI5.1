@@ -1,4 +1,5 @@
 import struct
+import time
 from pyModbusTCP.client import ModbusClient
 from pyModbusTCP.utils import decode_ieee, word_list_to_long
 
@@ -42,18 +43,30 @@ class FloatModbusClient(ModbusClient):
     def read_signal(self, signal):
         value = signal.get_value()
         address = signal.get_address()
-        if isinstance(value, bool):
-            result = self.read_coils(address)
-            # print(signal.get_name() + " : " + (str)(result[0]))
-            if result is not None:
-                return result[0]    # Extract first value
-        elif isinstance(value, int):
-            result = self.read_holding_registers(address)
-            # print(signal.get_name() + " : " + (str)(result[0]))
-            if result and len(result) > 0:
-                return result[0]
-        elif isinstance(value, float):
-            result = self.read_float(address)
-            # print(signal.get_name() + " : " + (str)(result[0]))
-            if result is not None:
-                return result[0]
+        
+        def attempt_read():
+            if isinstance(value, bool):
+                result = self.read_coils(address)
+                if result is not None:
+                    return result[0]
+            elif isinstance(value, int):
+                result = self.read_holding_registers(address)
+                if result and len(result) > 0:
+                    return result[0]
+            elif isinstance(value, float):
+                result = self.read_float(address)
+                if result is not None:
+                    return result[0]
+            return None
+
+        result = attempt_read()
+        if result is None:
+            print(f"Lost connection to OpenPLC, reconnecting...")
+            self.close()
+            while not self.open():
+                print("Reconnecting to OpenPLC...")
+                time.sleep(1)
+            print("Reconnected to OpenPLC.")
+            result = attempt_read()
+        
+        return result
