@@ -93,6 +93,8 @@ while not shutdown:
         print("Reset signal detected, resetting all values")
         for sig in SIGNALS:
             signal_obj = redis_client.get(sig.name)
+            if isinstance(signal_obj.get_value(), bool):
+                print(f"{sig.name}: {signal_obj.get_value()}, type: {type(signal_obj.get_value())}, address: {signal_obj.get_address()}")
             modbus_client.write_signal(signal_obj)
         redis_client.reset_all()
         reset.set_value(False)

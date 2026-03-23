@@ -41,6 +41,7 @@ class SignalClient:
 
     def reset(self, name):
         reset_value = self.r.hget(f"signal:{name}", "reset_value")
+        print(f"Resetting {name} to {reset_value}, type: {type(reset_value)}")
         self.set_value(name, reset_value)
     
     def reset_all(self):
