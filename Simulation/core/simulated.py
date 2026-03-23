@@ -91,12 +91,13 @@ while not shutdown:
     # If reset is true, reset all signals to their default values
     if reset.get_value():
         print("Reset signal detected, resetting all values")
+        print("Redis reset: ")
+        redis_client.reset_all()
+        print("Modbus reset: ")
         for sig in SIGNALS:
             signal_obj = redis_client.get(sig.name)
-            if isinstance(signal_obj.get_value(), bool):
-                print(f"{sig.name}: {signal_obj.get_value()}, type: {type(signal_obj.get_value())}, address: {signal_obj.get_address()}")
+            print(f"{sig.name}: {signal_obj.get_value()}, type: {type(signal_obj.get_value())}, address: {signal_obj.get_address()}")
             modbus_client.write_signal(signal_obj)
-        redis_client.reset_all()
         reset.set_value(False)
         modbus_client.write_signal(reset)
         redis_client.set_value("reset", False)
