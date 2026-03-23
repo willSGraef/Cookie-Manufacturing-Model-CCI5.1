@@ -68,6 +68,7 @@ while not shutdown:
     conveying_1 = redis_client.get_value("conveying_1")
     conveying_2 = redis_client.get_value("conveying_2")
     box_maker = redis_client.get("box_maker")
+    box_maker_value = redis_client.get_value("box_maker")
     boxing_signal = redis_client.get("boxing")
     boxing_value = redis_client.get_value("boxing")
     # Compare redis value to OpenPLC value and update if necessary
@@ -78,13 +79,9 @@ while not shutdown:
     # If photoelectric sensor 2 is off, set boxing to true
     if not (ps_1 or ps_2 or conveying_1 or conveying_2):
         boxing_value = True
-    
-    # If the box maker is off, set the boxing value to false
-    if not box_maker:
-        boxing_value = False
 
     # If the box_maker is boxing increment the counter, if the counter has reached 3, reset the counter and set boxing to false
-    if boxing_value:
+    if boxing_value and box_maker_value:
         if counter >= 3 * COUNTER_TIME_SCALE:
             counter = 0
             boxing_value = False
